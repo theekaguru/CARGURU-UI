@@ -12,3 +12,6 @@ pnpm add react-router-dom
 
 //install Lucid Icons
 pnpm install lucide
+
+//install react Icons
+pnpm i react-icons

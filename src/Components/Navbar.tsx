@@ -1,3 +1,7 @@
+import { Info } from "lucide-react"
+import { AiOutlineLogin } from "react-icons/ai"
+import { FaCar, FaHome, FaInfo, FaPhone } from "react-icons/fa"
+import { MdOutlineQuiz, MdOutlineSecurity } from "react-icons/md"
 import { Link } from "react-router-dom"
 
 
@@ -12,22 +16,22 @@ export const Navbar = () => {
       <ul
         tabIndex={0}
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-      <li><Link to='/'>Home</Link></li>
-       <li><Link to='/contact'>Contact</Link></li>
-        <li><Link to='/about'>About</Link></li>
-         <li><Link to='/faq'>FAQ</Link></li>
+      <li><Link to='/'><FaHome/>Home</Link></li>
+       <li><Link to='/contact'><FaPhone/>Contact</Link></li>
+        <li><Link to='/about'><FaInfo/>About</Link></li>
+         <li><Link to='/faq'><MdOutlineQuiz />FAQ</Link></li>
            <li><Link to='/register'>Register</Link></li>
              <li><Link to='/login'>Login</Link></li>        
       </ul>
     </div>
-    <a className="btn btn-ghost text-xl">CARGURU</a>
+    <a className="btn btn-ghost text-xl"><FaCar/>CARGURU</a>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
-      <li><Link to='/'>Home</Link></li>
-       <li><Link to='/contact'>Contact</Link></li>
-        <li><Link to='/about'>About</Link></li>
-         <li><Link to='/faq'>FAQ</Link></li>
+      <li><Link to='/'><FaHome/>Home</Link></li>
+       <li><Link to='/contact'><FaPhone/>Contact</Link></li>
+        <li><Link to='/about'><FaInfo/>About</Link></li>
+         <li><Link to='/faq'><MdOutlineQuiz />FAQ</Link></li>
            
              
 
@@ -35,8 +39,8 @@ export const Navbar = () => {
   </div>
   <div className="navbar-end">
      <ul>
-    <Link to='/register' className="btn">Register</Link>
-    <Link to='/login' className="btn">Login</Link>
+    <Link to='/register' className="btn"><AiOutlineLogin/>Register</Link>
+    <Link to='/login' className="btn"><MdOutlineSecurity />Login</Link>
      </ul>
 
   </div>
