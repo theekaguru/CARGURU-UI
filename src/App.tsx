@@ -6,6 +6,7 @@ import { Register } from './Pages/Register'
 import { Login } from './Pages/Login'
 import { Contact } from './Pages/Contact'
 import { FAQ } from './Pages/FAQ'
+import { About } from './Pages/About'
 
 function App() {
 const router = createBrowserRouter([
@@ -33,12 +34,15 @@ const router = createBrowserRouter([
     path:'/faq',
     element:<FAQ/>,
     errorElement:<Error/>
+  },
+  {
+    path:'about us',
+    element:<About/>,
+    errorElement:<Error/>
   }
 ])
   return (
-    <>
-      <h1 className='text-green-400 underline font-bold'>Hello World</h1>
-    </>
+     <RouterProvider router={router} />
   )
 }
 
