@@ -36,7 +36,7 @@ const router = createBrowserRouter([
     errorElement:<Error/>
   },
   {
-    path:'about us',
+    path:'about',
     element:<About/>,
     errorElement:<Error/>
   }
