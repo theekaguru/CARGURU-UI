@@ -10,3 +10,5 @@ pnpm add react-router
 Add NavLinks Routers
 pnpm add react-router-dom
 
+//install Lucid Icons
+pnpm install lucide

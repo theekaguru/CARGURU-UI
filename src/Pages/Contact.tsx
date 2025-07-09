@@ -1,7 +1,12 @@
+import { Footer } from "../Components/Footer"
+import { Navbar } from "../Components/Navbar"
 
 
 export const Contact = () => {
   return (
-    <div>Contact</div>
+    <>
+    <Navbar/>
+    <Footer/>
+    </>
   )
 }

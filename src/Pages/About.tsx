@@ -1,7 +1,12 @@
+import { Footer } from "../Components/Footer"
+import { Navbar } from "../Components/Navbar"
 
 
 export const About = () => {
   return (
-    <div>About</div>
+    <>
+    <Navbar/>
+    <Footer/>
+    </>
   )
 }

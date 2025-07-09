@@ -1,7 +1,12 @@
+import { Footer } from "../Components/Footer"
+import { Navbar } from "../Components/Navbar"
 
 
 export const FAQ = () => {
   return (
-    <div>FAQ</div>
+    <>
+    <Navbar/>
+    <Footer/>
+    </>
   )
 }

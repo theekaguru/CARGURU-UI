@@ -1,6 +1,11 @@
+import { Footer } from "../Components/Footer"
+import { Navbar } from "../Components/Navbar"
 
 export const Login = () => {
   return (
-    <div>Login</div>
+    <>
+    <Navbar/>
+    <Footer/>
+    </>
   )
 }
