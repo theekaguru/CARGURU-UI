@@ -1,4 +1,3 @@
-import { Info } from "lucide-react"
 import { AiOutlineLogin } from "react-icons/ai"
 import { FaCar, FaHome, FaInfo, FaPhone } from "react-icons/fa"
 import { MdOutlineQuiz, MdOutlineSecurity } from "react-icons/md"
@@ -24,14 +23,14 @@ export const Navbar = () => {
              <li><Link to='/login'>Login</Link></li>        
       </ul>
     </div>
-    <a className="btn btn-ghost text-xl"><FaCar/>CARGURU</a>
+    <a className="font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent"><FaCar/>CARGURU</a>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
-      <li><Link to='/'><FaHome/>Home</Link></li>
-       <li><Link to='/contact'><FaPhone/>Contact</Link></li>
-        <li><Link to='/about'><FaInfo/>About</Link></li>
-         <li><Link to='/faq'><MdOutlineQuiz />FAQ</Link></li>
+      <li><Link to='/'><FaHome className=" text-[#b7701a]"/>Home</Link></li>
+       <li><Link to='/contact'><FaPhone className=" text-[#b7701a]"/>Contact</Link></li>
+        <li><Link to='/about'><FaInfo className=" text-[#b7701a]"/>About</Link></li>
+         <li><Link to='/faq'><MdOutlineQuiz className=" text-[#b7701a]"/>FAQ</Link></li>
            
              
 
@@ -39,8 +38,8 @@ export const Navbar = () => {
   </div>
   <div className="navbar-end">
      <ul>
-    <Link to='/register' className="btn"><AiOutlineLogin/>Register</Link>
-    <Link to='/login' className="btn"><MdOutlineSecurity />Login</Link>
+    <Link to='/register' className="btn btn-sm bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white border-none"><AiOutlineLogin/>Register</Link>
+    <Link to='/login' className="btn btn-sm btn-ghost text-gray-700 hover:text-orange-600 hover:bg-[#aea382]"><MdOutlineSecurity />Login</Link>
      </ul>
 
   </div>
