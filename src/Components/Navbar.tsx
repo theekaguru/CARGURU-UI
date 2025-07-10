@@ -27,10 +27,10 @@ export const Navbar = () => {
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
-      <li><Link to='/'><FaHome className=" text-[#b7701a]"/>Home</Link></li>
-       <li><Link to='/contact'><FaPhone className=" text-[#b7701a]"/>Contact</Link></li>
-        <li><Link to='/about'><FaInfo className=" text-[#b7701a]"/>About</Link></li>
-         <li><Link to='/faq'><MdOutlineQuiz className=" text-[#b7701a]"/>FAQ</Link></li>
+      <li><Link to='/' className="flex items-center gap-2  hover:text-yellow-500 transition-colors duration-300 hover:border-b-1 hover:border-black"><FaHome className=" text-[#b7701a]"/>Home</Link></li>
+       <li><Link to='/contact' className="flex items-center gap-2  hover:text-yellow-500 transition-colors duration-300 hover:border-b-1 hover:border-black"><FaPhone className=" text-[#b7701a]"/>Contact</Link></li>
+        <li><Link to='/about' className="flex items-center gap-2  hover:text-yellow-500 transition-colors duration-300 hover:border-b-1 hover:border-black" ><FaInfo className=" text-[#b7701a]"/>About</Link></li>
+         <li><Link to='/faq' className="flex items-center gap-2  hover:text-yellow-500 transition-colors duration-300 hover:border-b-1 hover:border-black"><MdOutlineQuiz className=" text-[#b7701a] "/>FAQ</Link></li>
            
              
 
