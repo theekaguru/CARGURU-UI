@@ -29,7 +29,7 @@ export default function Testimonials() {
 
 function TestimonialCard({ name, avatar, rating, comment }: Testimonial) {
   return (
-    <div className="card bg-gradient-to-br from-[#888372] via-[#a3a4a1] to-[#c5981e]  shadow-xl p-6 hover:scale-105 transition-transform duration-300">
+    <div className="card bg-gradient-to-br from-[#888372] via-[#a3a4a1] to-[#504118]  shadow-xl p-6 hover:scale-105 transition-transform duration-300">
       <div className="flex items-center gap-4 mb-4">
         <div className="avatar">
           <div className="w-14 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">

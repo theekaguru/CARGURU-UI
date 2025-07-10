@@ -1,77 +1,209 @@
+import { useRef, useEffect } from "react";
+import vw1 from '../../assets/Account/vw1.jpg';
 
 export const SignIn = () => {
- return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-200 via-gray-400 to-gray-700 dark:from-gray-900 dark:via-gray-950 dark:to-gray-800 flex items-center justify-center py-10 overflow-hidden">
-      <div className="relative z-10 grid sm:grid-cols-2 gap-10 rounded-3xl overflow-hidden w-full max-w-5xl">
-        {/* Left Panel: Animated gradient and glowing lock icon */}
-        <div className="hidden sm:flex items-center justify-center bg-gradient-to-br from-blue-400/60 via-purple-400/40 to-pink-300/60 dark:from-blue-900/70 dark:via-purple-900/60 dark:to-pink-900/70 p-0 animate-pulse-slow">
-          <div className="relative w-80 h-56 rounded-2xl shadow-2xl overflow-hidden flex flex-col justify-center items-center p-6 backdrop-blur-xl bg-white/10 dark:bg-gray-900/20 border border-white/30 dark:border-gray-700/40">
-            {/* Glowing Lock Icon */}
-            <svg width="54" height="54" viewBox="0 0 54 54" fill="none" className="mb-4 drop-shadow-glow">
-              <circle cx="27" cy="27" r="25" fill="url(#glow)" />
-              <rect x="17" y="26" width="20" height="14" rx="4" fill="#fff" fillOpacity="0.15" stroke="#fff" strokeWidth="2" />
-              <rect x="21" y="18" width="12" height="12" rx="6" fill="#fff" fillOpacity="0.25" stroke="#fff" strokeWidth="2" />
-              <circle cx="27" cy="33" r="2" fill="#fff" />
-              <defs>
-                <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(27 27) scale(25)" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#a5b4fc" />
-                  <stop offset="1" stopColor="#f472b6" stopOpacity="0.3" />
-                </radialGradient>
-              </defs>
-            </svg>
-            <span className="text-2xl font-semibold text-white drop-shadow-lg text-center tracking-wide">Secure Access</span>
-            <span className="text-base text-white/80 text-center mt-1">Welcome back to your private session</span>
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let dpr = window.devicePixelRatio || 1;
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = width + "px";
+    canvas.style.height = height + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const colors = ["#ffec70", "#ff7170", "#70cfff", "#b370ff", "#fff", "#ffb370", "#70ffb3"];
+    const randomColor = () => colors[Math.floor(Math.random() * colors.length)];
+    const randomBetween = (a: number, b: number) => a + Math.random() * (b - a);
+
+    class Particle {
+      x: number; y: number; vx: number; vy: number; alpha: number; color: string; size: number;
+      constructor(x: number, y: number, color: string) {
+        this.x = x;
+        this.y = y;
+        const angle = randomBetween(0, Math.PI * 2);
+        const speed = randomBetween(2, 6);
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.alpha = 1;
+        this.color = color;
+        this.size = randomBetween(1.5, 3.5);
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vy += 0.03;
+        this.vx *= 0.98;
+        this.vy *= 0.98;
+        this.alpha -= 0.012;
+      }
+      draw(ctx: CanvasRenderingContext2D) {
+        ctx.save();
+        ctx.globalAlpha = Math.max(this.alpha, 0);
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 12;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    class Firework {
+      x: number; y: number; tx: number; ty: number; color: string; speed: number; state: 'fly' | 'burst'; particles: Particle[];
+      constructor() {
+        this.x = randomBetween(width * 0.2, width * 0.8);
+        this.y = height;
+        this.tx = this.x + randomBetween(-80, 80);
+        this.ty = randomBetween(height * 0.15, height * 0.45);
+        this.color = randomColor();
+        this.speed = randomBetween(6, 9);
+        this.state = 'fly';
+        this.particles = [];
+      }
+      update() {
+        if (this.state === 'fly') {
+          const dx = (this.tx - this.x) * 0.08;
+          const dy = (this.ty - this.y) * 0.08;
+          this.x += dx;
+          this.y += dy;
+          if (Math.abs(this.y - this.ty) < 12) {
+            this.state = 'burst';
+            for (let i = 0; i < randomBetween(18, 28); i++) {
+              this.particles.push(new Particle(this.x, this.y, randomColor()));
+            }
+          }
+        } else {
+          this.particles.forEach((p) => p.update());
+        }
+      }
+      draw(ctx: CanvasRenderingContext2D) {
+        if (this.state === 'fly') {
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.shadowColor = this.color;
+          ctx.shadowBlur = 10;
+          ctx.fill();
+          ctx.restore();
+        } else {
+          this.particles.forEach((p) => p.draw(ctx));
+        }
+      }
+      isDone() {
+        return this.state === 'burst' && this.particles.every((p) => p.alpha <= 0);
+      }
+    }
+
+    let fireworks: Firework[] = [];
+    let animationId: number;
+    function animate() {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, width, height);
+      if (Math.random() < 0.07) {
+        fireworks.push(new Firework());
+      }
+      fireworks.forEach((fw) => {
+        fw.update();
+        fw.draw(ctx);
+      });
+      fireworks = fireworks.filter((fw) => !fw.isDone());
+      animationId = requestAnimationFrame(animate);
+    }
+    animate();
+
+    function handleResize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      if (!canvas || !ctx) return;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return (
+    <div className="relative w-full min-h-screen flex justify-center items-center bg-gradient-to-br from-[#888372] via-[#a3a4a1] to-[#160d0b] text-[#160d0b]">
+      {/* Fireworks Canvas */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0 pointer-events-none" />
+
+      {/* Main SignIn Card */}
+      <div className="z-10 grid grid-cols-1 md:grid-cols-2 w-full max-w-5xl rounded-2xl overflow-hidden backdrop-blur-lg shadow-2xl border border-[#a3a4a1]">
+        {/* Left Side Image */}
+        <div
+          className="hidden md:flex items-center justify-center bg-cover bg-center"
+          style={{ backgroundImage: `url(${vw1})` }}
+        >
+        </div>
+
+        {/* Right Side Form */}
+        <form className="p-8 bg-white/40 dark:bg-gray-600/30 backdrop-blur-lg space-y-6">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-pink-400 to-blue-400 bg-clip-text text-transparent drop-shadow-lg animate-pulse">
+              Welcome to CarGuru!
+            </h2>
+            <p className="text-[#d6d4ce] text-base font-medium">
+              Log in to start your engine
+            </p>
           </div>
-        </div>
-        {/* Form Section: Glassmorphism card */}
-        <div className="flex items-center justify-center p-8">
-          <form className="w-full max-w-md space-y-6 rounded-2xl p-8 backdrop-blur-xl bg-white/70 dark:bg-gray-900/70 border border-white/30 dark:border-gray-700/40 shadow-2xl">
-            <div className="text-center mb-6">
-              <div className="text-4xl font-extrabold tracking-tight mb-2 text-center bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 bg-clip-text text-transparent drop-shadow-lg font-serif animate-gradient-x">
-                Log In to Continue
-              </div>
-              <p className="text-gray-700 dark:text-gray-200 text-lg font-medium">Access your personalized experience</p>
+
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="email" className="block text-sm font-semibold text-[#c2c0ba]">
+                Email Address
+              </label>
+              <input
+                id="email"
+                type="email"
+                placeholder="e.g. you@example.com"
+                className="w-full h-12 px-4 rounded-lg border bg-white/70 text-[#160d0b] placeholder-[#a3a4a1] border-[#bca16a] focus:border-[#888372] shadow-inner focus:outline-none"
+                required
+              />
             </div>
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm font-semibold leading-none text-gray-700 dark:text-gray-200" htmlFor="email">
-                  Email Address
-                </label>
-                <input
-                  className="flex h-12 w-full rounded-lg border bg-white/60 dark:bg-gray-800/60 px-4 py-2 text-base text-gray-900 dark:text-white placeholder-gray-400 border-blue-300 focus:border-blue-500 shadow-inner focus:outline-none transition"
-                  type="email"
-                  id="email"
-                  placeholder="e.g. you@example.com"
-                  required
-                />
-              </div>
-              <div>
-                <label className="text-sm font-semibold leading-none text-gray-700 dark:text-gray-200" htmlFor="password">
-                  Password
-                </label>
-                <input
-                  className="flex h-12 w-full rounded-lg border bg-white/60 dark:bg-gray-800/60 px-4 py-2 text-base text-gray-900 dark:text-white placeholder-gray-400 border-blue-300 focus:border-blue-500 shadow-inner focus:outline-none transition"
-                  type="password"
-                  id="password"
-                  placeholder="Enter your password"
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                className="btn btn-info btn-block mt-8 shadow-lg hover:scale-105 hover:shadow-xl transition-transform text-lg font-bold tracking-wide py-3 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-400 border-0 text-white"
-              >
-                Log In
-              </button>
+            <div>
+              <label htmlFor="password" className="block text-sm font-semibold text-[#b9b7af]">
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                className="w-full h-12 px-4 rounded-lg border bg-white/70 text-[#3c3e1f] placeholder-[#a3a4a1] border-[#bca16a] focus:border-[#888372] shadow-inner focus:outline-none"
+                required
+              />
             </div>
-            <div className="flex flex-col items-center mt-4 gap-2">
-              <a href="/forgotpassword" className="text-blue-500 hover:underline text-sm">Forgot password?</a>
-              <a href="/register" className="text-pink-500 hover:underline text-sm">Need an account? Register</a>
-              <a href="/" className="text-blue-400 hover:underline text-sm">Go to HomePage</a>
-            </div>
-          </form>
-        </div>
+            <button
+              type="submit"
+              className="w-full py-3 text-lg font-bold text-white rounded-md bg-gradient-to-r from-[#bca16a] via-[#a3a4a1] to-[#666037] hover:scale-105 hover:shadow-xl transition-transform shadow-lg"
+            >
+              Log In
+            </button>
+          </div>
+
+          <div className="flex flex-col items-center mt-4 gap-2 text-sm">
+            <a href="/forgotpassword" className="text-[#bca16a] hover:underline">Forgot password?</a>
+            <a href="/register" className="text-[#160d0b] hover:underline">Need an account? Register</a>
+            <a href="/" className="text-[#888372] hover:underline">HomePage</a>
+          </div>
+        </form>
       </div>
     </div>
-  )
-}
+  );
+};

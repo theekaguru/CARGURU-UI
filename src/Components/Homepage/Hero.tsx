@@ -21,7 +21,7 @@ export const Hero = () => {
       <div className="hero-content text-neutral-content text-center relative z-20 w-full flex justify-center items-center" style={{ minHeight: "75vh" }}>
         <div className="max-w-md">
           <h1 className="text-[#76726f] mb-5 text-5xl font-bold">Hello there</h1>
-          <Link to="/register" className=" text-[#b4a125] btn btn-primary">Book Now</Link>
+          <Link to="/register" className=" text-[#b4a125] btn btn-primary animate-pulse ">Book Now</Link>
         </div>
       </div>
     </div>

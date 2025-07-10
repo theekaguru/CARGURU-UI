@@ -22,9 +22,7 @@ export const Navbar = () => {
            <li><Link to='/register'>Register</Link></li>
              <li><Link to='/login'>Login</Link></li>        
       </ul>
-    </div>
-    <a className="font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent"><FaCar/>CARGURU</a>
-  </div>
+    </div ><a className="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-pink-400 to-blue-400 bg-clip-text text-transparent drop-shadow-lg animate-pulse">CARGURU</a></div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
       <li><Link to='/' className="flex items-center gap-2  hover:text-yellow-500 transition-colors duration-300 hover:border-b-1 hover:border-black"><FaHome className=" text-[#b7701a]"/>Home</Link></li>
@@ -38,8 +36,8 @@ export const Navbar = () => {
   </div>
   <div className="navbar-end">
      <ul>
-    <Link to='/register' className="btn btn-sm bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white border-none"><AiOutlineLogin/>Register</Link>
-    <Link to='/login' className="btn btn-sm btn-ghost text-gray-700 hover:text-orange-600 hover:bg-[#aea382]"><MdOutlineSecurity />Login</Link>
+    <Link to='/register' className="btn btn-sm bg-gradient-to-r from-orange-400 to-blue-900 hover:from-orange-500 hover:to-amber-800 text-white border-none mr-5"><AiOutlineLogin/>Register</Link>
+    <Link to='/login' className="btn btn-sm btn-ghost text-white hover:text-orange-950 hover:bg-[#40602a] animate-pulse  "><MdOutlineSecurity />Login</Link>
      </ul>
 
   </div>

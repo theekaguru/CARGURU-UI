@@ -1,8 +1,9 @@
 import { useRef, useEffect } from 'react';
+import sumertime from '../../assets/Account/summertime vw.jpg';
 
 export const SignUp = () => {
- // Fireworks canvas ref
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -17,7 +18,6 @@ export const SignUp = () => {
     canvas.style.height = height + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    // Firework and particle logic
     const colors = ['#ffec70', '#ff7170', '#70cfff', '#b370ff', '#fff', '#ffb370', '#70ffb3'];
     function randomColor() {
       return colors[Math.floor(Math.random() * colors.length)];
@@ -25,6 +25,7 @@ export const SignUp = () => {
     function randomBetween(a: number, b: number) {
       return a + Math.random() * (b - a);
     }
+
     class Particle {
       x: number; y: number; vx: number; vy: number; alpha: number; color: string; size: number;
       constructor(x: number, y: number, color: string) {
@@ -41,7 +42,7 @@ export const SignUp = () => {
       update() {
         this.x += this.vx;
         this.y += this.vy;
-        this.vy += 0.03; // gravity
+        this.vy += 0.03;
         this.vx *= 0.98;
         this.vy *= 0.98;
         this.alpha -= 0.012;
@@ -58,6 +59,7 @@ export const SignUp = () => {
         ctx.restore();
       }
     }
+
     class Firework {
       x: number; y: number; tx: number; ty: number; color: string; speed: number; state: 'fly' | 'burst'; particles: Particle[];
       constructor() {
@@ -104,8 +106,10 @@ export const SignUp = () => {
         return this.state === 'burst' && this.particles.every((p) => p.alpha <= 0);
       }
     }
+
     let fireworks: Firework[] = [];
     let animationId: number;
+
     function animate() {
       if (!ctx) return;
       ctx.clearRect(0, 0, width, height);
@@ -120,6 +124,7 @@ export const SignUp = () => {
       animationId = requestAnimationFrame(animate);
     }
     animate();
+
     function handleResize() {
       width = window.innerWidth;
       height = window.innerHeight;
@@ -130,6 +135,7 @@ export const SignUp = () => {
       canvas.style.height = height + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
+
     window.addEventListener('resize', handleResize);
     return () => {
       cancelAnimationFrame(animationId);
@@ -138,93 +144,77 @@ export const SignUp = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-gray-200 via-gray-400 to-gray-700 dark:from-gray-900 dark:via-gray-950 dark:to-gray-800 flex items-center justify-center py-10 overflow-hidden">
+    <div className="relative w-full min-h-screen flex justify-center items-center bg-gradient-to-br from-[#888372] via-[#a3a4a1] to-[#160d0b] text-[#160d0b]">
       {/* Fireworks Canvas */}
-      <canvas ref={canvasRef} className="fixed inset-0 w-full h-full pointer-events-none z-0" />
-      {/* 🧾 Main Signup Content */}
-      <div className="relative z-10 grid sm:grid-cols-2 gap-10 bg-white dark:bg-gray-900 rounded-3xl overflow-hidden w-full max-w-5xl">
-        {/* Form Section */}
-        <div className="flex items-center justify-center p-8">
-          <form className="w-full max-w-md space-y-6 bg-gray-700 dark:bg-gray-800 rounded-2xl p-8">
-            <div className="text-center mb-6">
-              <div className="text-yellow-400 text-4xl font-bold mb-2">XpressLootCart KE</div>
-              <p className="text-gray-300 dark:text-gray-200 text-lg">Join the Marketplace</p>
-            </div>
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm font-medium leading-none text-gray-300" htmlFor="name">
-                  Full Name
-                </label>
-                <input
-                  className="flex h-10 w-full rounded-md border bg-transparent px-3 py-2 text-sm text-white placeholder-gray-400 border-gray-500"
-                  type="text"
-                  id="name"
-                  placeholder="e.g. John Doe"
-                />
-              </div>
-              <div>
-                <label className="text-sm font-medium leading-none text-gray-300" htmlFor="contactPhone">
-                  Phone Number
-                </label>
-                <input
-                  className="flex h-10 w-full rounded-md border bg-transparent px-3 py-2 text-sm text-white placeholder-gray-400 border-gray-500"
-                  type="tel"
-                  id="contactPhone"
-                  placeholder="e.g. +254712345678"
-                />
-              </div>
-              <div>
-                <label className="text-sm font-medium leading-none text-gray-300" htmlFor="email">
-                  Email Address
-                </label>
-                <input
-                  className="flex h-10 w-full rounded-md border bg-transparent px-3 py-2 text-sm text-white placeholder-gray-400 border-gray-500"
-                  type="email"
-                  id="email"
-                  placeholder="e.g. you@example.com"
-                />
-              </div>
-              <div>
-                <label className="text-sm font-medium leading-none text-gray-300" htmlFor="password">
-                  Password
-                </label>
-                <input
-                  className="flex h-10 w-full rounded-md border bg-transparent px-3 py-2 text-sm text-white placeholder-gray-400 border-gray-500"
-                  type="password"
-                  id="password"
-                  placeholder="Create a strong password"
-                />
-              </div>
-              <button
-                type="submit"
-                className="btn btn-success btn-block mt-8 shadow-md hover:scale-105 transition-transform"
-              >
-                Create Account
-              </button>
-              <div className="flex flex-col items-center mt-4 gap-2">
-                <a href="/login" className="text-blue-400 hover:underline text-sm">Already have an account? Log in</a>
-              </div>
-              <p className="text-center text-gray-400 text-sm mt-4">
-  🔐 Your gateway to exclusive loot deals and irresistible offers starts here.
-</p>
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0 pointer-events-none" />
 
+      {/* Main SignUp Card */}
+      <div className="z-10 grid grid-cols-1 md:grid-cols-2 w-full max-w-5xl rounded-2xl overflow-hidden backdrop-blur-lg shadow-2xl border border-[#a3a4a1]">
+        {/* Left Side Form */}
+        <form className="p-8 bg-white/40 dark:bg-gray-900/30 backdrop-blur-lg space-y-6">
+          <div className="text-center mb-6">
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-pink-400 to-blue-400 bg-clip-text text-transparent drop-shadow-lg animate-pulse">
+              Welcome to CarGuru!
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300 text-base font-medium">
+              Ride like there's no tomorrow
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="name" className="block text-sm font-semibold text-gray-700">Full Name</label>
+              <input
+                id="name"
+                type="text"
+                placeholder="e.g. John Doe"
+                className="w-full h-12 px-4 rounded-lg border bg-white/70 text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
+              />
             </div>
-          </form>
-        </div>
-        {/* Right Panel */}
-        <div className="hidden sm:flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-blue-700 dark:from-gray-800 dark:via-blue-950 dark:to-blue-900 p-0">
-          <div className="relative w-80 h-48 rounded-2xl shadow-2xl overflow-hidden flex flex-col justify-center items-center p-6" style={{background: 'linear-gradient(135deg, #232526 0%, #414345 100%)'}}>
-            {/* Fancy Welcome Message */}
-            <div className="flex flex-col items-center justify-center w-full h-full">
-              <span className="text-3xl md:text-4xl font-extrabold tracking-wider mb-2 text-center bg-gradient-to-r from-yellow-400 via-pink-400 to-blue-400 bg-clip-text text-transparent drop-shadow-lg animate-pulse">
-                Welcome to LootCart!
-              </span>
-              <span className="text-lg md:text-xl font-semibold text-center text-blue-200 dark:text-blue-300 italic drop-shadow-sm animate-fade-in">
-                🚀⭐
-              </span>
+            <div>
+              <label htmlFor="phone" className="block text-sm font-semibold text-gray-700">Phone Number</label>
+              <input
+                id="phone"
+                type="tel"
+                placeholder="e.g. +254712345678"
+                className="w-full h-12 px-4 rounded-lg border bg-white/70 text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-semibold text-gray-700">Email Address</label>
+              <input
+                id="email"
+                type="email"
+                placeholder="e.g. you@example.com"
+                className="w-full h-12 px-4 rounded-lg border bg-white/70 text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
+              />
+            </div>
+            <div>
+              <label htmlFor="password" className="block text-sm font-semibold text-gray-700">Password</label>
+              <input
+                id="password"
+                type="password"
+                placeholder="Create a strong password"
+                className="w-full h-12 px-4 rounded-lg border bg-white/70 text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full py-3 text-lg font-bold text-white rounded-md bg-gradient-to-r from-[#bca16a] via-[#a3a4a1] to-[#756b41] hover:scale-105 hover:shadow-xl transition-transform shadow-lg"
+            >
+              Create Account
+            </button>
+            <div className="flex flex-col items-center mt-4 gap-2 text-sm">
+              <a href="/login" className="text-blue-400 hover:underline">Already have an account? Log in</a>
             </div>
           </div>
-        </div>
+        </form>
+
+        {/* Right Side Image */}
+        <div
+          className="hidden md:flex items-center justify-center bg-cover bg-center"
+          style={{ backgroundImage: `url(${sumertime})` }}
+        ></div>
       </div>
     </div>
   );
