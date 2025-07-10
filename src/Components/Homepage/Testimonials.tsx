@@ -12,7 +12,7 @@ interface Testimonial {
 export default function Testimonials() {
 
   return (
-    <div className="bg-gradient-to-br from-[#888372] via-[#a3a4a1] to-[#160d0b] py-12 px-4">
+    <div className=" py-12 px-4">
       <Container className="">
         <h2 className="text-4xl font-bold text-center text-white mb-10">
           What Our Users Say

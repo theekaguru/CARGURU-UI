@@ -1,4 +1,7 @@
-// data/carData.tsx
+import gwagon from "../assets/gwagon.jpg"
+import bmw from"../assets/bmw.jpg"
+import mustang from"../assets/mustang.jpg"
+import porche from "../assets/porche.jpg"
 
 export interface Car {
   id: number;
@@ -13,21 +16,28 @@ export const carData: Car[] = [
     id: 1,
     name: "Luxury Sedan",
     description: "Experience the ultimate in comfort and style.",
-    image: "https://images.unsplash.com/photo-1616789849643-0e42a6c82d63?auto=format&fit=crop&w=800&q=80",
+    image: porche ,
     rating: 4.8,
   },
   {
     id: 2,
     name: "Adventure SUV",
     description: "Tackle any terrain with confidence and space.",
-    image: "https://images.unsplash.com/photo-1589396575555-e7be6a9f3795?auto=format&fit=crop&w=800&q=80",
+    image: gwagon,
     rating: 4.6,
   },
   {
     id: 3,
-    name: "Coastal Convertible",
+    name: "Fuel Consumpution free",
     description: "Enjoy the freedom of the open road.",
-    image: "https://images.unsplash.com/photo-1613323593608-abc5fc8be4d2?auto=format&fit=crop&w=800&q=80",
+    image: bmw ,
+    rating: 4.9,
+  },
+    {
+    id: 4,
+    name: "Feel the thrill in tires ",
+    description: "Beat The Roads Like There's No Tomorrow.",
+    image: mustang ,
     rating: 4.9,
   },
 ];

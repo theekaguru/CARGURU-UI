@@ -3,7 +3,7 @@ import { AmazonLogo, MicrosoftLogo, NetflixLogo, SonyLogo, VerizonLogo } from ".
 
 export default function Companies() {
     return (
-        <div className="flex flex-col place-items-center min-w-lg bg-base-200 ">
+        <div className="flex flex-col place-items-center min-w-lg bg-base-200 mt-20 ">
            <h1 className="text-4xl font-bold tracking-wide text-center">
   <span className="text-blue-700">1k + </span> Trusted Partners choosing <span className="text-yellow-500">CarGuru Brand</span> every day 
 </h1>
