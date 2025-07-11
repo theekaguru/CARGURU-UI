@@ -4,7 +4,7 @@ export const UserNavbar = () => {
   return (
     <div className="navbar bg-base-100 shadow-sm">
   <div className="flex-1">
-    <a className="btn btn-ghost text-xl">daisyUI</a>
+    <a className="text-2xl font-bold bg-gradient-to-r from-yellow-400 via-pink-400 to-blue-400 bg-clip-text text-transparent drop-shadow-lg animate-pulse">CARGURU</a>
   </div>
   <div className="flex-none">
     <div className="dropdown dropdown-end">

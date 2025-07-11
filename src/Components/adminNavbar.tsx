@@ -17,7 +17,7 @@ export const AdminNavbar = () => {
     </div>
   </div>
   <div className="navbar-center">
-    <a className="btn btn-ghost text-xl">daisyUI</a>
+    <a className="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-pink-400 to-blue-400 bg-clip-text text-transparent drop-shadow-lg animate-pulse">CARGURU</a>
   </div>
   <div className="navbar-end">
     <button className="btn btn-ghost btn-circle">

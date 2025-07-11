@@ -9,7 +9,12 @@ import { FAQ } from './Pages/FAQ'
 import { About } from './Pages/About'
 import { Book } from './Pages/Book'
 import { UsersDashboard } from './Pages/UsersDashboard'
-import { Profile } from './Components/UserDashboardContent/Profile'
+import { Activities } from './Components/UserDashboardContent/Activities'
+import { DriveNow } from './Components/UserDashboardContent/DriveNow'
+import { BookingHistory } from './Components/UserDashboardContent/BookingHistory'
+import { Transactions } from './Components/UserDashboardContent/Transactions'
+import { SupportTickets } from './Components/UserDashboardContent/SupportTickets'
+import { Settings } from './Components/UserDashboardContent/Settings'
 
 
 
@@ -56,9 +61,35 @@ const router = createBrowserRouter([
     errorElement:<Error/>,
        children:[
         {
-          path:'profile',
-          element:<Profile/>
-        }
+          path:'activities',
+          element:<Activities/>,
+          errorElement:<Error/>
+        },
+                {
+          path:'driveNow',
+          element:<DriveNow/>,
+          errorElement:<Error/>
+        },
+                {
+          path:'bookingHistory',
+          element:<BookingHistory/>,
+          errorElement:<Error/>
+        },
+                {
+          path:'transactions',
+          element:<Transactions/>,
+          errorElement:<Error/>
+        },
+                        {
+          path:'supportTickets',
+          element:<SupportTickets/>,
+          errorElement:<Error/>
+        },
+                        {
+          path:'settings',
+          element:<Settings/>,
+          errorElement:<Error/>
+        },
        ]
   }
 ])
