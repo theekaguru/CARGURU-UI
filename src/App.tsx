@@ -9,7 +9,9 @@ import { FAQ } from './Pages/FAQ'
 import { About } from './Pages/About'
 import { Book } from './Pages/Book'
 import { UsersDashboard } from './Pages/UsersDashboard'
-import { Profile } from './Components/UserDashboard/profile'
+import { Profile } from './Components/UserDashboardContent/Profile'
+
+
 
 function App() {
 const router = createBrowserRouter([

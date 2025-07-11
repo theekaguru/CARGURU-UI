@@ -6,7 +6,7 @@ interface CardProps{
 
 export const Card:React.FC<CardProps> = ({children}) => {
   return (
-    <div>
+    <div className="p-3 bg-gradient-to-br from-[#7c786b] via-[#8e9288] to-[#5f5d5c] ">
       {children}
     </div>
   )
