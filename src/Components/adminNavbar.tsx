@@ -1,5 +1,5 @@
 
-export const adminNavbar = () => {
+export const AdminNavbar = () => {
   return (
     <div className="navbar bg-base-100 shadow-sm">
   <div className="navbar-start">
