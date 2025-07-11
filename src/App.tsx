@@ -8,6 +8,8 @@ import { Contact } from './Pages/Contact'
 import { FAQ } from './Pages/FAQ'
 import { About } from './Pages/About'
 import { Book } from './Pages/Book'
+import { UsersDashboard } from './Pages/UsersDashboard'
+import { Profile } from './Components/UserDashboard/profile'
 
 function App() {
 const router = createBrowserRouter([
@@ -45,6 +47,17 @@ const router = createBrowserRouter([
     path:'book',
     element:<Book/>,
     errorElement:<Error/>
+  },
+  {
+    path:'dashboard',
+    element:<UsersDashboard/>,
+    errorElement:<Error/>,
+       children:[
+        {
+          path:'profile',
+          element:<Profile/>
+        }
+       ]
   }
 ])
   return (

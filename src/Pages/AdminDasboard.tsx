@@ -1,7 +1,8 @@
 
-import { AdminNavbar } from '../Components/adminNavbar'
+
 import { Layout } from 'lucide-react'
 import { Footer } from '../Components/Footer'
+import { AdminNavbar } from '../Components/AdminNavbar'
 
 export const AdminDasboard = () => {
   return (
