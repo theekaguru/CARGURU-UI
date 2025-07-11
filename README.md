@@ -15,3 +15,9 @@ pnpm install lucide
 
 //install react Icons
 pnpm i react-icons
+
+//redux toolkit use selector dispatch
+pnpm add @reduxjs/toolkit react-redux
+
+//react hookform to validate our form
+pnpm add react-hook-form
