@@ -144,14 +144,14 @@ export const SignUp = () => {
   }, []);
 
   return (
-    <div className="relative w-full min-h-screen flex justify-center items-center bg-gradient-to-br from-[#888372] via-[#a3a4a1] to-[#160d0b] text-[#160d0b]">
+    <div className=" min-h-screen flex justify-center items-center ">
       {/* Fireworks Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0 pointer-events-none" />
 
       {/* Main SignUp Card */}
-      <div className="z-10 grid grid-cols-1 md:grid-cols-2 w-full max-w-5xl rounded-2xl overflow-hidden backdrop-blur-lg shadow-2xl border border-[#a3a4a1]">
+      <div className="z-10 grid grid-cols-1 md:grid-cols-2 w-full max-w-5xl rounded-2xl overflow-hidden backdrop-blur-none shadow-2xl border border-[#a3a4a1]">
         {/* Left Side Form */}
-        <form className="p-8 bg-white/40 dark:bg-gray-900/30 backdrop-blur-lg space-y-6">
+        <form className="p-8 space-y-6  ">
           <div className="text-center mb-6">
             <h2 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-pink-400 to-blue-400 bg-clip-text text-transparent drop-shadow-lg animate-pulse">
               Welcome to CarGuru!
@@ -163,11 +163,20 @@ export const SignUp = () => {
 
           <div className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-semibold text-gray-700">Full Name</label>
+              <label htmlFor="name" className="block text-sm font-semibold text-gray-700">first Name</label>
               <input
                 id="name"
                 type="text"
-                placeholder="e.g. John Doe"
+                placeholder="e.g. daniel"
+                className="w-full h-12 px-4 rounded-lg border bg-white/70 text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
+              />
+            </div>
+             <div>
+              <label htmlFor="name" className="block text-sm font-semibold text-gray-700">last Name</label>
+              <input
+                id="name"
+                type="text"
+                placeholder="e.g. example"
                 className="w-full h-12 px-4 rounded-lg border bg-white/70 text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
               />
             </div>
@@ -176,7 +185,7 @@ export const SignUp = () => {
               <input
                 id="phone"
                 type="tel"
-                placeholder="e.g. +254712345678"
+                placeholder="e.g. 0712345678"
                 className="w-full h-12 px-4 rounded-lg border bg-white/70 text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
               />
             </div>

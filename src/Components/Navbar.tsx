@@ -1,5 +1,5 @@
 import { AiOutlineLogin } from "react-icons/ai"
-import { FaCar, FaHome, FaInfo, FaPhone } from "react-icons/fa"
+import { FaHome, FaInfo, FaPhone } from "react-icons/fa"
 import { MdOutlineQuiz, MdOutlineSecurity } from "react-icons/md"
 import { Link } from "react-router-dom"
 
