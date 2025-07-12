@@ -24,7 +24,14 @@ export const SignUp = () => {
 
 
   const onsubmit =async(data:userRegisterForm) =>{
-    console.log(data)
+    
+    try {
+      const res = await registerUser(data).unwrap()
+      console.log(res)
+    } catch (err:any) {
+      console.log('failed register:',err);
+      
+    }
   }
 
   return (
