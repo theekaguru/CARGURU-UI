@@ -1,7 +1,30 @@
 import { useRef, useEffect } from 'react';
 import sumertime from '../../assets/Account/summertime vw.jpg';
+import {useForm} from "react-hook-form"
+
+
+type userRegisterForm ={
+      firstname: string,
+      lastname: string,
+      contactPhone: number,
+      email: string,
+      password: string, 
+      address: string
+      // "userType": "admin",
+      // "confirmationCode": "CONF1234",
+      // "emailVerified": true
+}
 
 export const SignUp = () => {
+  const {register , handleSubmit ,formState:{errors}} = useForm<userRegisterForm>()
+
+
+  const onsubmit =async(data:userRegisterForm) =>{
+    console.log(data)
+  }
+
+
+
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -144,6 +167,7 @@ export const SignUp = () => {
   }, []);
 
   return (
+
     <div className=" min-h-screen flex justify-center items-center ">
       {/* Fireworks Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0 pointer-events-none" />
@@ -151,7 +175,7 @@ export const SignUp = () => {
       {/* Main SignUp Card */}
       <div className="z-10 grid grid-cols-1 md:grid-cols-2 w-full max-w-5xl rounded-2xl overflow-hidden backdrop-blur-none shadow-2xl border border-[#a3a4a1]">
         {/* Left Side Form */}
-        <form className="p-8 space-y-6  ">
+        <form className="p-8 space-y-6  " onSubmit={handleSubmit(onsubmit)}>
           <div className="text-center mb-6">
             <h2 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-pink-400 to-blue-400 bg-clip-text text-transparent drop-shadow-lg animate-pulse">
               Welcome to CarGuru!
@@ -165,47 +189,71 @@ export const SignUp = () => {
             <div>
               <label htmlFor="name" className="block text-sm font-semibold text-gray-700">first Name</label>
               <input
+                className="w-full h-12 px-4 rounded-lg border bg-white/70 text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
                 id="name"
                 type="text"
                 placeholder="e.g. daniel"
-                className="w-full h-12 px-4 rounded-lg border bg-white/70 text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
+
+                {...register('firstname',{required:true})}  
               />
+               {errors.firstname && <span className='text-sm font-semibold text-gray-700 '>First Name is Required 💁‍♂️</span>}
+
             </div>
              <div>
               <label htmlFor="name" className="block text-sm font-semibold text-gray-700">last Name</label>
               <input
+                className="w-full h-12 px-4 rounded-lg border bg-white/70 text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
                 id="name"
                 type="text"
                 placeholder="e.g. example"
-                className="w-full h-12 px-4 rounded-lg border bg-white/70 text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
+              
+              {...register('lastname',{required:true})} 
               />
+              {errors.lastname && <span className='text-sm font-semibold text-gray-700 '>Last Name is Required 💁‍♂️</span>}
+           
             </div>
             <div>
               <label htmlFor="phone" className="block text-sm font-semibold text-gray-700">Phone Number</label>
               <input
+                className="w-full h-12 px-4 rounded-lg border bg-white/70 text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
                 id="phone"
                 type="tel"
                 placeholder="e.g. 0712345678"
-                className="w-full h-12 px-4 rounded-lg border bg-white/70 text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
+
+                {...register('contactPhone',{required:true})}
+               
               />
+              {errors.contactPhone && <span className='text-sm font-semibold text-gray-700 '>contact is Required 💁‍♂️</span>}
+
             </div>
             <div>
               <label htmlFor="email" className="block text-sm font-semibold text-gray-700">Email Address</label>
               <input
+               className="w-full h-12 px-4 rounded-lg border bg-white/70 text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
                 id="email"
                 type="email"
                 placeholder="e.g. you@example.com"
-                className="w-full h-12 px-4 rounded-lg border bg-white/70 text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
+                
+              
+              {...register('email',{required:true})}
               />
+              {errors.email && <span className='text-sm font-semibold text-gray-700 '>email is Required 💁‍♂️</span>}
+
             </div>
             <div>
               <label htmlFor="password" className="block text-sm font-semibold text-gray-700">Password</label>
               <input
+                className="w-full h-12 px-4 rounded-lg border bg-white/70 text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
                 id="password"
                 type="password"
                 placeholder="Create a strong password"
-                className="w-full h-12 px-4 rounded-lg border bg-white/70 text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
+               
+              
+                {...register('password',{required:true})}
+
               />
+              {errors.password && <span className='text-sm font-semibold text-gray-700 '>password is Required 💁‍♂️</span>}
+
             </div>
             <button
               type="submit"
