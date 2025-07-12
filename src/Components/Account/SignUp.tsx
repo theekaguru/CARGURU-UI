@@ -3,7 +3,7 @@ import {useForm} from "react-hook-form"
 import { Anim } from './Anim';
 import { userApi } from '../../../features/api/userApi';
 import { toast, Toaster } from 'sonner';
-
+import { useNavigate } from 'react-router-dom';
 
 type userRegisterForm ={
       firstname: string,
@@ -18,6 +18,8 @@ type userRegisterForm ={
 }
 
 export const SignUp = () => {
+   const navigate = useNavigate();
+
   const { register , handleSubmit ,formState:{errors}} = useForm<userRegisterForm>()
 
   const [registerUser, {isLoading}] = userApi.useRegisterUserMutation()
@@ -30,6 +32,7 @@ export const SignUp = () => {
       const res = await registerUser(data).unwrap()
       //console.log(res)
       toast.success(res.message , {id:loadingToastId})
+      navigate("/login")
     } catch (err:any) {
       console.log('failed register:',err);
       toast.error('failed to register:' + (err.data?.message))
