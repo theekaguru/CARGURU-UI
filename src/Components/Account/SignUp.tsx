@@ -158,12 +158,12 @@ export const SignUp = () => {
             
             <button
               type="submit"
-              className="w-full py-3 text-lg font-bold text-white rounded-md bg-gradient-to-r from-[#bca16a] via-[#a3a4a1] to-[#756b41] hover:scale-105 hover:shadow-xl transition-transform shadow-lg"
-            >
-              Create Account
+              className="w-full py-3 text-lg font-bold text-white rounded-md bg-gradient-to-r from-[#bca16a] via-[#a3a4a1] to-[#756b41] hover:scale-105 hover:shadow-xl transition-transform shadow-lg" >
+             {isLoading && <span className='loading loading-spinner text to-blue-500'></span>}
+              Register
             </button>
             <div className="flex flex-col items-center mt-4 gap-2 text-sm">
-              <a href="/login" className="text-blue-400 hover:underline">Already have an account? Log in</a>
+              <a href="/login" className="text-[#000000] hover:underline">Already have an account? Log in</a>
             </div>
           </div>
         </form>
