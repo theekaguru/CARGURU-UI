@@ -2,6 +2,7 @@ import sumertime from '../../assets/Account/summertime vw.jpg';
 import {useForm} from "react-hook-form"
 import { Anim } from './Anim';
 import { userApi } from '../../../features/api/userApi';
+import { toast, Toaster } from 'sonner';
 
 
 type userRegisterForm ={
@@ -24,17 +25,26 @@ export const SignUp = () => {
 
 
   const onsubmit =async(data:userRegisterForm) =>{
-    
+    const loadingToastId =toast.loading("creating account...")
     try {
       const res = await registerUser(data).unwrap()
-      console.log(res)
+      //console.log(res)
+      toast.success(res.message , {id:loadingToastId})
     } catch (err:any) {
       console.log('failed register:',err);
+      toast.error('failed to register:' + (err.data?.message))
+      toast.dismiss(loadingToastId)
       
     }
   }
 
   return (
+        <>
+        
+    <Toaster
+    richColors
+    position='top-right'
+    />
     <div className=" min-h-screen flex justify-center items-center ">
       <Anim />
       {/* Main SignUp Card */}
@@ -106,7 +116,7 @@ export const SignUp = () => {
               <input
                 className="w-full h-8 px-4 rounded-lg border bg-[#b3afad] text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
                 id="address"
-                type="password"
+                type="address"
                 placeholder="e.g . Nai , 254"
                 {...register('address',{required:true})}
               />
@@ -162,5 +172,6 @@ export const SignUp = () => {
         ></div>
       </div>
     </div>
+    </>
   );
 };

@@ -21,3 +21,6 @@ pnpm add @reduxjs/toolkit react-redux
 
 //react hookform to validate our form
 pnpm add react-hook-form
+
+//sonner 
+pnpm add sonner
