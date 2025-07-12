@@ -32,7 +32,7 @@ export const SignIn = () => {
                 id="email"
                 type="email"
                 placeholder="e.g. you@example.com"
-                className="w-full h-12 px-4 rounded-lg border bg-white/70 text-[#160d0b] placeholder-[#a3a4a1] border-[#bca16a] focus:border-[#888372] shadow-inner focus:outline-none"
+                className="w-full h-8 px-4 rounded-lg border bg-[#b3afad] text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
                 required
               />
             </div>
@@ -44,7 +44,7 @@ export const SignIn = () => {
                 id="password"
                 type="password"
                 placeholder="Enter your password"
-                className="w-full h-12 px-4 rounded-lg border bg-white/70 text-[#3c3e1f] placeholder-[#a3a4a1] border-[#bca16a] focus:border-[#888372] shadow-inner focus:outline-none"
+                className="w-full h-8 px-4 rounded-lg border bg-[#b3afad] text-black placeholder-gray-500 border-gray-400 focus:outline-none focus:border-yellow-400"
                 required
               />
             </div>
