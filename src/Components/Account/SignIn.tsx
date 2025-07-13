@@ -2,7 +2,7 @@ import { Anim } from './Anim';
 import vw1 from '../../assets/Account/vw1.jpg';
 import {useForm} from "react-hook-form"
 import { toast, Toaster } from 'sonner';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { userApi } from '../../../features/api/userApi';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../../../features/auth/authSlice';
@@ -16,9 +16,10 @@ type userLoginForm ={
 }
 
 export const SignIn = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
+
 
  const { register , handleSubmit ,formState:{errors}} = useForm<userLoginForm>()
  
@@ -31,7 +32,7 @@ export const SignIn = () => {
       console.log(res)
       toast.success(res.message , {id:loadingToastId})
       dispatch(setCredentials(res))
-     // Navigate("/login")
+      navigate("/dashboard/activities")
     } catch (err:any) {
       console.log('failed register:',err);
       toast.error('failed to register:' + (err.data?.message))
@@ -98,8 +99,8 @@ export const SignIn = () => {
             </div>
             <button
               type="submit"
-              className="w-full py-3 text-lg font-bold text-white rounded-md bg-gradient-to-r from-[#bca16a] via-[#a3a4a1] to-[#666037] hover:scale-105 hover:shadow-xl transition-transform shadow-lg"
-            >
+              className="w-full py-3 text-lg font-bold text-white rounded-md bg-gradient-to-r from-[#bca16a] via-[#a3a4a1] to-[#666037] hover:scale-105 hover:shadow-xl transition-transform shadow-lg">
+              {isLoading && <span className='loading loading-spinner text to-blue-500'></span>}
               Log In
             </button>
           </div>
