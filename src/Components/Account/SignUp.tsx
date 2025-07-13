@@ -48,10 +48,10 @@ export const SignUp = () => {
     richColors
     position='top-right'
     />
-    <div className=" min-h-screen flex justify-center items-center ">
+    <div className="min-h-screen flex justify-center items-center overflow-x-hidden">
       <Anim />
       {/* Main SignUp Card */}
-      <div className="z-10 grid grid-cols-1 md:grid-cols-2 w-full max-w-5xl rounded-2xl overflow-hidden backdrop-blur-none shadow-2xl border border-[#a3a4a1]">
+      <div className="z-10 w-full max-w-md md:max-w-5xl grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden backdrop-blur-none shadow-2xl border border-[#a3a4a1]">
         {/* Left Side Form */}
         <form className="p-8 space-y-6  " onSubmit={handleSubmit(onsubmit)}>
           <div className="text-center mb-6">
