@@ -4,6 +4,9 @@ import {useForm} from "react-hook-form"
 import { toast, Toaster } from 'sonner';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { userApi } from '../../../features/api/userApi';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '../../../features/auth/authSlice';
+
 
 
 type userLoginForm ={
@@ -15,6 +18,8 @@ type userLoginForm ={
 export const SignIn = () => {
   const navigate = useNavigate()
 
+  const dispatch = useDispatch();
+
  const { register , handleSubmit ,formState:{errors}} = useForm<userLoginForm>()
  
  const [loginUser , isLoading] =userApi.useLoginUserMutation()
@@ -25,6 +30,7 @@ export const SignIn = () => {
       const res = await loginUser(data).unwrap()
       console.log(res)
       toast.success(res.message , {id:loadingToastId})
+      dispatch(setCredentials(res))
      // Navigate("/login")
     } catch (err:any) {
       console.log('failed register:',err);
