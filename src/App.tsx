@@ -15,6 +15,7 @@ import { BookingHistory } from './Components/UserDashboardContent/BookingHistory
 import { Transactions } from './Components/UserDashboardContent/Transactions'
 import { SupportTickets } from './Components/UserDashboardContent/SupportTickets'
 import { Settings } from './Components/UserDashboardContent/Settings'
+import ProtectedRoute from './Components/ProtectedRoute'
 
 
 
@@ -57,7 +58,11 @@ const router = createBrowserRouter([
   },
   {
     path:'dashboard',
-    element:<UsersDashboard/>,
+    element:(
+      <ProtectedRoute>
+        <UsersDashboard/>
+      </ProtectedRoute>
+          ),
     errorElement:<Error/>,
        children:[
         {
