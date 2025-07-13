@@ -24,3 +24,6 @@ pnpm add react-hook-form
 
 //sonner 
 pnpm add sonner
+
+//install redux persist
+pnpm i redux-persist
