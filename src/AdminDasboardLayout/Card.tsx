@@ -1,13 +1,14 @@
-import type { ReactNode } from "react"
+import type { ReactNode } from "react";
 
-interface CardProps{
-    children:ReactNode
+interface CardProps {
+  children: ReactNode;
+  className?: string;
 }
 
-export const Card:React.FC<CardProps> = ({children}) => {
+export const Card: React.FC<CardProps> = ({ children, className = "" }) => {
   return (
-    <div>
-        {children}
+    <div className={`p-6 rounded-md shadow-md ${className}`}>
+      {children}
     </div>
-  )
-}
+  );
+};

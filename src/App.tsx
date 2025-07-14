@@ -16,6 +16,8 @@ import { Transactions } from './Components/UserDashboardContent/Transactions'
 import { SupportTickets } from './Components/UserDashboardContent/SupportTickets'
 import { Settings } from './Components/UserDashboardContent/Settings'
 import ProtectedRoute from './Components/ProtectedRoute'
+import { AdminDashboard } from './Pages/AdminDashboard'
+import { Analytics } from './Components/AdminDashboardContent/analytics'
 
 
 
@@ -96,6 +98,18 @@ const router = createBrowserRouter([
           errorElement:<Error/>
         },
        ]
+  },
+  {
+    path:'admindashboard',
+    element:<AdminDashboard/>,
+    errorElement:<Error/>,
+    children:[
+      {
+        path:"analytics",
+        element:<Analytics/>,
+        errorElement:<Error/>
+      }
+    ]
   }
 ])
   return (
