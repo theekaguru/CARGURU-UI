@@ -1,11 +1,11 @@
 import { AiOutlineLogin } from "react-icons/ai"
-import { FaHome, FaInfo, FaPhone, FaSignOutAlt } from "react-icons/fa"
-import { MdOutlineQuiz, MdOutlineSecurity } from "react-icons/md"
+import { FaHome, FaInfo, FaPhone } from "react-icons/fa"
+import { MdDashboard, MdOutlineQuiz, MdOutlineSecurity } from "react-icons/md"
 import { Link , useNavigate} from "react-router-dom"
 import type { RootState } from "../../app/store"
 import { useDispatch, useSelector } from "react-redux"
-import { GrDashboard } from "react-icons/gr"
 import { clearCredentials } from "../../features/auth/authSlice"
+import { RiLogoutCircleRLine } from "react-icons/ri"
 
 
 export const Navbar = () => {
@@ -63,50 +63,48 @@ export const Navbar = () => {
   </div>
 
   ):(
-<div className="navbar-end hidden lg:flex gap-2">
-                   <div className="dropdown dropdown-end bg-amber-200">
-                    <button className="btn btn-ghost flex items-center">
-                        <div className="flex items-center">
-                            <span className="text-dark">Hey, {user.firstname}</span>
-                            <svg
-                                className="w-6 h-6 text-orange-400"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M19 9l-7 7-7-7"
-                                />
-                            </svg>
-                           
-                        </div>
-                    </button>
-                    <ul className="dropdown-content bg-neutral-200 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                        <li>
-                            <Link
-                                to="/dashboard/activities"
-                                className="flex items-center text-slate-950 hover:text-gray-300 mb-2"
-                            >
-                                <GrDashboard className="mr-3 text-xl text-orange-600" />
-                                Dashboard
-                            </Link>
-                        </li>
-                        <li>
-                            <button
-                                onClick={handleLogout}
-                                className="flex items-center text-slate-950 hover:text-gray-300"
-                            >
-                                <FaSignOutAlt className="text-xl text-orange-600 mr-3" />
-                                Logout
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-                </div>
+<div className="navbar-end hidden lg:flex gap-4">
+  <div className="dropdown dropdown-end">
+    {/* Trigger */}
+    <button tabIndex={0} className="px-3 py-1.5 flex items-center gap-2 group">
+      <span className="text-sm font-semibold bg-gradient-to-r from-[#7c0d0dca] via-[#1b0636] to-[#381565] bg-clip-text text-transparent">
+        Hey, {user.firstname}
+      </span>
+      <svg
+        className="w-4 h-4 text-[#bca16a] group-hover:rotate-180 transition duration-200"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={2}
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+
+    {/* Dropdown menu */}
+    <ul tabIndex={0} className="dropdown-content mt-2 z-50 space-y-1">
+      <li>
+        <Link
+          to="/dashboard/activities"
+          className="flex items-center gap-2 px-2 py-1 text-sm text-[#172c70] hover:underline"
+        >
+          <MdDashboard className="bg-gradient-to-r from-[#7c0d0dca] via-[#1b0636] to-[#381565] bg-clip-text text-transparenttext-base" />
+          Dashboard
+        </Link>
+      </li>
+      <li>
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 px-2 py-1 text-sm bg-gradient-to-r from-[#7c0d0dca] via-[#1b0636] to-[#381565] bg-clip-text text-transparent hover:underline w-full text-left"
+        >
+          <RiLogoutCircleRLine className="text-[#172c70] text-base" />
+          Logout
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
    )}
 
 

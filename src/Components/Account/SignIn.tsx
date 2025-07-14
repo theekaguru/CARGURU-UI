@@ -23,7 +23,8 @@ export const SignIn = () => {
 
  const { register , handleSubmit ,formState:{errors}} = useForm<userLoginForm>()
  
- const [loginUser , isLoading] =userApi.useLoginUserMutation()
+const [loginUser , { isLoading }] = userApi.useLoginUserMutation();
+
 
   const onsubmit =async(data:userLoginForm) => {
     const loadingToastId =toast.loading("Logging account...")
@@ -100,7 +101,7 @@ export const SignIn = () => {
             <button
               type="submit"
               className="w-full py-3 text-lg font-bold text-white rounded-md bg-gradient-to-r from-[#bca16a] via-[#a3a4a1] to-[#666037] hover:scale-105 hover:shadow-xl transition-transform shadow-lg">
-              {isLoading && <span className='loading loading-spinner text to-blue-500'></span>}
+               {isLoading && <span className='loading loading-spinner text to-blue-500'></span>}
               Log In
             </button>
           </div>
