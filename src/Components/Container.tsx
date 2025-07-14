@@ -6,7 +6,7 @@ interface ContainerProps{
 }
 export const Container = (props:Readonly<ContainerProps>) => {
   return (
-    <div className={`mx-auto xl:px-0 ${props.className? props.className :""}`}>
+    <div className={`flex flex-col min-h-fit mx-auto xl:px-0 ${props.className? props.className :""}`}>
         
        {props.children}
 

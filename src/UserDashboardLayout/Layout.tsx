@@ -9,11 +9,13 @@ export const Layout = () => {
           <div className="min-w-[15%]">
                 <SideNav/>
           </div>
-          <div className="flex flex-col min-w-[90%]">
+          <div className="flex flex-col min-w-[85%]">
                 <div className="h-fit">
-                      <Card>
-                            <Outlet/>
-                      </Card>
+                        <Card className="rounded-lg border-4 border-[#574f1f]">
+                        <p className="text-white">🚀</p>
+                        <Outlet />
+                        </Card>
+
                 </div>
 
           </div>
