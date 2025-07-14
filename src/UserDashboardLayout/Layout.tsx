@@ -12,7 +12,7 @@ export const Layout = () => {
           <div className="flex flex-col min-w-[85%]">
                 <div className="h-fit">
                         <Card className="rounded-lg border-4 border-[#574f1f]">
-                        <p className="text-white">🚀</p>
+                        <p className="text-white">User🚀</p>
                         <Outlet />
                         </Card>
 
