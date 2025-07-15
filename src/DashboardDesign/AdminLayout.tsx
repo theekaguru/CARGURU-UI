@@ -1,6 +1,8 @@
 import { Outlet } from "react-router"
-import { Card } from "./UsersCard"
-import { SideNav } from "./UsersSideNav"
+import { Card } from "./AdminCard"
+import { SideNav } from "./AdminSideNav"
+
+
 
 export const Layout = () => {
   return (
@@ -13,7 +15,7 @@ export const Layout = () => {
       {/* Main content area */}
       <div className="w-full md:w-[80%] p-4">
         <Card className="rounded-lg border-4 border-[#574f1f]">
-          <p className="text-white">User🚀</p>
+          <p className="text-white">Admin🚀</p>
           <Outlet />
         </Card>
       </div>
