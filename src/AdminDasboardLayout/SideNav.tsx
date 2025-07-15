@@ -29,7 +29,7 @@ export const SideNav = () => {
         <Link to='adminSupport'><LuTickets />Support</Link>
       </li>
       <li>
-        <Link to='settings'><FaUsersCog />Settings</Link>
+        <Link to='profile'><FaUsersCog />Profile</Link>
       </li>
     </ul>
   )

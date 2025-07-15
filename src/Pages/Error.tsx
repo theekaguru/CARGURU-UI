@@ -22,7 +22,7 @@ const customStyles = `
 
 export const Error = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-900 to-black text-white flex flex-col items-center justify-center relative overflow-hidden px-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#888372] via-[#a3a4a1] to-[#160d0b] flex flex-col items-center justify-center relative overflow-hidden px-4">
       <style>{customStyles}</style>
 
       <div className="text-center z-10">
@@ -35,19 +35,19 @@ export const Error = () => {
           />
           <span>4</span>
         </div>
-        <p className="text-yellow-400 text-4xl font-semibold mt-4">Oops!</p>
+        <p className=" mt-4 text-3xl font-bold bg-clip-text  animate-pulse">Oops!</p>
         <p className="text-gray-300 text-lg md:text-xl mb-6">We couldn’t find the page you’re looking for.</p>
 
         <div className="flex flex-row items-center justify-center gap-4 mt-4">
           <Link
             to="/"
-            className="bg-white text-indigo-900 px-6 py-2 text-lg font-semibold rounded-full shadow-md hover:bg-yellow-300 hover:text-black transition-all duration-300 border-2 border-indigo-900"
+            className="px-6 py-2 text-lg font-semibold rounded-full text-white  bg-gradient-to-r from-[#bca16a] via-[#a3a4a1] to-[#666037] hover:scale-105 hover:shadow-xl transition-transform shadow-lg"
           >
             Run 🏃Back Home 
           </Link>
           <Link
             to="/contact"
-            className="bg-yellow-300 text-black px-6 py-2 text-lg font-semibold rounded-full shadow-md hover:bg-white hover:text-indigo-900 transition-all duration-300 border-2 border-yellow-300"
+            className="px-6 py-2 text-lg font-semibold rounded-full text-white  bg-gradient-to-r from-[#bca16a] via-[#a3a4a1] to-[#666037] hover:scale-105 hover:shadow-xl transition-transform shadow-lg"
           >
             Contact Us 📬
           </Link>
