@@ -27,3 +27,6 @@ pnpm add sonner
 
 //install redux persist
 pnpm i redux-persist
+
+//install sweetalert
+pnpm install sweetalert2
