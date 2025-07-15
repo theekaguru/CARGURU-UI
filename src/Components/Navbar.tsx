@@ -68,7 +68,7 @@ export const Navbar = () => {
     {/* Trigger */}
     <button tabIndex={0} className="px-3 py-1.5 flex items-center gap-2 group">
       <span className="text-sm font-semibold bg-gradient-to-r from-[#7c0d0dca] via-[#1b0636] to-[#381565] bg-clip-text text-transparent">
-        Hey, {user.firstname}
+        Hey,  {user?.firstname || "User"}
       </span>
       <svg
         className="w-4 h-4 text-[#bca16a] group-hover:rotate-180 transition duration-200"

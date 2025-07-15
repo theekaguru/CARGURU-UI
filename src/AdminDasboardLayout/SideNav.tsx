@@ -26,7 +26,7 @@ export const SideNav = () => {
         <Link to='carSpecifications'><MdSettingsInputComposite />CarSpecifications</Link>
       </li>
       <li>
-        <Link to='supportTickets'><LuTickets />SupportTickets</Link>
+        <Link to='adminSupport'><LuTickets />Support</Link>
       </li>
       <li>
         <Link to='settings'><FaUsersCog />Settings</Link>

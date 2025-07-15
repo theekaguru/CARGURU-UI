@@ -31,12 +31,17 @@ const [loginUser , { isLoading }] = userApi.useLoginUserMutation();
     try {
       const res = await loginUser(data).unwrap()
       console.log(res)
-      toast.success(res.message , {id:loadingToastId})
+      toast.success(res?.message , {id:loadingToastId})
       dispatch(setCredentials(res))
-      navigate("/dashboard/activities")
+      if (res.userType === "admin") {
+                navigate("/admindashboard/analytics")
+            } else {
+                navigate("/dashboard/activities")
+            }
+      
     } catch (err:any) {
       console.log('failed register:',err);
-      toast.error('failed to register:' + (err.data?.message))
+      toast.error('Failed to Login: ' + (err.data?.message || err.message || err.error || err));
       toast.dismiss(loadingToastId)
       
     }

@@ -17,7 +17,15 @@ import { SupportTickets } from './Components/UserDashboardContent/SupportTickets
 import { Settings } from './Components/UserDashboardContent/Settings'
 import ProtectedRoute from './Components/ProtectedRoute'
 import { AdminDashboard } from './Pages/AdminDashboard'
-import { Analytics } from './Components/AdminDashboardContent/analytics'
+import { Bookings } from './Components/AdminDashboardContent/Bookings'
+import { Cars } from './Components/AdminDashboardContent/Cars'
+import { CarSpecifications } from './Components/AdminDashboardContent/CarSpecifications'
+import { AdminSupport } from './Components/AdminDashboardContent/AdminSupport'
+import { Profile } from './Components/AdminDashboardContent/Profile'
+import { Dashboard } from './Components/AdminDashboardContent/Dashboard'
+import { Location } from './Components/AdminDashboardContent/Location'
+import { Analytics } from './Components/AdminDashboardContent/Analytics'
+import { Users } from './Components/AdminDashboardContent/Users'
 
 
 
@@ -108,6 +116,44 @@ const router = createBrowserRouter([
         path:"analytics",
         element:<Analytics/>,
         errorElement:<Error/>
+      },
+      {
+        path:"users",
+        element:<Users/>,
+        errorElement:<Error/>
+      },
+      {
+        path:"bookings",
+        element:<Bookings/>,
+        errorElement:<Error/>
+      },
+      {
+        path:"cars",
+        element:<Cars/>,
+        errorElement:<Error/>
+      },
+      {
+         path:"carSpecifications",
+         element:<CarSpecifications/>,
+         errorElement:<Error/>
+      },
+      {
+        path:"adminSupport",
+        element:<AdminSupport/>,
+        errorElement:<Error/>
+      },
+      {
+        path:"profile",
+        element:<Profile/>,
+        errorElement:<Error/>
+      },
+      {
+        path:"dashboard",
+        element:<Dashboard/>
+      },
+      {
+        path:"location",
+        element:<Location/>
       }
     ]
   }
