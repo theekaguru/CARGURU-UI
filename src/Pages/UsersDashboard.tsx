@@ -2,7 +2,7 @@ import { Container } from "../Components/Container"
 import { Footer } from "../Components/Footer"
 import { Navbar } from "../Components/Navbar"
 
-import { Layout } from "../UserDashboardLayout/Layout"
+import { Layout } from "../DashboardDesign/UsersLayout"
 
 
 export const UsersDashboard = () => {

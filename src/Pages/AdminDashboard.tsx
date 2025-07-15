@@ -1,4 +1,4 @@
-import { Layout } from "../AdminDasboardLayout/Layout"
+import { Layout } from "../DashboardDesign/AdminDasboardLayout/AdminLayout"
 import { Container } from "../Components/Container"
 import { Footer } from "../Components/Footer"
 import { Navbar } from "../Components/Navbar"
