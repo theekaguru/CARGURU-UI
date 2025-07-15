@@ -4,7 +4,7 @@ import { FaEyeSlash } from "react-icons/fa";
 export const Transactions = () => {
   return (
     <>
-      <div className="text-2xl font-bold text-center mb-4 text-orange-400">My Payments</div>
+      <div className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c]  animate-pulse">My Payments</div>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}

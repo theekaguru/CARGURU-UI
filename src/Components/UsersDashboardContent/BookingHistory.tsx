@@ -1,7 +1,7 @@
 export const BookingHistory = () => {
   return (
     <>
-      <div className="text-2xl font-bold text-center mb-4 text-orange-400">My Bookings</div>
+      <div className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c]  animate-pulse">My Bookings</div>
 
       {/* Upcoming Section */}
       <div className="text-lg font-semibold mb-4">Upcoming</div>

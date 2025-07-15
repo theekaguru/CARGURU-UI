@@ -6,7 +6,7 @@ export const DriveNow = () => {
   return (
     <section className="pb-16">
       {/* Heading */}
-      <h2 className="text-3xl font-bold mb-8 text-center text-white">
+      <h2 className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c]  animate-pulse">
         Select Car
       </h2>
 
