@@ -1,3 +1,5 @@
+
+
 import { useState } from 'react';
 import { FaCamera, FaEdit, FaTimes } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
@@ -44,9 +46,9 @@ export const Profile = () => {
             <img
               src={user?.profileUrl || profilePicture}
               alt="Profile"
-              className="w-24 h-24 rounded-full border-4 border-orange-500"
+              className="w-24 h-24 rounded-full border-4 border-[#444009] "
             />
-            <label className="absolute bottom-0 bg-orange-500 p-2 rounded-full cursor-pointer">
+            <label className="absolute bottom-0 bg-[#342e0f] p-2 rounded-full cursor-pointer">
               <FaCamera />
               <input type="file" className="hidden" />
             </label>
@@ -64,7 +66,7 @@ export const Profile = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-gradient-to-r from-orange-600 to-amber-600 rounded-lg p-4">
+          <div className="bg-gradient-to-br from-[#888372] via-[#a3a4a1] to-[#504118]  shadow-xl  hover:scale-105 transition-transform duration-300 rounded-lg p-4">
             <h3 className="text-2xl font-bold mb-3">Personal Information</h3>
             <p className="mb-2">
               <span className="font-bold">First Name:</span> {user?.firstName}
@@ -73,7 +75,7 @@ export const Profile = () => {
               <span className="font-bold">Last Name:</span> {user?.lastName}
             </p>
           </div>
-          <div className="bg-gradient-to-r from-orange-600 to-amber-600 rounded-lg p-4">
+          <div className="bg-gradient-to-br from-[#888372] via-[#a3a4a1] to-[#504118]  shadow-xl  hover:scale-105 transition-transform duration-300 rounded-lg p-4">
             <h3 className="text-2xl font-bold mb-3">Security Settings</h3>
             <p className="mb-2">
               <span className="font-bold">Password:</span> ********
@@ -139,7 +141,7 @@ export const Profile = () => {
               <div className="mb-4">
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-orange-500"
+                  className="block text-sm font-medium "
                 >
                   Email
                 </label>
