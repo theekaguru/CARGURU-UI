@@ -113,7 +113,7 @@ const router = createBrowserRouter([
     errorElement:<Error/>,
     children:[
       {
-        path:"analytics",
+        path:"Analytics",
         element:<Analytics/>,
         errorElement:<Error/>
       },

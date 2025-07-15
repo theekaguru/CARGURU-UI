@@ -3,7 +3,7 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 export const Cars = () => {
   return (
     <>
-      <div className="text-2xl font-bold text-center mb-4 text-orange-400">All Cars</div>
+      <div className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c]  animate-pulse">All Cars</div>
       <div className="overflow-x-auto">
         <table className="table">
           <thead>
@@ -22,7 +22,7 @@ export const Cars = () => {
             {/* Row 1 */}
             <tr>
               <th>1</th>
-              <td className="font-bold text-orange-500">Volvo V40</td>
+              <td className="font-bold text-[#3d3935]">Volvo V40</td>
               <td>Toyota</td>
               <td>
                 <div className="avatar">
@@ -52,7 +52,7 @@ export const Cars = () => {
             {/* Row 2 */}
             <tr>
               <th>2</th>
-              <td className="font-bold text-orange-500">BMW X5</td>
+              <td className="font-bold text-[#3d3935]">BMW X5</td>
               <td>BMW</td>
               <td>
                 <div className="avatar">
@@ -82,7 +82,7 @@ export const Cars = () => {
             {/* Row 3 */}
             <tr>
               <th>3</th>
-              <td className="font-bold text-orange-500">Mercedes C200</td>
+              <td className="font-bold text-[#3d3935]">Mercedes C200</td>
               <td>Mercedes</td>
               <td>
                 <div className="avatar">

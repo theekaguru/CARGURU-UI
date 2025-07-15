@@ -4,7 +4,7 @@ import { MdOutlineCheckCircle, MdOutlineCancel } from "react-icons/md";
 export const Bookings = () => {
   return (
     <>
-      <div className="text-2xl font-bold text-center mb-4 text-orange-400">All Bookings Page</div>
+      <div className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c]  animate-pulse">All Bookings Page</div>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
@@ -26,7 +26,7 @@ export const Bookings = () => {
             {/* Row 1 */}
             <tr>
               <th>1</th>
-              <td className="font-bold text-orange-500">Daniel Kaguru</td>
+              <td className="font-bold text-[#3d3935]">Daniel Kaguru</td>
               <td>
                 <div className="avatar">
                   <div className="mask mask-squircle h-12 w-12">
@@ -61,7 +61,7 @@ export const Bookings = () => {
             {/* Row 2 */}
             <tr>
               <th>2</th>
-              <td className="font-bold text-orange-500">Jane Mwangi</td>
+              <td className="font-bold text-[#3d3935]">Jane Mwangi</td>
               <td>
                 <div className="avatar">
                   <div className="mask mask-squircle h-12 w-12">
@@ -96,7 +96,7 @@ export const Bookings = () => {
             {/* Row 3 */}
             <tr>
               <th>3</th>
-              <td className="font-bold text-orange-500">Kevin Otieno</td>
+              <td className="font-bold text-[#3d3935]">Kevin Otieno</td>
               <td>
                 <div className="avatar">
                   <div className="mask mask-squircle h-12 w-12">

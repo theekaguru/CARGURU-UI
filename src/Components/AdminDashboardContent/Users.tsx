@@ -3,7 +3,7 @@ import { FiEdit, FiEye, FiTrash2 } from "react-icons/fi"
 export const Users = () => {
   return (
     <>
-      <div className="text-2xl font-bold text-center mb-4 text-orange-400">All Users Page</div>
+      <div className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c]  animate-pulse">All Users Page</div>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
@@ -32,7 +32,7 @@ export const Users = () => {
                     </div>
                   </div>
                   <div>
-                    <div className="font-bold text-orange-500">John Doe</div>
+                    <div className="font-bold ">John Doe</div>
                     <div className="text-sm opacity-50">john@mail.com</div>
                   </div>
                 </div>

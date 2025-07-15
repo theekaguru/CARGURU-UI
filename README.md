@@ -30,3 +30,9 @@ pnpm i redux-persist
 
 //install sweetalert
 pnpm install sweetalert2
+
+//install recharts
+pnpm install recharts
+
+//install framer motions
+pnpm install frame-motion
