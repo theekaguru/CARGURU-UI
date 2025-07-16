@@ -36,3 +36,7 @@ pnpm install recharts
 
 //install framer motions
 pnpm install frame-motion
+
+//install react spinners
+
+pnpm install react-spinners
