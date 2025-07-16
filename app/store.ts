@@ -3,6 +3,7 @@ import { userApi } from "../features/api/userApi";
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import authReducer from "../features/auth/authSlice"
+import {vehicleApi} from "../features/api/vehicleApi"
 
 // create persist config for the authslice
 
@@ -20,6 +21,7 @@ const persistAuthReducer = persistReducer(authPersistConfig , authReducer)
 export const store = configureStore({
     reducer:{
         [userApi.reducerPath]:userApi.reducer,
+        [vehicleApi.reducerPath]:vehicleApi.reducer,
         //use the persisted reducer
 
         auth:persistAuthReducer
@@ -27,7 +29,7 @@ export const store = configureStore({
     middleware:(getDefaultMidddleware) =>
         getDefaultMidddleware({
             serializableCheck:false,
-        }).concat(userApi.middleware)
+        }).concat(userApi.middleware , vehicleApi.middleware )
 })
 
 //Export the persisted store 
