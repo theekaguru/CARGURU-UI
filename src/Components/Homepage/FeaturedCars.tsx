@@ -3,6 +3,7 @@ import { carData, type Car } from "../../Utils/carData";
 import CarCard from "./CarCard";
 import { PuffLoader } from "react-spinners";
 
+
 export default function FeaturedCars() {
   const { data: fetchedCars = [], isLoading, error } = vehicleApi.useGetAllVehiclesQuery({});
   console.log("🚀 ~ carsdata:", fetchedCars);
@@ -26,9 +27,10 @@ export default function FeaturedCars() {
         <div>No Vehicles</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
-          {allCars.map((car) => (
-            <CarCard key={car.vehicleId} car={car} />
-          ))}
+          {allCars.map((car, index) => (
+  <CarCard key={`car-${car.vehicleId}-${index}`} car={car} />
+))}
+
         </div>
       )}
     </section>

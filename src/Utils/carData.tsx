@@ -6,7 +6,7 @@ export interface Car {
   vehicleId: number;
   carRating?: number;
   carImage: string;
-  rentalRate: number | string;
+  rentalRate: number;
   availability: string; 
   specification: {
     manufacturer: string;
@@ -25,7 +25,7 @@ export interface Car {
 
 export const carData: Car[] = [
   {
-    vehicleId: 1,
+    vehicleId: 5,
     carRating: 4.9,
     carImage: gwagon,
     rentalRate: 5500,
@@ -43,7 +43,7 @@ export const carData: Car[] = [
     },
   },
   {
-    vehicleId: 2,
+    vehicleId: 6,
     carRating: 4.8,
     carImage: bmw,
     rentalRate: 4500,
@@ -61,7 +61,7 @@ export const carData: Car[] = [
     },
   },
   {
-    vehicleId: 3,
+    vehicleId: 7,
     carRating: 4.7,
     carImage: mustang,
     rentalRate: 3300,

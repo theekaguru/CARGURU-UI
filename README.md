@@ -40,3 +40,6 @@ pnpm install frame-motion
 //install react spinners
 
 pnpm install react-spinners
+
+//install axios 
+pnpm install axios

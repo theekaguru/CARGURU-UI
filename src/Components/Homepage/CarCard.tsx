@@ -4,6 +4,9 @@ import { GiGearStickPattern, GiGasPump } from "react-icons/gi";
 import { PiEngineLight } from "react-icons/pi";
 import { BsPeopleFill } from "react-icons/bs";
 import type { Car } from "../../Utils/carData";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../app/store";
+import { Link } from "react-router";
 
 interface Props {
   car: Car;
@@ -12,8 +15,23 @@ interface Props {
 export default function CarCard({ car }: Props) {
   if (!car || !car.specification) return null;
 
+  const {isAuthenticated , user} = useSelector ((state:RootState)=>state.auth)
+
+  const userId =user?.userId
+
+  console.log("🚀🚀🚀~userId", userId);
+
+  console.log("🚀 Authenticated:", isAuthenticated);
+console.log("🚀 User object:", user);
+
+
+
   const spec = car.specification;
   const locationName = car.location?.name || "Unknown Location";
+
+  const handleBooking = async (vehicleId: number, model: string, rentalRate: number) => {
+  console.log(vehicleId, model, rentalRate);
+  }
 
   return (
     <div className="bg-gradient-to-br from-[#817962] via-[#a2a099] to-[#c5c0ab] shadow-md w-full max-w-96 transition-transform duration-300 hover:scale-105 hover:shadow-xl p-8 ">
@@ -82,10 +100,26 @@ export default function CarCard({ car }: Props) {
         </div>
       </div>
 
-      {/* Rent Now Button */}
-      <button className="bg-[#888776] w-full mt-4 py-2 rounded-md text-[#161135] transition-transform duration-300 hover:scale-105 hover:shadow-xl font-bold ">
+      {/* Book Now Button */}
+      {
+          isAuthenticated ?(
+            <button className="bg-[#888776] w-full mt-4 py-2 rounded-md text-[#161135] transition-transform duration-300 hover:scale-105 hover:shadow-xl font-bold "
+            onClick={() => handleBooking(car.vehicleId, spec.model, car.rentalRate)}
+
+            >
         Book Now
       </button>
+          ):(
+            <Link
+      to="/login"
+      className="bg-[#888776] w-full mt-4 py-2 rounded-md text-[#161135] transition-transform duration-300 hover:scale-105 hover:shadow-xl font-bold text-center block"
+        >
+      Login to book
+    </Link>
+          )
+      }
+      
+      
     </div>
   );
 }

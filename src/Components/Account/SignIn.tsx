@@ -30,9 +30,19 @@ const [loginUser , { isLoading }] = userApi.useLoginUserMutation();
     const loadingToastId =toast.loading("Logging account...")
     try {
       const res = await loginUser(data).unwrap()
-      console.log(res)
+      console.log("🔥 LOGIN RESPONSE:", res);
       toast.success(res?.message , {id:loadingToastId})
-      dispatch(setCredentials(res))
+dispatch(setCredentials({
+  user: {
+    userId: res.userId,
+    firstName: res.firstname,
+    lastName: res.lastname,
+    email: res.email
+  },
+  token: res.generatedtoken,
+  userType: res.userType ?? "client"  // fallback if not provided
+}));
+
       if (res.userType === "admin") {
                 navigate("/admindashboard/analytics")
             } else {
