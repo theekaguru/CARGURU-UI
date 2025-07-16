@@ -4,57 +4,78 @@ import mustang from "../assets/mustang.jpg";
 
 export interface Car {
   vehicleId: number;
-  manufacturer: string;
-  model: string;
-  carRating: number;
+  carRating?: number;
   carImage: string;
-  location: string;
-  rentalRate: number;
-  transmission: string;
-  engineCapacity: string;
-  seatingCapacity: number;
-  fuelType: string;
+  rentalRate: number | string;
+  availability: string; 
+  specification: {
+    manufacturer: string;
+    model: string;
+    transmission: string;
+    engineCapacity: string;
+    seatingCapacity: number;
+    fuelType: string;
+  };
+  location: {
+    name: string;
+    address?: string;
+    contactPhone?: string;
+  };
 }
-
 
 export const carData: Car[] = [
   {
     vehicleId: 1,
-    manufacturer: "Hyundai",
-    model: "Tucson PHEV",
     carRating: 4.9,
     carImage: gwagon,
-    location: "Ji Kendalsari V, Malang, East Java",
-    rentalRate: 56.88,
-    transmission: "Automatic",
-    engineCapacity: "1600cc",
-    seatingCapacity: 5,
-    fuelType: "Petrol",
+    rentalRate: 5500,
+    availability: "available", // ✅ ADDED
+    specification: {
+      manufacturer: "Hyundai",
+      model: "Tucson PHEV",
+      transmission: "Automatic",
+      engineCapacity: "1600cc",
+      seatingCapacity: 5,
+      fuelType: "Petrol",
+    },
+    location: {
+      name: "Garden City , Thika Road",
+    },
   },
   {
     vehicleId: 2,
-    manufacturer: "Tesla",
-    model: "Model S",
     carRating: 4.8,
     carImage: bmw,
-    location: "San Francisco, California",
-    rentalRate: 75.5,
-    transmission: "Automatic",
-    engineCapacity: "Electric",
-    seatingCapacity: 5,
-    fuelType: "Electric",
+    rentalRate: 4500,
+    availability: "available", 
+    specification: {
+      manufacturer: "Tesla",
+      model: "Model S",
+      transmission: "Automatic",
+      engineCapacity: "Electric",
+      seatingCapacity: 5,
+      fuelType: "Electric",
+    },
+    location: {
+      name: "San Francisco, California",
+    },
   },
   {
     vehicleId: 3,
-    manufacturer: "Ford",
-    model: "Mustang",
     carRating: 4.7,
     carImage: mustang,
-    location: "New York City",
-    rentalRate: 65.0,
-    transmission: "Manual",
-    engineCapacity: "5000cc",
-    seatingCapacity: 4,
-    fuelType: "Petrol",
-  }
+    rentalRate: 3300,
+    availability: "unavailable", 
+    specification: {
+      manufacturer: "Ford",
+      model: "Mustang",
+      transmission: "Manual",
+      engineCapacity: "5000cc",
+      seatingCapacity: 4,
+      fuelType: "Petrol",
+    },
+    location: {
+      name: "New York City",
+    },
+  },
 ];

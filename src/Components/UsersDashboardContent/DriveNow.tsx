@@ -1,12 +1,20 @@
 import CarCard from "../Homepage/CarCard";
-import { carData } from "../../Utils/carData";
+import { carData, type Car } from "../../Utils/carData";
 import { FaSearch, FaFilter } from "react-icons/fa";
 
+import { PuffLoader } from "react-spinners";
+import { vehicleApi } from "../../../features/api/vehicleApi";
+
 export const DriveNow = () => {
+  const { data: fetchedCars = [], isLoading, error } = vehicleApi.useGetAllVehiclesQuery({});
+
+  // You can choose to combine with static cars, or just use backend only:
+  const allCars: Car[] = [...carData, ...fetchedCars];
+
   return (
     <section className="pb-16">
       {/* Heading */}
-      <h2 className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c]  animate-pulse">
+      <h2 className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c] animate-pulse">
         Select Car
       </h2>
 
@@ -28,11 +36,19 @@ export const DriveNow = () => {
       </div>
 
       {/* Car Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center max-w-7xl mx-auto">
-        {carData.map((car) => (
-          <CarCard key={car.id} car={car} />
-        ))}
-      </div>
+      {error ? (
+        <div className="text-red-500 text-center">Something went wrong</div>
+      ) : isLoading ? (
+        <div className="flex justify-center">
+          <PuffLoader color="#26bb4a" />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center max-w-7xl mx-auto">
+          {allCars.map((car) => (
+            <CarCard key={car.vehicleId} car={car} />
+          ))}
+        </div>
+      )}
     </section>
   );
 };

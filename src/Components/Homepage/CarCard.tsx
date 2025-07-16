@@ -3,72 +3,88 @@ import { FaLocationDot } from "react-icons/fa6";
 import { GiGearStickPattern, GiGasPump } from "react-icons/gi";
 import { PiEngineLight } from "react-icons/pi";
 import { BsPeopleFill } from "react-icons/bs";
-import type { Car } from "../../Utils/carData"; // use your correct relative path
+import type { Car } from "../../Utils/carData";
 
 interface Props {
   car: Car;
 }
 
 export default function CarCard({ car }: Props) {
+  if (!car || !car.specification) return null;
+
+  const spec = car.specification;
+  const locationName = car.location?.name || "Unknown Location";
+
   return (
-    <div className=" shadow-md  w-full max-w-xs transition-transform duration-300 hover:scale-105 hover:shadow-xl rounded-lg">
+    <div className="bg-gradient-to-br from-[#817962] via-[#a2a099] to-[#c5c0ab] shadow-md w-full max-w-96 transition-transform duration-300 hover:scale-105 hover:shadow-xl p-8 ">
       {/* Top Section */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="font-bold text-lg text-gray-800">
-            {car.manufacturer} {car.model}
+          <h3 className="font-bold text-lg text-[#5c260b]">
+            {spec?.manufacturer} {spec?.model}
           </h3>
-          <p className="text-sm text-gray-600">{car.model}</p>
+          <p className="text-sm text-[#0d500c]">{spec?.model}</p>
         </div>
-        <div className="flex items-center gap-1 text-orange-500 font-semibold">
+        <div className="flex items-center gap-1 text-[#761623] font-semibold">
           <FaStar />
-          <span>{car.carRating}</span>
-          <span className="text-gray-400 text-xs">(100)</span>
+          <span>{car.carRating ?? "4.5"}</span>
         </div>
       </div>
 
       {/* Car Image */}
-      <img
-        src={car.carImage}
-        alt={`${car.manufacturer} ${car.model}`}
-        className="w-full h-40 object-cover rounded-md my-3"
-      />
+      <div className="relative">
+  <img
+    src={car.carImage}
+    alt={`${spec?.manufacturer} ${spec?.model}`}
+    className="w-full h-40 object-cover rounded-md my-3"
+  />
+  <span
+    className={`absolute top-2 right-2 text-xs font-bold px-2 py-1 rounded-full ${
+      car.availability?.toLowerCase() === "available"
+        ? "bg-[#0c691f] text-white"
+        : "bg-[#bc1629] text-white"
+    }`}
+  >
+    {car.availability?.toLowerCase() === "available" ? "Available" : "Unavailable"}
+  </span>
+</div>
+
 
       {/* Location */}
-      <div className="flex items-center text-sm text-gray-600 gap-1 mb-2">
-        <FaLocationDot className="text-red-400" />
-        <span>{car.location}</span>
+      <div className="flex items-center text-sm  ap-1 mb-2">
+        <FaLocationDot className="text-[#690c17]" />
+        <span>{locationName}</span>
       </div>
 
       {/* Rental Rate */}
       <div className="text-lg font-bold mb-2 text-black">
-        ksh <span className="text-blue-700">{car.rentalRate}</span>
+        ksh <span>{car.rentalRate}</span>
         <span className="text-sm text-gray-500"> /Day</span>
       </div>
 
-      {/* Car Features Row */}
+      {/* Car Features */}
       <div className="flex flex-wrap justify-between text-sm text-gray-600 mt-3">
         <div className="flex items-center gap-1 mb-2">
           <GiGearStickPattern />
-          {car.transmission}
+          {spec?.transmission}
         </div>
         <div className="flex items-center gap-1 mb-2">
           <PiEngineLight />
-          {car.engineCapacity}
+          {spec?.engineCapacity}
         </div>
         <div className="flex items-center gap-1 mb-2">
           <BsPeopleFill />
-          {car.seatingCapacity} Persons
+          {spec?.seatingCapacity} seater
         </div>
         <div className="flex items-center gap-1 mb-2">
           <GiGasPump />
-          {car.fuelType}
+          {spec?.fuelType}
         </div>
       </div>
 
       {/* Rent Now Button */}
-      <button className="bg-blue-600 text-white w-full mt-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition">
-        Rent Now
+      <button className="bg-[#888776] w-full mt-4 py-2 rounded-md text-[#161135] transition-transform duration-300 hover:scale-105 hover:shadow-xl font-bold ">
+        Book Now
       </button>
     </div>
   );
