@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 
-// ✅ Interface included at the top of the same file
+// ✅ Full vehicle structure
 interface Vehicle {
+  vehicleId: number;
   carImage: string;
+  rentalRate: string;
+  availability: string;
 }
 
+// ✅ Car specification with list of vehicles
 interface CarSpecification {
   vehicleSpecId: number;
   manufacturer: string;
@@ -35,10 +39,7 @@ export const CarSpecifications = () => {
         }
 
         const data: CarSpecification[] = await response.json();
-
-        // ✅ DEBUG: Log data fetched from backend — REMOVE AFTER TESTING
         console.log("Fetched car specifications from backend:", data);
-
         setCarSpecs(data);
       } catch (error) {
         console.error("Failed to fetch car specifications:", error);
@@ -80,7 +81,7 @@ export const CarSpecifications = () => {
                   {spec.vehicles?.[0]?.carImage ? (
                     <img
                       src={spec.vehicles[0].carImage}
-                      alt="Car"
+                      alt={spec.model}
                       className="w-16 h-12 rounded object-cover"
                     />
                   ) : (

@@ -1,114 +1,99 @@
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+type Location = {
+  locationId: number;
+  name: string;
+  address: string;
+  contactPhone: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type Specification = {
+  vehicleSpecId: number;
+  manufacturer: string;
+  model: string;
+  year: number;
+  fuelType: string;
+  engineCapacity: string;
+  transmission: string;
+  seatingCapacity: number;
+  color: string;
+  features: string;
+};
+
+type Booking = {
+  bookingId: number;
+  userId: number;
+  vehicleId: number;
+  locationId: number;
+  bookingDate: string;
+  returnDate: string;
+  totalAmount: string;
+  bookingStatus: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type Vehicle = {
+  vehicleId: number;
+  carImage: string;
+  rentalRate: string;
+  availability: string;
+  location: Location;
+  specification: Specification;
+  bookings: Booking[];
+};
 
 export const Cars = () => {
-  // Static mock data simulating backend response
-  const cars = [
-    {
-      vehicleId: 1,
-      carImage: "https://cdn.example.com/images/mazda_cx5.jpg",
-      rentalRate: "5000.00",
-      availability: "available",
-      location: { name: "Nairobi HQ" },
-      specification: {
-        manufacturer: "Mazda",
-        model: "CX-5",
-        year: 2021,
-        fuelType: "Petrol",
-        engineCapacity: "2000cc",
-        transmission: "Automatic",
-        seatingCapacity: 5,
-        color: "Red",
-      },
-    },
-    {
-      vehicleId: 2,
-      carImage: "https://cdn.example.com/images/toyota_hilux.jpg",
-      rentalRate: "4500.00",
-      availability: "unavailable",
-      location: { name: "Thika Branch" },
-      specification: {
-        manufacturer: "Toyota",
-        model: "Hilux",
-        year: 2020,
-        fuelType: "Diesel",
-        engineCapacity: "2400cc",
-        transmission: "Manual",
-        seatingCapacity: 5,
-        color: "White",
-      },
-    },
-  ];
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+
+  useEffect(() => {
+    const fetchVehicles = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/vehicle");
+        setVehicles(res.data);
+        console.log("Fetched vehicles:", res.data);
+      } catch (err) {
+        console.error("Error fetching vehicles:", err);
+      }
+    };
+
+    fetchVehicles();
+  }, []);
 
   return (
-    <>
-      <div className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c] animate-pulse">
-        All Cars
-      </div>
-      <div className="overflow-x-auto">
-        <table className="table table-zebra">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Image</th>
-              <th>Manufacturer</th>
-              <th>Model</th>
-              <th>Location</th>
-              <th>Year</th>
-              <th>Fuel</th>
-              <th>Engine</th>
-              <th>Transmission</th>
-              <th>Seats</th>
-              <th>Color</th>
-              <th>Rate (Ksh)</th>
-              <th>Status</th>
-              <th>Actions</th>
+    <div className="p-4">
+      <h1 className="text-xl font-bold mb-4">All Vehicles</h1>
+      <table className="table w-full">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Manufacturer</th>
+            <th>Year</th>
+            <th>Color</th>
+            <th>Fuel Type</th>
+            <th>Location</th>
+            <th>Availability</th>
+            <th>Rental Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          {vehicles.map((vehicle) => (
+            <tr key={vehicle.vehicleId}>
+              <td>{vehicle.specification?.model}</td>
+              <td>{vehicle.specification?.manufacturer}</td>
+              <td>{vehicle.specification?.year}</td>
+              <td>{vehicle.specification?.color}</td>
+              <td>{vehicle.specification?.fuelType}</td>
+              <td>{vehicle.location?.name || "No Location"}</td>
+              <td>{vehicle.availability}</td>
+              <td>KES {vehicle.rentalRate}</td>
             </tr>
-          </thead>
-          <tbody>
-            {cars.map((car, idx) => (
-              <tr key={car.vehicleId}>
-                <th>{car.vehicleId}</th>
-                <td>
-                  <div className="avatar">
-                    <div className="mask mask-squircle h-12 w-12">
-                      <img src={car.carImage} alt={car.specification.model} />
-                    </div>
-                  </div>
-                </td>
-                <td>{car.specification.manufacturer}</td>
-                <td className="font-bold text-[#3d3935]">{car.specification.model}</td>
-                <td>{car.location.name}</td>
-                <td>{car.specification.year}</td>
-                <td>{car.specification.fuelType}</td>
-                <td>{car.specification.engineCapacity}</td>
-                <td>{car.specification.transmission}</td>
-                <td>{car.specification.seatingCapacity}</td>
-                <td>{car.specification.color}</td>
-                <td>{car.rentalRate}</td>
-                <td>
-                  <div
-                    className={`badge badge-outline ${
-                      car.availability === "available"
-                        ? "badge-success"
-                        : "badge-error"
-                    }`}
-                  >
-                    {car.availability}
-                  </div>
-                </td>
-                <td className="flex gap-1">
-                  <button className="btn btn-sm btn-outline text-green-700 hover:text-green-500">
-                    <FiEdit />
-                  </button>
-                  <button className="btn btn-sm btn-outline text-red-700 hover:text-red-500">
-                    <FiTrash2 />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };

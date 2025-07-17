@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { FaUsers, FaDollarSign } from 'react-icons/fa';
 import { BiCar, BiSolidCalendar } from 'react-icons/bi';
 import { motion } from 'framer-motion';
@@ -5,8 +6,63 @@ import {
   PieChart, Pie, LineChart, Line, Cell,
   XAxis, YAxis, Tooltip, CartesianGrid
 } from 'recharts';
-import type { Variants } from "framer-motion";
+import type { Variants } from 'framer-motion';
 
+// Interfaces
+interface IUser {
+  userId: number;
+  firstname: string;
+  lastname: string;
+  email: string;
+  contactPhone: string;
+  address: string;
+  userType: string;
+  emailVerified: boolean;
+  profileImage: string;
+}
+
+interface IVehicle {
+  vehicleId: number;
+  vehicleSpecId: number;
+  locationId: number;
+  carImage: string;
+  rentalRate: string;
+  availability: string;
+}
+
+interface ILocation {
+  locationId: number;
+  name: string;
+  address: string;
+  contactPhone: string;
+}
+
+interface IPayment {
+  paymentId: number;
+  bookingId: number;
+  amount: string;
+  paymentStatus: string;
+  paymentDate: string;
+  paymentMethod: string;
+  transactionId: string;
+}
+
+interface IBooking {
+  bookingId: number;
+  userId: number;
+  vehicleId: number;
+  locationId: number;
+  bookingDate: string;
+  returnDate: string;
+  totalAmount: string;
+  bookingStatus: string;
+  user: IUser;
+  vehicle: IVehicle;
+  location: ILocation;
+  payments: IPayment[];
+}
+
+// Animation
 const cardVariants: Variants = {
   hover: {
     scale: 1.04,
@@ -15,35 +71,59 @@ const cardVariants: Variants = {
   tap: { scale: 0.97 },
 };
 
+// Theme
 const HERO_THEME = {
   TEXT: '#76726f',
   HIGHLIGHT: '#b4a125',
   BG: '#1a1a1a',
   CARD: '#222222',
   BORDER: '#2f2f2f',
-  SHADOW: '0 0 16px rgba(180, 161, 37, 0.1)'
+  SHADOW: '0 0 16px rgba(180, 161, 37, 0.1)',
 };
 
-const pieData = [
-  { name: 'Confirmed', value: 45 },
-  { name: 'Pending', value: 25 },
-  { name: 'Canceled', value: 10 },
-];
-
-const lineData = [
-  { name: 'Jan', value: 100000 },
-  { name: 'Feb', value: 85000 },
-  { name: 'Mar', value: 91000 },
-  { name: 'Apr', value: 120000 },
-  { name: 'May', value: 110000 },
-];
-
-const usersCount = 120;
-const bookingsCount = 80;
-const carsCount = 25;
-const totalRevenue = 480000;
-
 export const Analytics = () => {
+  const [users, setUsers] = useState<IUser[]>([]);
+  const [cars, setCars] = useState<IVehicle[]>([]);
+  const [bookings, setBookings] = useState<IBooking[]>([]);
+  const [revenue, setRevenue] = useState<number>(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [usersRes, carsRes, bookingsRes] = await Promise.all([
+          fetch("http://localhost:5000/api/user"),
+          fetch("http://localhost:5000/api/vehicle"),
+          fetch("http://localhost:5000/api/booking"),
+        ]);
+
+        const usersData = await usersRes.json();
+        const carsData = await carsRes.json();
+        const bookingsData = await bookingsRes.json();
+
+        setUsers(usersData);
+        setCars(carsData);
+        setBookings(bookingsData);
+
+        const totalRevenue = bookingsData.reduce(
+          (acc: number, b: IBooking) => acc + (parseFloat(b.totalAmount) || 0),
+          0
+        );
+
+        setRevenue(totalRevenue);
+      } catch (err) {
+        console.error("Error loading analytics:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const pieData = [
+    { name: 'Confirmed', value: bookings.filter(b => b.bookingStatus === 'Confirmed').length },
+    { name: 'Pending', value: bookings.filter(b => b.bookingStatus === 'Pending').length },
+    { name: 'Canceled', value: bookings.filter(b => b.bookingStatus === 'Canceled').length },
+  ];
+
   return (
     <section className="w-full px-4 py-10 min-h-[80vh] flex flex-col items-center justify-center" style={{ backgroundColor: HERO_THEME.BG }}>
       {/* Header */}
@@ -57,10 +137,10 @@ export const Analytics = () => {
       {/* Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-6xl">
         {[
-          { label: 'Users', icon: <FaUsers size={36} />, value: usersCount },
-          { label: 'Bookings', icon: <BiSolidCalendar size={36} />, value: bookingsCount },
-          { label: 'Cars', icon: <BiCar size={36} />, value: carsCount },
-          { label: 'Revenue', icon: <FaDollarSign size={36} />, value: `Ksh ${totalRevenue.toLocaleString()}` },
+          { label: 'Users', icon: <FaUsers size={36} />, value: users.length },
+          { label: 'Bookings', icon: <BiSolidCalendar size={36} />, value: bookings.length },
+          { label: 'Cars', icon: <BiCar size={36} />, value: cars.length },
+          { label: 'Revenue', icon: <FaDollarSign size={36} />, value: `Ksh ${revenue.toLocaleString()}` },
         ].map((item, i) => (
           <motion.div
             key={i}
@@ -113,14 +193,14 @@ export const Analytics = () => {
           </PieChart>
         </div>
 
-        {/* Line Chart */}
+        {/* Line Chart Placeholder */}
         <div className="rounded-xl p-8 shadow-md flex flex-col items-center" style={{
           backgroundColor: HERO_THEME.CARD,
           border: `1px solid ${HERO_THEME.BORDER}`,
           boxShadow: HERO_THEME.SHADOW
         }}>
           <h3 className="text-lg font-bold mb-4" style={{ color: HERO_THEME.TEXT }}>Monthly Revenue</h3>
-          <LineChart width={350} height={220} data={lineData}>
+          <LineChart width={350} height={220} data={[]}>
             <CartesianGrid strokeDasharray="3 3" stroke="#444" />
             <XAxis dataKey="name" stroke={HERO_THEME.TEXT} />
             <YAxis stroke={HERO_THEME.TEXT} />
