@@ -8,6 +8,7 @@ import {bookingApi} from "../features/api/bookingApi"
 import {locationApi} from "../features/api/locationApi"
 import {vehicleSpecApi} from "../features/api/vehicleSpec"
 import {paymentApi} from "../features/api/paymentApi"
+import {supportTicketApi} from "../features/api/supportTicketApi"
 
 // create persist config for the authslice
 
@@ -30,6 +31,7 @@ export const store = configureStore({
         [locationApi.reducerPath]:locationApi.reducer,
         [vehicleSpecApi.reducerPath]:vehicleSpecApi.reducer,
         [paymentApi.reducerPath]:paymentApi.reducer,
+        [supportTicketApi .reducerPath]:supportTicketApi .reducer,
         //use the persisted reducer
 
         auth:persistAuthReducer
@@ -37,7 +39,7 @@ export const store = configureStore({
     middleware:(getDefaultMidddleware) =>
         getDefaultMidddleware({
             serializableCheck:false,
-        }).concat(userApi.middleware , vehicleApi.middleware  , bookingApi.middleware , locationApi.middleware , vehicleSpecApi.middleware , paymentApi.middleware)
+        }).concat(userApi.middleware , vehicleApi.middleware  , bookingApi.middleware , locationApi.middleware , vehicleSpecApi.middleware , paymentApi.middleware , supportTicketApi.middleware )
 })
 
 //Export the persisted store 
