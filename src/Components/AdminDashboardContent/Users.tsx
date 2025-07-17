@@ -1,137 +1,133 @@
-import { FiEdit, FiEye, FiTrash2 } from "react-icons/fi";
+import { FiEdit, FiEye, FiTrash2 } from "react-icons/fi"
 
 export const Users = () => {
-  // Mock static user data
-  const users = [
-    {
-      userId: 1,
-      firstname: "Kaguru",
-      lastname: "Tests",
-      email: "kagurutest@gmail.com",
-      contactPhone: "0712345678",
-      address: "123 Nairobi Street",
-      emailVerified: true,
-      userType: "admin",
-      profileImage: "https://cdn.example.com/images/admin_kaguru.jpg",
-      bookings: [
-        { totalAmount: "10000" },
-        { totalAmount: "8000" },
-      ],
-    },
-    {
-      userId: 2,
-      firstname: "Jane",
-      lastname: "Doe",
-      email: "jane.doe@example.com",
-      contactPhone: "0722334455",
-      address: "456 Kiambu Road",
-      emailVerified: false,
-      userType: "member",
-      profileImage: "https://cdn.example.com/images/jane.jpg",
-      bookings: [
-        { totalAmount: "2000" },
-      ],
-    },
-    {
-      userId: 3,
-      firstname: "John",
-      lastname: "Smith",
-      email: "johnsmith@example.com",
-      contactPhone: "0799988776",
-      address: "789 Westlands",
-      emailVerified: true,
-      userType: "disabled",
-      profileImage: "https://cdn.example.com/images/john.jpg",
-      bookings: [],
-    },
-  ];
-
   return (
     <>
-      <div className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c] animate-pulse">
-        All Users Page
-      </div>
-
+      <div className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c]  animate-pulse">All Users Page</div>
       <div className="overflow-x-auto">
-        <table className="table table-zebra">
+        <table className="table">
+          {/* head */}
           <thead>
             <tr>
               <th>#</th>
-              <th>Profile</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Address</th>
-              <th>Email Verified</th>
-              <th>Total Bookings</th>
-              <th>Total Amount (Ksh)</th>
+              <th>User</th>
+              <th>Joined On</th>
               <th>User Type</th>
+              <th>Total Bookings</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => {
-              const fullName = `${user.firstname} ${user.lastname}`;
-              const totalBookings = user.bookings.length;
-              const totalAmount = user.bookings
-                .reduce((sum, b) => sum + Number(b.totalAmount), 0)
-                .toLocaleString();
+            {/* row 1 */}
+            <tr>
+              <th>1</th>
+              <td>
+                <div className="flex items-center gap-3">
+                  <div className="avatar">
+                    <div className="mask mask-squircle h-12 w-12">
+                      <img
+                        src="https://img.daisyui.com/images/profile/demo/2@94.webp"
+                        alt="Avatar Tailwind CSS Component"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="font-bold ">John Doe</div>
+                    <div className="text-sm opacity-50">john@mail.com</div>
+                  </div>
+                </div>
+              </td>
+              <td>18/06/2025</td>
+              <td>
+                <div className="badge badge-outline badge-success">Admin</div>
+              </td>
+              <td>4</td>
+              <td className="flex gap-1">
+                <button className="btn btn-sm btn-outline text-blue-700 hover:text-blue-500">
+                  <FiEye />
+                </button>
+                <button className="btn btn-sm btn-outline text-green-700 hover:text-green-500">
+                  <FiEdit />
+                </button>
+                <button className="btn btn-sm btn-outline text-red-700 hover:text-red-500">
+                  <FiTrash2 />
+                </button>
+              </td>
+            </tr>
 
-              return (
-                <tr key={user.userId}>
-                  <th>{user.userId}</th>
-                  <td>
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img src={user.profileImage} alt={fullName} />
-                      </div>
+            {/* row 2 */}
+            <tr>
+              <th>2</th>
+              <td>
+                <div className="flex items-center gap-3">
+                  <div className="avatar">
+                    <div className="mask mask-squircle h-12 w-12">
+                      <img
+                        src="https://img.daisyui.com/images/profile/demo/3@94.webp"
+                        alt="Avatar Tailwind CSS Component"
+                      />
                     </div>
-                  </td>
-                  <td className="font-bold">{fullName}</td>
-                  <td className="text-sm opacity-90">{user.email}</td>
-                  <td>{user.contactPhone}</td>
-                  <td>{user.address}</td>
-                  <td>
-                    <div
-                      className={`badge ${
-                        user.emailVerified
-                          ? "badge-success"
-                          : "badge-warning"
-                      }`}
-                    >
-                      {user.emailVerified ? "Verified" : "Not Verified"}
+                  </div>
+                  <div>
+                    <div className="font-bold">Jane Smith</div>
+                    <div className="text-sm opacity-50">jane@mail.com</div>
+                  </div>
+                </div>
+              </td>
+              <td>18/06/2025</td>
+              <td>
+                <div className="badge badge-outline badge-error">Disabled</div>
+              </td>
+              <td>1</td>
+              <td className="flex gap-1">
+                <button className="btn btn-sm btn-outline text-blue-700 hover:text-blue-500">
+                  <FiEye />
+                </button>
+                <button className="btn btn-sm btn-outline text-green-700 hover:text-green-500">
+                  <FiEdit />
+                </button>
+                <button className="btn btn-sm btn-outline text-red-700 hover:text-red-500">
+                  <FiTrash2 />
+                </button>
+              </td>
+            </tr>
+
+            {/* row 3 */}
+            <tr>
+              <th>3</th>
+              <td>
+                <div className="flex items-center gap-3">
+                  <div className="avatar">
+                    <div className="mask mask-squircle h-12 w-12">
+                      <img
+                        src="https://img.daisyui.com/images/profile/demo/3@94.webp"
+                        alt="Avatar Tailwind CSS Component"
+                      />
                     </div>
-                  </td>
-                  <td>{totalBookings}</td>
-                  <td>{totalAmount}</td>
-                  <td>
-                    <div
-                      className={`badge badge-outline ${
-                        user.userType === "admin"
-                          ? "badge-success"
-                          : user.userType === "member"
-                          ? "badge-warning"
-                          : "badge-error"
-                      }`}
-                    >
-                      {user.userType.charAt(0).toUpperCase() +
-                        user.userType.slice(1)}
-                    </div>
-                  </td>
-                  <td className="flex gap-1">
-                    <button className="btn btn-sm btn-outline text-blue-700 hover:text-blue-500">
-                      <FiEye />
-                    </button>
-                    <button className="btn btn-sm btn-outline text-green-700 hover:text-green-500">
-                      <FiEdit />
-                    </button>
-                    <button className="btn btn-sm btn-outline text-red-700 hover:text-red-500">
-                      <FiTrash2 />
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+                  </div>
+                  <div>
+                    <div className="font-bold">Jane Doe</div>
+                    <div className="text-sm opacity-50">doe@mail.com</div>
+                  </div>
+                </div>
+              </td>
+              <td>18/06/2025</td>
+              <td>
+                <div className="badge badge-outline badge-warning">Member</div>
+              </td>
+              <td>3</td>
+              <td className="flex gap-1">
+                <button className="btn btn-sm btn-outline text-blue-700 hover:text-blue-500">
+                  <FiEye />
+                </button>
+                <button className="btn btn-sm btn-outline text-green-700 hover:text-green-500">
+                  <FiEdit />
+                </button>
+                <button className="btn btn-sm btn-outline text-red-700 hover:text-red-500">
+                  <FiTrash2 />
+                </button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>

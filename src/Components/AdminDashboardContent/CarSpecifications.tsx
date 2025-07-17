@@ -1,46 +1,52 @@
+import { useEffect, useState } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 
+// ✅ Interface included at the top of the same file
+interface Vehicle {
+  carImage: string;
+}
+
+interface CarSpecification {
+  vehicleSpecId: number;
+  manufacturer: string;
+  model: string;
+  year: number;
+  fuelType: string;
+  engineCapacity: string;
+  transmission: string;
+  seatingCapacity: number;
+  color: string;
+  features: string;
+  vehicles: Vehicle[];
+}
+
 export const CarSpecifications = () => {
-  // Mocked backend response
-  const carSpecs = [
-    {
-      vehicleSpecId: 1,
-      manufacturer: "Mazda",
-      model: "CX-5",
-      year: 2021,
-      fuelType: "Petrol",
-      engineCapacity: "2000cc",
-      transmission: "Automatic",
-      seatingCapacity: 5,
-      color: "Red",
-      features: "Bluetooth, Cruise Control",
-      vehicles: [
-        {
-          carImage: "https://cdn.example.com/images/mazda_cx5.jpg",
-        },
-        {
-          carImage: "https://cdn.example.com/images/nissan_xtrail.jpg",
-        },
-      ],
-    },
-    {
-      vehicleSpecId: 2,
-      manufacturer: "Toyota",
-      model: "Corolla",
-      year: 2019,
-      fuelType: "Diesel",
-      engineCapacity: "1800cc",
-      transmission: "Manual",
-      seatingCapacity: 5,
-      color: "White",
-      features: "ABS, Rear Camera",
-      vehicles: [
-        {
-          carImage: "https://cdn.example.com/images/toyota_corolla.jpg",
-        },
-      ],
-    },
-  ];
+  const [carSpecs, setCarSpecs] = useState<CarSpecification[]>([]);
+
+  useEffect(() => {
+    const fetchCarSpecifications = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/vehicleSpec");
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error("Error from backend:", errorText);
+          return;
+        }
+
+        const data: CarSpecification[] = await response.json();
+
+        // ✅ DEBUG: Log data fetched from backend — REMOVE AFTER TESTING
+        console.log("Fetched car specifications from backend:", data);
+
+        setCarSpecs(data);
+      } catch (error) {
+        console.error("Failed to fetch car specifications:", error);
+      }
+    };
+
+    fetchCarSpecifications();
+  }, []);
 
   return (
     <>
