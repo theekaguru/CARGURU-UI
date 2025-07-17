@@ -7,6 +7,8 @@ import type { Car } from "../../Utils/carData";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../app/store";
 import { Link } from "react-router";
+import { bookingApi } from "../../../features/api/bookingApi";
+import Swal from "sweetalert2"
 
 interface Props {
   car: Car;
@@ -17,6 +19,7 @@ export default function CarCard({ car }: Props) {
 
   const {isAuthenticated , user} = useSelector ((state:RootState)=>state.auth)
 
+   const [createBooking] = bookingApi.useCreateBookingMutation()
   const userId =user?.userId
 
   console.log("🚀🚀🚀~userId", userId);
@@ -31,6 +34,33 @@ console.log("🚀 User object:", user);
 
   const handleBooking = async (vehicleId: number, model: string, rentalRate: number) => {
   console.log(vehicleId, model, rentalRate);
+ Swal.fire({
+  title:"Are You Sure?",
+  html:`<div>
+  <b>Booking:</b>${model}<br/>
+  <b>Book:</b>ksh${rentalRate}
+  </div>
+  <div style ="margin-top:10px ;"Do you want to place this Order?</div>`,
+  icon:"question",
+  showCancelButton:true,
+  confirmButtonColor:"",
+  cancelButtonColor:"",
+  confirmButtonText:"Yes , BookNow"
+ }).then(async(result)=>{
+  if(result.isConfirmed){
+    try {
+      const res = await createBooking({userId , vehicleId , rentalRate })
+
+      console.log(res)
+      Swal.fire("Ordered" , res.data.message , "success")
+      
+    } catch (error) {
+      Swal.fire("something went wrong" , "Please try Again","error")
+      console.error(error)
+    }
+  }
+ })
+
   }
 
   return (

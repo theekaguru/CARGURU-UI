@@ -43,3 +43,6 @@ pnpm install react-spinners
 
 //install axios 
 pnpm install axios
+
+//install sweetalert2
+pnpm install sweetalert2

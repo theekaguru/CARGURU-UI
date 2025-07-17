@@ -1,4 +1,4 @@
-import { CiBookmarkPlus } from "react-icons/ci"
+import { CiBookmarkPlus, CiLocationOn } from "react-icons/ci"
 import { FaUsersCog } from "react-icons/fa"
 import { IoCarSport } from "react-icons/io5"
 import { LuTickets } from "react-icons/lu"
@@ -33,6 +33,14 @@ export const SideNav = () => {
           className={`${location.pathname.includes('bookings') ? 'border-l-4 border-yellow-400' : ''}`}
         >
           <CiBookmarkPlus /> Bookings
+        </Link>
+      </li>
+      <li>
+        <Link
+          to='location'
+          className={`${location.pathname.includes('location') ? 'border-l-4 border-yellow-400' : ''}`}
+        >
+          <CiLocationOn/> Location
         </Link>
       </li>
       <li>
