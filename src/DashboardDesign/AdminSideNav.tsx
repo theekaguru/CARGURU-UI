@@ -1,6 +1,6 @@
-import { CiBookmarkPlus, CiLocationOn } from "react-icons/ci"
-import { FaUsersCog } from "react-icons/fa"
-import { IoCarSport } from "react-icons/io5"
+import { FaUsers, FaUsersCog } from "react-icons/fa"
+import { FaLocationDot } from "react-icons/fa6"
+import { IoBookmark, IoCarSport } from "react-icons/io5"
 import { LuTickets } from "react-icons/lu"
 import { MdSettingsInputComposite } from "react-icons/md"
 import { TbDeviceDesktopAnalytics } from "react-icons/tb"
@@ -24,7 +24,7 @@ export const SideNav = () => {
           to='users'
           className={`${location.pathname.includes('users') ? 'border-l-4 border-yellow-400' : ''}`}
         >
-          <CiBookmarkPlus /> Users
+          <FaUsers /> Users
         </Link>
       </li>
       <li>
@@ -32,7 +32,7 @@ export const SideNav = () => {
           to='bookings'
           className={`${location.pathname.includes('bookings') ? 'border-l-4 border-yellow-400' : ''}`}
         >
-          <CiBookmarkPlus /> Bookings
+          <IoBookmark /> Bookings
         </Link>
       </li>
       <li>
@@ -40,7 +40,7 @@ export const SideNav = () => {
           to='location'
           className={`${location.pathname.includes('location') ? 'border-l-4 border-yellow-400' : ''}`}
         >
-          <CiLocationOn/> Location
+          <FaLocationDot/> Location
         </Link>
       </li>
       <li>
