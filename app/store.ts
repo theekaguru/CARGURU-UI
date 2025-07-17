@@ -6,7 +6,7 @@ import authReducer from "../features/auth/authSlice"
 import {vehicleApi} from "../features/api/vehicleApi"
 import {bookingApi} from "../features/api/bookingApi"
 import {locationApi} from "../features/api/locationApi"
-import {vehicleSpecApi} from "../features/api/vehicleSpec"
+import {vehicleSpecApi} from "../features/api/vehicleSpecApi"
 import {paymentApi} from "../features/api/paymentApi"
 import {supportTicketApi} from "../features/api/supportTicketApi"
 
