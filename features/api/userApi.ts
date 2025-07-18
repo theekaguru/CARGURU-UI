@@ -1,59 +1,60 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const userApi = createApi({
-  reducerPath: 'userApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:5000/api/',
-    prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as any)?.auth?.token;
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
-  tagTypes: ['users'],
+  reducerPath: "userApi",
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/" }),
+  tagTypes: ["users"],
   endpoints: (builder) => ({
-    createUser: builder.mutation({
-      query: (newUser) => ({
-        url: 'users',
-        method: 'POST',
-        body: newUser,
+    // Auth endpoints
+    registerUser: builder.mutation({
+      query: (registerPayload) => ({
+        url: "auth/register",
+        method: "POST",
+        body: registerPayload,
       }),
-      invalidatesTags: ['users'],
+    }),
+    loginUser: builder.mutation({
+      query: (loginPayload) => ({
+        url: "auth/login",
+        method: "POST",
+        body: loginPayload,
+      }),
     }),
 
+    // CRUD endpoints
     getAllUsers: builder.query({
-      query: () => 'users',
-      providesTags: ['users'],
+      query: () => "users",
+      providesTags: ["users"],
     }),
 
     getUserById: builder.query({
       query: (userId) => `users/${userId}`,
-      providesTags: ['users'],
+      providesTags: ["users"],
     }),
 
     updateUser: builder.mutation({
       query: ({ userId, ...userData }) => ({
         url: `users/${userId}`,
-        method: 'PUT',
+        method: "PUT",
         body: userData,
       }),
-      invalidatesTags: ['users'],
+      invalidatesTags: ["users"],
     }),
 
     deleteUser: builder.mutation({
       query: (userId) => ({
         url: `users/${userId}`,
-        method: 'DELETE',
+        method: "DELETE",
       }),
-      invalidatesTags: ['users'],
+      invalidatesTags: ["users"],
     }),
   }),
 });
 
+// Hooks for components
 export const {
-  useCreateUserMutation,
+  useRegisterUserMutation,
+  useLoginUserMutation,
   useGetAllUsersQuery,
   useGetUserByIdQuery,
   useUpdateUserMutation,

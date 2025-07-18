@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { PuffLoader } from "react-spinners";
+import { useSelector } from "react-redux";
+import { vehicleApi } from "../../../features/api/vehicleApi";
+import type { RootState } from "../../../app/store";
 
 type Location = {
   locationId: number;
@@ -47,53 +49,58 @@ type Vehicle = {
 };
 
 export const Cars = () => {
-  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
-
-  useEffect(() => {
-    const fetchVehicles = async () => {
-      try {
-        const res = await axios.get("http://localhost:5000/api/vehicle");
-        setVehicles(res.data);
-        console.log("Fetched vehicles:", res.data);
-      } catch (err) {
-        console.error("Error fetching vehicles:", err);
-      }
-    };
-
-    fetchVehicles();
-  }, []);
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { data: vehicles = [], isLoading, error } = vehicleApi.useGetAllVehiclesQuery(undefined, {
+    skip: !isAuthenticated,
+  });
 
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">All Vehicles</h1>
-      <table className="table w-full">
-        <thead>
-          <tr>
-            <th>Model</th>
-            <th>Manufacturer</th>
-            <th>Year</th>
-            <th>Color</th>
-            <th>Fuel Type</th>
-            <th>Location</th>
-            <th>Availability</th>
-            <th>Rental Rate</th>
-          </tr>
-        </thead>
-        <tbody>
-          {vehicles.map((vehicle) => (
-            <tr key={vehicle.vehicleId}>
-              <td>{vehicle.specification?.model}</td>
-              <td>{vehicle.specification?.manufacturer}</td>
-              <td>{vehicle.specification?.year}</td>
-              <td>{vehicle.specification?.color}</td>
-              <td>{vehicle.specification?.fuelType}</td>
-              <td>{vehicle.location?.name || "No Location"}</td>
-              <td>{vehicle.availability}</td>
-              <td>KES {vehicle.rentalRate}</td>
+      <div className="text-2xl font-bold text-center mb-4 text-orange-400">All Vehicles</div>
+      <div className="overflow-x-auto">
+        <table className="table w-full">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Manufacturer</th>
+              <th>Year</th>
+              <th>Color</th>
+              <th>Fuel Type</th>
+              <th>Location</th>
+              <th>Availability</th>
+              <th>Rental Rate</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {error ? (
+              <tr>
+                <td colSpan={8} className="text-red-400 text-center">Something went wrong. Please try again.</td>
+              </tr>
+            ) : isLoading ? (
+              <tr>
+                <td colSpan={8} className="text-center"><PuffLoader color="#0aff13" /></td>
+              </tr>
+            ) : vehicles.length === 0 ? (
+              <tr>
+                <td colSpan={8} className="text-center">No Vehicles Available</td>
+              </tr>
+            ) : (
+              vehicles.map((vehicle: Vehicle) => (
+                <tr key={vehicle.vehicleId}>
+                  <td>{vehicle.specification?.model}</td>
+                  <td>{vehicle.specification?.manufacturer}</td>
+                  <td>{vehicle.specification?.year}</td>
+                  <td>{vehicle.specification?.color}</td>
+                  <td>{vehicle.specification?.fuelType}</td>
+                  <td>{vehicle.location?.name || "No Location"}</td>
+                  <td>{vehicle.availability}</td>
+                  <td>KES {vehicle.rentalRate}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
