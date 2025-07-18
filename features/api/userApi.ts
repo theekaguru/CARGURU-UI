@@ -23,7 +23,7 @@ export const userApi = createApi({
 
     // CRUD endpoints
     getAllUsers: builder.query({
-      query: () => "users",
+      query: () => "user",
       providesTags: ["users"],
     }),
 
