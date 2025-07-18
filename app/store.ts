@@ -6,9 +6,10 @@ import authReducer from "../features/auth/authSlice"
 import {vehicleApi} from "../features/api/vehicleApi"
 import {bookingApi} from "../features/api/bookingApi"
 import {locationApi} from "../features/api/locationApi"
-import {vehicleSpecApi} from "../features/api/vehicleSpecApi"
 import {paymentApi} from "../features/api/paymentApi"
 import {supportTicketApi} from "../features/api/supportTicketApi"
+import { vehicleSpecApi } from "../features/api/vehicleSpecApi";
+import {analyticsApi} from "../features/api/analyticsApi"
 
 // create persist config for the authslice
 
@@ -32,6 +33,8 @@ export const store = configureStore({
         [vehicleSpecApi.reducerPath]:vehicleSpecApi.reducer,
         [paymentApi.reducerPath]:paymentApi.reducer,
         [supportTicketApi .reducerPath]:supportTicketApi .reducer,
+        [analyticsApi.reducerPath]:analyticsApi.reducer,
+
         //use the persisted reducer
 
         auth:persistAuthReducer
@@ -39,7 +42,7 @@ export const store = configureStore({
     middleware:(getDefaultMidddleware) =>
         getDefaultMidddleware({
             serializableCheck:false,
-        }).concat(userApi.middleware , vehicleApi.middleware  , bookingApi.middleware , locationApi.middleware , vehicleSpecApi.middleware , paymentApi.middleware , supportTicketApi.middleware )
+        }).concat(userApi.middleware , vehicleApi.middleware  , bookingApi.middleware , locationApi.middleware , vehicleSpecApi.middleware , paymentApi.middleware , supportTicketApi.middleware , analyticsApi.middleware )
 })
 
 //Export the persisted store 
