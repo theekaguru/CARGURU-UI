@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { PuffLoader } from "react-spinners";
+import { useSelector } from "react-redux";
+import { locationApi } from "../../../features/api/locationApi";
+import type { RootState } from "../../../app/store";
 
-// types/location.ts
+// ✅ Interfaces
 export interface Booking {
   bookingId: number;
   userId: number;
@@ -23,33 +26,19 @@ export interface Location {
   createdAt: string;
   updatedAt: string;
   bookings: Booking[];
-  vehicles?: any[]; // Optional, if your backend includes this later
+  vehicles?: any[];
 }
 
 export const Location = () => {
-  const [locations, setLocations] = useState<Location[]>([]);
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
-  useEffect(() => {
-    const fetchLocations = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/api/location");
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error("Error from backend:", errorText);
-          return;
-        }
-
-        const data: Location[] = await response.json();
-        console.log("Fetched locations:", data);
-        setLocations(Array.isArray(data) ? data : [data]); // handle single object or array
-      } catch (error) {
-        console.error("Failed to fetch locations:", error);
-      }
-    };
-
-    fetchLocations();
-  }, []);
+  const {
+    data: locations = [],
+    isLoading,
+    error,
+  } = locationApi.useGetAllLocationsQuery(undefined, {
+    skip: !isAuthenticated,
+  });
 
   return (
     <>
@@ -71,33 +60,56 @@ export const Location = () => {
             </tr>
           </thead>
           <tbody>
-            {locations.map((location, index) => {
-              const totalBookings = location.bookings?.length || 0;
-              const totalAmount = location.bookings?.reduce(
-                (sum, booking) => sum + parseFloat(booking.totalAmount),
-                0
-              ) || 0;
+            {error ? (
+              <tr>
+                <td colSpan={8} className="text-red-500 text-center">
+                  Failed to load locations.
+                </td>
+              </tr>
+            ) : isLoading ? (
+              <tr>
+                <td colSpan={8} className="text-center">
+                  <PuffLoader color="#0aff13" />
+                </td>
+              </tr>
+            ) : locations.length === 0 ? (
+              <tr>
+                <td colSpan={8} className="text-center">
+                  No Locations Found
+                </td>
+              </tr>
+            ) : (
+              locations.map((location: Location, index: number) => {
+                const totalBookings = location.bookings?.length || 0;
+                const totalAmount =
+                  location.bookings?.reduce(
+                    (sum, booking) => sum + parseFloat(booking.totalAmount),
+                    0
+                  ) || 0;
 
-              return (
-                <tr key={location.locationId}>
-                  <th>{index + 1}</th>
-                  <td className="font-bold text-[#3d3935]">{location.name}</td>
-                  <td>{location.address}</td>
-                  <td>{location.contactPhone}</td>
-                  <td>{totalBookings}</td>
-                  <td>{location.vehicles?.length || "N/A"}</td>
-                  <td>${totalAmount.toLocaleString()}</td>
-                  <td className="flex gap-1">
-                    <button className="btn btn-sm btn-outline text-green-700 hover:text-green-500">
-                      <FiEdit />
-                    </button>
-                    <button className="btn btn-sm btn-outline text-red-700 hover:text-red-500">
-                      <FiTrash2 />
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+                return (
+                  <tr key={location.locationId}>
+                    <th>{index + 1}</th>
+                    <td className="font-bold text-[#3d3935]">
+                      {location.name}
+                    </td>
+                    <td>{location.address}</td>
+                    <td>{location.contactPhone}</td>
+                    <td>{totalBookings}</td>
+                    <td>{location.vehicles?.length || "N/A"}</td>
+                    <td>${totalAmount.toLocaleString()}</td>
+                    <td className="flex gap-1">
+                      <button className="btn btn-sm btn-outline text-green-700 hover:text-green-500">
+                        <FiEdit />
+                      </button>
+                      <button className="btn btn-sm btn-outline text-red-700 hover:text-red-500">
+                        <FiTrash2 />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
           </tbody>
         </table>
       </div>
