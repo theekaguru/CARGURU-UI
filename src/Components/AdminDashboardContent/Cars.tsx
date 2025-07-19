@@ -81,7 +81,9 @@ export const Cars = () => {
 
   return (
     <>
-      <div className="text-2xl font-bold text-center mb-4 text-orange-400">All Cars Page</div>
+      <div className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c] animate-pulse">
+        All Vehicles
+      </div>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
