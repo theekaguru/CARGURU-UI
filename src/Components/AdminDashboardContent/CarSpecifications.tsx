@@ -70,14 +70,12 @@ export const CarSpecifications = () => {
             <thead>
               <tr>
                   <th>Spec Id</th>
-                  <th>vehicleImage</th>
-                  <th>Manufacturer</th>
-                  <th>Model</th>
+                  <th>vehicle</th>
                   <th>Year</th>
                   <th>fuelType</th>
                   <th>EngineCapacity</th>
                   <th>Transmission</th>
-                  <th>Number of Seats</th>
+                  <th>Seats</th>
                   <th>Color</th>
                   <th>Features</th>
                   <th>Number Plate</th>
