@@ -7,7 +7,7 @@ import { PuffLoader } from "react-spinners";
 import { AiFillDelete } from "react-icons/ai";
 
 
-interface vehicledata {
+interface vehicleInterface {
   vehicleId: number;
   carRating?: number;
   rentalRate: number;
@@ -116,7 +116,7 @@ export const Cars = () => {
                   <div>No Orders Available</div>
                 </tr>
               ):(
-                allVehicleData?.map((vehicle:vehicledata)=>(
+                allVehicleData?.map((vehicle:vehicleInterface)=>(
                   <tr key={vehicle.vehicleId}>
 
  {/* Car id */}

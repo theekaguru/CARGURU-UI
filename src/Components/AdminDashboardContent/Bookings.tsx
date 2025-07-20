@@ -7,38 +7,43 @@ import Swal from "sweetalert2";
 import { bookingApi } from "../../../features/api/bookingApi";
 import { MdOutlineCancel, MdOutlineCheckCircle } from "react-icons/md";
 
-interface BookingInference{
+interface BookingInterface {
   bookingId: number;
   bookingDate: string;
   returnDate: string;
   totalAmount: string;
   bookingStatus: string;
-  specification: {
-    manufacturer: string;
-    model: string;
-    vehicleImage:string;
-    numberPlate:string;
-    seatingCapacity:string;
-  };
+
   user: {
     firstname: string;
     lastname: string;
-    profileImage:string;
-    email:string;
+    profileImage: string;
+    email: string;
   };
+
   vehicle: {
     vehicleId: number;
     rentalRate: number;
+
+    specification: {
+      manufacturer: string;
+      model: string;
+      vehicleImage: string;
+      numberPlate: string;
+      seatingCapacity: string;
+    };
   };
+
   location: {
     name: string;
   };
+
   payments: {
     amount: string;
     paymentStatus: string;
-    paymentDate:string;
-    paymentMethod:string;
-    transactionId:string;
+    paymentDate: string;
+    paymentMethod: string;
+    transactionId: string;
   };
 }
 
@@ -149,7 +154,7 @@ export const Bookings = () => {
                     <div>No Available</div>
                   </tr>
                 ):(
-                  allBookingsData?.map((booking:BookingInference)=>(
+                  allBookingsData?.map((booking:BookingInterface)=>(
                     <tr key={booking.bookingId}>
 
 {/* Booking Id */}
@@ -181,20 +186,20 @@ export const Bookings = () => {
                   <div className="avatar">
                     <div className="mask mask-squircle h-12 w-12">
                       <img
-                        src={booking.specification?.vehicleImage}
+                        src={booking.vehicle.specification.vehicleImage}
                         alt="vehicle image" />
                     </div>
                   </div>
                   <div>
-                    <div className="font-bold">{booking.specification?.manufacturer}</div>
-                    <div className="text-sm opacity-50">{booking.specification?.model}</div>
+                    <div className="font-bold">{booking.vehicle.specification.manufacturer}</div>
+                    <div className="text-sm opacity-50">{booking.vehicle.specification.model}</div>
                   </div>
                 </div>
               </td>
   
 {/* Number Plate*/}
   
-                <td>{booking.specification?.numberPlate}</td>
+                <td>{booking.vehicle.specification.numberPlate}</td>
 {/* Booking Days */}
   
                 <td>{calculateDaysBooked(booking.bookingDate, booking.returnDate)}</td>

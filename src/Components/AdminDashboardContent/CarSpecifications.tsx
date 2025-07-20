@@ -7,7 +7,7 @@ import type { RootState } from "../../../app/store";
 import Swal from "sweetalert2";
 import { AiFillDelete } from "react-icons/ai";
 
-interface CarSpecification {
+interface CarSpecificationInterface {
   vehicleSpecId: number;
   vehicleImage:string;
   manufacturer: string;
@@ -101,7 +101,7 @@ export const CarSpecifications = () => {
                     <div>No Orders Available</div>
                   </tr>
                 ):(
-                  allVehicleSpecificationData?.map((vehicleSpec:CarSpecification)=>(
+                  allVehicleSpecificationData?.map((vehicleSpec:CarSpecificationInterface)=>(
                     <tr key={vehicleSpec.vehicleSpecId}>
   
 {/* vehicleSpeId id */}
