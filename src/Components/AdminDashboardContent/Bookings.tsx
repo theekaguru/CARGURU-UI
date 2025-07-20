@@ -16,6 +16,7 @@ interface BookingInterface {
 
   user: {
     firstname: string;
+    contactPhone: string;
     lastname: string;
     profileImage: string;
     email: string;
@@ -173,7 +174,9 @@ export const Bookings = () => {
                     </div>
                   </div>
                   <div>
-                    <div className="font-bold">{booking.user.firstname }</div>
+                    <div className="font-bold">{booking.user.firstname} {booking.user.lastname}</div>
+
+                    <div className="font-bold">{booking.user.contactPhone}</div>
                     <div className="text-sm opacity-50">{booking.user.email}</div>
                   </div>
                 </div>
