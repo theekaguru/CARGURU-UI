@@ -6,7 +6,7 @@ export const analyticsApi = createApi({
   tagTypes: ["Analytics"],
   endpoints: (builder) => ({
     getAllUsers: builder.query<any[], void>({
-      query: () => "user",
+      query: () => "users",
       providesTags: ["Analytics"],
     }),
     getAllVehicles: builder.query<any[], void>({

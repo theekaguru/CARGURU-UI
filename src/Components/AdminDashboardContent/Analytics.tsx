@@ -19,8 +19,8 @@ import type { Variants } from "framer-motion";
 
 import {
   useGetAllUsersQuery,
-  useGetAllVehiclesQuery,
-  useGetAllBookingsQuery,
+ useGetAllBookingsQuery,
+   useGetAllVehiclesQuery
 } from "../../../features/api/analyticsApi";
 
 // Theme + Animation
