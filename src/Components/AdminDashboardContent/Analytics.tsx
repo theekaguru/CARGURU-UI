@@ -6,36 +6,14 @@ import { useEffect, useState } from "react";
 import { FaUsers, FaDollarSign } from "react-icons/fa";
 import { BiCar, BiSolidCalendar } from "react-icons/bi";
 import {
-  PieChart,
-  Pie,
-  Line,
-  Cell,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  AreaChart,
-  Area,
-  ResponsiveContainer,
+  PieChart,Pie,Line,Cell,XAxis,YAxis,Tooltip,CartesianGrid,AreaChart,Area,ResponsiveContainer,
 } from "recharts";
+
 import {
   useGetAllUsersQuery,
   useGetAllBookingsQuery,
   useGetAllVehiclesQuery,
 } from "../../../features/api/analyticsApi";
-
-// Theme
-const THEME = {
-  TEXT: "#76726f",
-  HIGHLIGHT: "#b4a125",
-  BG: "#1a1a1a",
-  CARD: "#222222",
-  BORDER: "#2f2f2f",
-  SHADOW: "0 0 16px rgba(180, 161, 37, 0.1)",
-  SUCCESS: "#10b981",
-  WARNING: "#f59e0b",
-  DANGER: "#ef4444",
-};
 
 interface ChartCardProps {
   title: string;
@@ -60,14 +38,9 @@ interface StatCardProps {
 const cardVariants: Variants = {
   hover: {
     scale: 1.02,
-    transition: {
-      type: "spring" as const,
-      stiffness: 300,
-    },
+    transition: { type: "spring", stiffness: 300 },
   },
-  tap: {
-    scale: 0.98,
-  },
+  tap: { scale: 0.98 },
 };
 
 export const Analytics = () => {
@@ -84,14 +57,14 @@ export const Analytics = () => {
     setRevenue(totalRevenue);
   }, [bookings]);
 
-  const confirmedBookings = bookings.filter(b => b.bookingStatus === "Confirmed").length;
-  const pendingBookings = bookings.filter(b => b.bookingStatus === "Pending").length;
-  const canceledBookings = bookings.filter(b => b.bookingStatus === "Canceled").length;
+  const confirmed = bookings.filter(b => b.bookingStatus === "Confirmed").length;
+  const pending = bookings.filter(b => b.bookingStatus === "Pending").length;
+  const canceled = bookings.filter(b => b.bookingStatus === "Canceled").length;
 
   const pieData = [
-    { name: "Confirmed", value: confirmedBookings, color: THEME.SUCCESS },
-    { name: "Pending", value: pendingBookings, color: THEME.WARNING },
-    { name: "Canceled", value: canceledBookings, color: THEME.DANGER },
+    { name: "Confirmed", value: confirmed, color: "#10b981" }, // green
+    { name: "Pending", value: pending, color: "#f59e0b" }, // amber
+    { name: "Canceled", value: canceled, color: "#ef4444" }, // red
   ];
 
   const monthlyData = [
@@ -103,106 +76,54 @@ export const Analytics = () => {
     { month: "Jun", revenue: revenue * 0.19, bookings: Math.floor(bookings.length * 0.20) },
   ];
 
-  const StatCard = ({
-    icon,
-    title,
-    value,
-    subtitle,
-    color = THEME.HIGHLIGHT,
-  }: StatCardProps) => (
+  const StatCard = ({ icon, title, value, subtitle, color = "#6366f1" }: StatCardProps) => (
     <motion.div
       variants={cardVariants}
       whileHover="hover"
       whileTap="tap"
-      className="p-6 rounded-xl transition-all cursor-pointer"
-      style={{
-        backgroundColor: THEME.CARD,
-        border: `1px solid ${THEME.BORDER}`,
-        boxShadow: THEME.SHADOW,
-      }}
+      className="p-6 rounded-xl bg-white/10 backdrop-blur border border-white/10 shadow-lg transition-all cursor-pointer"
     >
       <div className="flex items-center justify-between mb-3">
-        <div className="text-2xl" style={{ color }}>
-          {icon}
-        </div>
-        {subtitle && (
-          <div className="text-right text-xs" style={{ color: THEME.TEXT }}>
-            {subtitle}
-          </div>
-        )}
+        <div className="text-2xl" style={{ color }}>{icon}</div>
+        {subtitle && <div className="text-right text-xs text-white/70">{subtitle}</div>}
       </div>
       <div>
-        <h3 className="text-lg font-semibold mb-1" style={{ color: THEME.TEXT }}>
-          {title}
-        </h3>
-        <p className="text-2xl font-bold" style={{ color }}>
-          {value}
-        </p>
+        <h3 className="text-lg font-semibold mb-1 text-white/90">{title}</h3>
+        <p className="text-2xl font-bold" style={{ color }}>{value}</p>
       </div>
     </motion.div>
   );
 
   const ChartCard = ({ title, children, height = "300px" }: ChartCardProps) => (
-    <div
-      className="rounded-xl p-6 shadow-md"
-      style={{
-        backgroundColor: THEME.CARD,
-        border: `1px solid ${THEME.BORDER}`,
-        boxShadow: THEME.SHADOW,
-      }}
-    >
-      <h3 className="text-xl font-bold mb-6 text-center" style={{ color: THEME.HIGHLIGHT }}>
-        {title}
-      </h3>
+    <div className="rounded-xl p-6 bg-gradient-to-br from-slate-800 to-gray-900 shadow-lg">
+      <h3 className="text-xl font-bold mb-6 text-center text-yellow-400">{title}</h3>
       <div style={{ height }}>{children}</div>
     </div>
   );
 
-  const MetricRow = ({ label, value, color = THEME.HIGHLIGHT }: MetricRowProps) => (
+  const MetricRow = ({ label, value, color = "#10b981" }: MetricRowProps) => (
     <div className="flex justify-between items-center py-2 border-b border-gray-700">
-      <span className="text-sm" style={{ color: THEME.TEXT }}>{label}</span>
+      <span className="text-sm text-white/70">{label}</span>
       <span className="font-semibold" style={{ color }}>{value}</span>
     </div>
   );
 
   return (
-    <section className="w-full px-4 py-10 min-h-screen" style={{ backgroundColor: THEME.BG }}>
+    <section className="w-full px-4 py-10 min-h-screen bg-gradient-to-br from-[#161652] via-[#070b1f] to-[#403d3d]
+">
       <div className="text-center mb-12">
-        <h1 className="text-5xl font-bold mb-4" style={{ color: THEME.TEXT }}>
-          ℂ₳Ɽ ₲ɄⱤɄ <span style={{ color: THEME.HIGHLIGHT }}>Analytics</span>
+        <h1 className="text-5xl font-bold text-white mb-4">
+          ℂ₳Ɽ ₲ɄⱤɄ <span className="text-yellow-400">Analytics</span>
         </h1>
-        <div className="w-32 h-1 mx-auto bg-gradient-to-r from-green-500 via-yellow-500 to-orange-500 rounded-full animate-pulse" />
+        <div className="w-32 h-1 mx-auto bg-gradient-to-r from-green-400 via-yellow-400 to-pink-500 rounded-full animate-pulse" />
       </div>
 
       <div className="max-w-7xl mx-auto space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <StatCard
-            icon={<FaUsers />}
-            title="Total Users"
-            value={users.length.toLocaleString()}
-            subtitle="+8.2% this month"
-            color={THEME.SUCCESS}
-          />
-          <StatCard
-            icon={<BiSolidCalendar />}
-            title="Total Bookings"
-            value={bookings.length.toLocaleString()}
-            subtitle="+15.3% this month"
-            color="#8b5cf6"
-          />
-          <StatCard
-            icon={<BiCar />}
-            title="Total Cars"
-            value={cars.length}
-            color="#06b6d4"
-          />
-          <StatCard
-            icon={<FaDollarSign />}
-            title="Total Revenue"
-            value={`Ksh ${revenue.toLocaleString()}`}
-            subtitle="+12.5% this month"
-            color={THEME.HIGHLIGHT}
-          />
+          <StatCard icon={<FaUsers />} title="Total Users" value={users.length} subtitle="+8.2% this month" color="#10b981" />
+          <StatCard icon={<BiSolidCalendar />} title="Total Bookings" value={bookings.length} subtitle="+15.3% this month" color="#8b5cf6" />
+          <StatCard icon={<BiCar />} title="Total Cars" value={cars.length} color="#06b6d4" />
+          <StatCard icon={<FaDollarSign />} title="Total Revenue" value={`Ksh ${revenue.toLocaleString()}`} subtitle="+12.5% this month" color="#facc15" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -210,33 +131,11 @@ export const Analytics = () => {
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={monthlyData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-                <XAxis dataKey="month" stroke={THEME.TEXT} />
-                <YAxis stroke={THEME.TEXT} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: THEME.CARD,
-                    border: `1px solid ${THEME.BORDER}`,
-                    color: THEME.TEXT,
-                    borderRadius: '8px',
-                  }}
-                  formatter={(value, name) => [
-                    name === 'revenue' ? `Ksh ${Number(value).toLocaleString()}` : value,
-                    name === 'revenue' ? 'Revenue' : 'Bookings'
-                  ]}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="revenue"
-                  stroke={THEME.HIGHLIGHT}
-                  fill={THEME.HIGHLIGHT}
-                  fillOpacity={0.3}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="bookings"
-                  stroke={THEME.SUCCESS}
-                  strokeWidth={2}
-                />
+                <XAxis dataKey="month" stroke="#cbd5e1" />
+                <YAxis stroke="#cbd5e1" />
+                <Tooltip contentStyle={{ background: "#111", borderRadius: 8, border: "1px solid #333" }} />
+                <Area type="monotone" dataKey="revenue" stroke="#facc15" fill="#facc15" fillOpacity={0.3} />
+                <Line type="monotone" dataKey="bookings" stroke="#10b981" strokeWidth={2} />
               </AreaChart>
             </ResponsiveContainer>
           </ChartCard>
@@ -258,66 +157,36 @@ export const Analytics = () => {
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: THEME.CARD,
-                    border: `1px solid ${THEME.BORDER}`,
-                    color: THEME.TEXT,
-                    borderRadius: '8px',
-                  }}
-                />
+                <Tooltip contentStyle={{ background: "#111", border: "1px solid #333", color: "#fff" }} />
               </PieChart>
             </ResponsiveContainer>
           </ChartCard>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="rounded-xl p-6 shadow-md" style={{ backgroundColor: THEME.CARD, border: `1px solid ${THEME.BORDER}`, boxShadow: THEME.SHADOW }}>
-            <h3 className="text-xl font-bold mb-4" style={{ color: THEME.HIGHLIGHT }}>
-              Performance Metrics
-            </h3>
+          <div className="rounded-xl p-6 bg-slate-800 shadow-md">
+            <h3 className="text-xl font-bold mb-4 text-yellow-400">Performance Metrics</h3>
             <div className="space-y-1">
-              <MetricRow
-                label="Booking Success Rate"
-                value={`${bookings.length > 0 ? Math.round((confirmedBookings / bookings.length) * 100) : 0}%`}
-                color={THEME.SUCCESS}
-              />
-              <MetricRow
-                label="Cancellation Rate"
-                value={`${bookings.length > 0 ? Math.round((canceledBookings / bookings.length) * 100) : 0}%`}
-                color={THEME.DANGER}
-              />
+              <MetricRow label="Booking Success Rate" value={`${bookings.length > 0 ? Math.round((confirmed / bookings.length) * 100) : 0}%`} color="#10b981" />
+              <MetricRow label="Cancellation Rate" value={`${bookings.length > 0 ? Math.round((canceled / bookings.length) * 100) : 0}%`} color="#ef4444" />
             </div>
           </div>
 
-          <div className="rounded-xl p-6 shadow-md" style={{ backgroundColor: THEME.CARD, border: `1px solid ${THEME.BORDER}`, boxShadow: THEME.SHADOW }}>
-            <h3 className="text-xl font-bold mb-4" style={{ color: THEME.HIGHLIGHT }}>
-              Financial Metrics
-            </h3>
+          <div className="rounded-xl p-6 bg-slate-800 shadow-md">
+            <h3 className="text-xl font-bold mb-4 text-yellow-400">Financial Metrics</h3>
             <div className="space-y-1">
-              <MetricRow
-                label="Avg Revenue/Booking"
-                value={`Ksh ${bookings.length > 0 ? Math.round(revenue / bookings.length).toLocaleString() : 0}`}
-              />
-              <MetricRow label="Revenue Growth" value="+12.5%" color={THEME.SUCCESS} />
-              <MetricRow label="Monthly Target" value="85% achieved" color={THEME.WARNING} />
+              <MetricRow label="Avg Revenue/Booking" value={`Ksh ${bookings.length > 0 ? Math.round(revenue / bookings.length).toLocaleString() : 0}`} />
+              <MetricRow label="Revenue Growth" value="+12.5%" color="#10b981" />
+              <MetricRow label="Monthly Target" value="85% achieved" color="#f59e0b" />
             </div>
           </div>
 
-          <div className="rounded-xl p-6 shadow-md" style={{ backgroundColor: THEME.CARD, border: `1px solid ${THEME.BORDER}`, boxShadow: THEME.SHADOW }}>
-            <h3 className="text-xl font-bold mb-4" style={{ color: THEME.HIGHLIGHT }}>
-              Operational Metrics
-            </h3>
+          <div className="rounded-xl p-6 bg-slate-800 shadow-md">
+            <h3 className="text-xl font-bold mb-4 text-yellow-400">Operational Metrics</h3>
             <div className="space-y-1">
-              <MetricRow
-                label="Cars per User"
-                value={users.length > 0 ? (cars.length / users.length).toFixed(2) : "0"}
-              />
-              <MetricRow
-                label="Bookings per User"
-                value={users.length > 0 ? (bookings.length / users.length).toFixed(2) : "0"}
-              />
-              <MetricRow label="User Growth" value="+8.2%" color={THEME.SUCCESS} />
+              <MetricRow label="Cars per User" value={users.length > 0 ? (cars.length / users.length).toFixed(2) : "0"} />
+              <MetricRow label="Bookings per User" value={users.length > 0 ? (bookings.length / users.length).toFixed(2) : "0"} />
+              <MetricRow label="User Growth" value="+8.2%" color="#10b981" />
             </div>
           </div>
         </div>

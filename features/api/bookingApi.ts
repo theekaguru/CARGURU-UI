@@ -25,6 +25,11 @@ export const bookingApi = createApi({
       providesTags: ['booking'],
     }),
 
+    getAllBookingForOneUserById:builder.query({
+      query:(userId) => `booking/user?userId=${userId}`,
+      providesTags:['booking']
+    }),
+    
     createBooking: builder.mutation({
       query: (createBookingPayload) => ({
         url: 'booking',

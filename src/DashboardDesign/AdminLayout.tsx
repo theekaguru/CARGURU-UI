@@ -15,7 +15,7 @@ export const Layout = () => {
       {/* Main content area */}
       <div className="w-full md:w-[80%] p-4">
         <Card className="rounded-lg border-4 border-[#574f1f]">
-          <p className="text-white">Admin🚀</p>
+          <p className="text-green-500">🚀 Admin</p>
           <Outlet />
         </Card>
       </div>
