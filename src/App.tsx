@@ -12,7 +12,6 @@ import { UsersDashboard } from './Pages/UsersDashboard'
 import { Activities } from './Components/UsersDashboardContent/Activities'
 import { DriveNow } from './Components/UsersDashboardContent/DriveNow'
 import { BookingHistory } from './Components/UsersDashboardContent/BookingHistory'
-import { Transactions } from './Components/UsersDashboardContent/Transactions'
 import { SupportTickets } from './Components/UsersDashboardContent/SupportTickets'
 import ProtectedRoute from './Components/ProtectedRoute'
 import { AdminDashboard } from './Pages/AdminDashboard'
@@ -26,6 +25,8 @@ import { Analytics } from './Components/AdminDashboardContent/Analytics'
 import { Users } from './Components/AdminDashboardContent/Users'
 import { Profile } from './Components/AdminDashboardContent/Profile'
 import { Settings } from './Components/UsersDashboardContent/Settings'
+import { Payments } from './Components/UsersDashboardContent/Payments'
+
 
 
 
@@ -91,8 +92,8 @@ const router = createBrowserRouter([
           errorElement:<Error/>
         },
                 {
-          path:'transactions',
-          element:<Transactions/>,
+          path:'payments',
+          element:<Payments/>,
           errorElement:<Error/>
         },
                         {

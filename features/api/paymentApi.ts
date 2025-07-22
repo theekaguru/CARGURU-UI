@@ -34,11 +34,16 @@ export const paymentApi = createApi({
       invalidatesTags: ['payment'],
     }),
 
+        getAllPaymentForUserById:builder.query({
+            query:(userId)=>`payment/user?userId=${userId}`,
+            providesTags:['payment']
+        }),    
+
     updatePayment: builder.mutation({
-      query: ({ paymentId, ...paymentData }) => ({
+      query: ({ paymentId, ...paymentDataPayload }) => ({
         url: `payment/${paymentId}`,
         method: 'PUT',
-        body: paymentData,
+        body: paymentDataPayload,
       }),
       invalidatesTags: ['payment'],
     }),

@@ -33,8 +33,8 @@ interface vehicleInterface {
 
 const getStatusBadge =(status:string)=>{
   switch(status){
-    case "Avaialble":return "badge-success"
-    case "Unavailable":return "badge-error"
+    case "avaialble":return "badge-success"
+    case "unavailable":return "badge-error"
     default: return "badge-primary"
 
   }

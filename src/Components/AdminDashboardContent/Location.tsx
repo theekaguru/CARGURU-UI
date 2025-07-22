@@ -81,99 +81,94 @@ export const Location = () => {
       })
     }
 
-
-  
     return (
       <>
         <div className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c] animate-pulse">
-        ALl Locations
+        ALL Locations
       </div>
         <div className="overflow-x-auto">
           <table className="table">
             {/* head */}
             <thead>
               <tr>
-
-              <th>#</th>
-              <th>Name</th>
-              <th>Address</th>
-              <th>Phone</th>
-              <th>Total Bookings</th>
-              <th>Total Vehicles</th>
-              <th>Total Amount</th>
-              <th>Actions</th>
-
+                <th>#</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Total Bookings</th>
+                <th>Total Vehicles</th>
+                <th>Total Amount</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-  
               {
                 error ? (
-                  <div className="text-red-400">
-                    something went Wrong try Again .....
-                  </div>
-                ): isLoading ? (
-                  <div>
-                   <PuffLoader color="#0aff13"/>
-                  </div>
+                  <tr>
+                    <td colSpan={8}>
+                      <div className="text-red-400 text-center">
+                        something went Wrong try Again .....
+                      </div>
+                    </td>
+                  </tr>
+                ) : isLoading ? (
+                  <tr>
+                    <td colSpan={8}>
+                      <div className="flex justify-center">
+                        <PuffLoader color="#0aff13"/>
+                      </div>
+                    </td>
+                  </tr>
                 ) : allLocationsData?.length === 0 ? (
                   <tr>
-                    <div>No Locations Available</div>
+                    <td colSpan={8} className="text-center">
+                      No Locations Available
+                    </td>
                   </tr>
-                ):(
-                  allLocationsData?.map((location:LocationInterface)=>(
+                ) : (
+                  allLocationsData?.map((location: LocationInterface) => (
                     <tr key={location.locationId}>
-  
+
 {/* Location Id */}
                       <td>
-                        <th>{location.locationId}</th>
+                        {location.locationId}
                       </td>
                       
 {/* Name */}
                       <td>{location.name}</td>
-  
+
 {/* Address*/}
-  
-                <td>{location.address}</td>
+                      <td>{location.address}</td>
+
 {/* Phone */}
-  
-                <td>{location.contactPhone}</td>
+                      <td>{location.contactPhone}</td>
 
 {/* Total bookings */}
-  
-               <td>{calculateTotalBookings(location)}</td>
-  
-  
+                      <td>{calculateTotalBookings(location)}</td>
+
 {/* Total Vehicles*/}
-   
-                <td>{calculateTotalVehicles(location)}</td>                
-                  
-  
+                      <td>{calculateTotalVehicles(location)}</td>                
+
 {/* Total Amount*/}
-   
-                <td>{calculateTotalAmount(location)}</td>  
-                 
-              
+                      <td>{calculateTotalAmount(location)}</td>  
+
 {/* update and delete Location */}
-                <td>
-                <button className="text-blue-500 hover:text-blue-400 btn btn-sm btn-outline"
-                onClick={()=>handleEdit(location.locationId)}>
-                <FiEdit/>
-                </button>
-                <button className="btn btn-sm btn-outline text-red-500 ml-1 hover:bg-red-700">
-                <AiFillDelete />
-                </button>
-  
-                  </td>
+                      <td>
+                        <button className="text-blue-500 hover:text-blue-400 btn btn-sm btn-outline"
+                          onClick={() => handleEdit(location.locationId)}>
+                          <FiEdit/>
+                        </button>
+                        <button className="btn btn-sm btn-outline text-red-500 ml-1 hover:bg-red-700">
+                          <AiFillDelete />
+                        </button>
+                      </td>
                     </tr>
                   ))
                 )
               }
             </tbody>
-  
           </table>
         </div>
       </>
     )
-   }
-  
+}

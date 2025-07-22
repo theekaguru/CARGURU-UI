@@ -36,10 +36,10 @@ export const SideNav = () => {
       </li>
       <li>
         <Link
-          to='transactions'
-          className={`${location.pathname.includes('transactions') ? 'border-l-4 border-yellow-400' : ''}`} // ✅ ADDED
+          to='payments'
+          className={`${location.pathname.includes('payments') ? 'border-l-4 border-yellow-400' : ''}`} // ✅ ADDED
         >
-          <FaHandHoldingDollar /> Transactions
+          <FaHandHoldingDollar /> Payments
         </Link>
       </li>
       <li>

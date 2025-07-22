@@ -1,4 +1,3 @@
-
 import { FiEye} from "react-icons/fi";
 import { PuffLoader } from "react-spinners";
 import { useSelector } from "react-redux";
@@ -55,7 +54,7 @@ export const Bookings = () => {
     const {user , isAuthenticated} =useSelector((state:RootState)=>state.auth)
 
   // ✅ Mutation hook to update booking
-    const [updateBookingStatus] = bookingApi.useUpdateBookingMutation()
+    const [] = bookingApi.useUpdateBookingMutation()
   
     const userId =user?.userId;
   
@@ -125,111 +124,109 @@ export const Bookings = () => {
   
               {
                 error ? (
-                  <div className="text-red-400">
-                    something went Wrong try Again .....
-                  </div>   
+                  <tr>
+                    <td colSpan={10}>
+                      <div className="text-red-400 text-center">
+                        something went Wrong try Again .....
+                      </div> 
+                    </td>                    
+                  </tr>
                 ): isLoading ? (
-                  <div>
-                   <PuffLoader color="#0aff13"/>
-                  </div>
+                  <tr>
+                    <td colSpan={10}>
+                      <div className="flex justify-center">
+                        <PuffLoader color="#0aff13" />
+                      </div>
+                    </td>
+                  </tr>
                 ) : allBookingsData?.length === 0 ? (
                   <tr>
-                    <div>No Available</div>
+                    <td colSpan={10} className="text-center">
+                      No bookings available.
+                    </td>
                   </tr>
-                ):(
-                  allBookingsData?.map((booking:BookingInterface)=>(
+                ):( 
+                  allBookingsData?.map((booking:BookingInterface)=>( 
                     <tr key={booking.bookingId}>
 
 {/* Booking Id */}
-                      <td>
-                        <th>{booking.bookingId}</th>
-                      </td>
+                      <td>{booking.bookingId}</td>
 
 {/* profileImage , username and email */}
                     <td>
-                <div className="flex items-center gap-3">
-                  <div className="avatar">
-                    <div className="mask mask-squircle h-12 w-12">
-                      <img
-                        src={booking.user.profileImage}
-                        alt="user image" />
-                    </div>
-                  </div>
-                  <div>
-                    <div className="font-bold">{booking.user.firstname} {booking.user.lastname}</div>
+                      <div className="flex items-center gap-3">
+                        <div className="avatar">
+                          <div className="mask mask-squircle h-12 w-12">
+                            <img
+                              src={booking.user.profileImage}
+                              alt="user image" />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-bold">{booking.user.firstname} {booking.user.lastname}</div>
+                          <div className="font-bold">{booking.user.contactPhone}</div>
+                          <div className="text-sm opacity-50">{booking.user.email}</div>
+                        </div>
+                      </div>
+                    </td>
 
-                    <div className="font-bold">{booking.user.contactPhone}</div>
-                    <div className="text-sm opacity-50">{booking.user.email}</div>
-                  </div>
-                </div>
-              </td>
-  
-                      
 {/* image, manufacturer , model */}
                     <td>
-                <div className="flex items-center gap-3">
-                  <div className="avatar">
-                    <div className="mask mask-squircle h-12 w-12">
-                      <img
-                        src={booking.vehicle.specification.vehicleImage}
-                        alt="vehicle image" />
-                    </div>
-                  </div>
-                  <div>
-                    <div className="font-bold">{booking.vehicle.specification.manufacturer}</div>
-                    <div className="text-sm opacity-50">{booking.vehicle.specification.model}</div>
-                  </div>
-                </div>
-              </td>
-  
+                      <div className="flex items-center gap-3">
+                        <div className="avatar">
+                          <div className="mask mask-squircle h-12 w-12">
+                            <img
+                              src={booking.vehicle.specification.vehicleImage}
+                              alt="vehicle image" />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-bold">{booking.vehicle.specification.manufacturer}</div>
+                          <div className="text-sm opacity-50">{booking.vehicle.specification.model}</div>
+                        </div>
+                      </div>
+                    </td>
+
 {/* Number Plate*/}
-  
-                <td>{booking.vehicle.specification.numberPlate}</td>
+                    <td>{booking.vehicle.specification.numberPlate}</td>
+
 {/* Booking Days */}
-  
-                <td>{calculateDaysBooked(booking.bookingDate, booking.returnDate)}</td>
+                    <td>{calculateDaysBooked(booking.bookingDate, booking.returnDate)}</td>
 
 {/* TotalAmount */}
-  
-                <td>Ksh{booking.totalAmount}</td>
-  
-  
-{/* Status*/}
-   
-                <td>
-                <div className={`badge badge-outline ${getStatusBadge(booking.bookingStatus)}`}>
-                {booking.bookingStatus}</div>
-              </td>
+                    <td>Ksh{booking.totalAmount}</td>
 
-                  
-  
+{/* Status*/}
+                    <td>
+                      <div className={`badge badge-outline ${getStatusBadge(booking.bookingStatus)}`}>
+                        {booking.bookingStatus}
+                      </div>
+                    </td>
+
 {/* Booking Date */}
-   
-                <td>{formatDateRange(booking.bookingDate, booking.returnDate)}</td> 
-  
-  
+                    <td>{formatDateRange(booking.bookingDate, booking.returnDate)}</td> 
+
 {/* Location*/}
-                <td>{booking.location.name}</td>
-              
-              
+                    <td>{booking.location.name}</td>
+
 {/* update and delete car */}
-                <td className="flex gap-1">
-                    <button className="btn btn-sm btn-outline text-blue-700 hover:text-blue-500">
-                      <FiEye />
-                    </button>
-                    <button className="btn btn-sm btn-outline text-green-600 hover:text-green-400">
-                      <MdOutlineCheckCircle />
-                    </button>
-                    <button className="btn btn-sm btn-outline text-red-600 hover:text-red-400">
-                      <MdOutlineCancel />
-                    </button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
-    </>
-  );
+                    <td className="flex gap-1">
+                      <button className="btn btn-sm btn-outline text-blue-700 hover:text-blue-500">
+                        <FiEye />
+                      </button>
+                      <button className="btn btn-sm btn-outline text-green-600 hover:text-green-400">
+                        <MdOutlineCheckCircle />
+                      </button>
+                      <button className="btn btn-sm btn-outline text-red-600 hover:text-red-400">
+                        <MdOutlineCancel />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </>
+    );
 };
