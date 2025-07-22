@@ -25,10 +25,11 @@ export const bookingApi = createApi({
       providesTags: ['booking'],
     }),
 
-    getAllBookingForOneUserById:builder.query({
-      query:(userId) => `booking/user?userId=${userId}`,
-      providesTags:['booking']
-    }),
+        getAllBookingForOneUserById:builder.query({
+            query:(userId)=>`booking/user?userId=${userId}`,
+            providesTags:['booking'] 
+        }),      
+
     
     createBooking: builder.mutation({
       query: (createBookingPayload) => ({
@@ -40,10 +41,10 @@ export const bookingApi = createApi({
     }),
 
     updateBooking: builder.mutation({
-      query: ({ bookingId, ...bookingData }) => ({
+      query: ({ bookingId, ...bookingDataPayLoad }) => ({
         url: `booking/${bookingId}`,
         method: 'PUT',
-        body: bookingData,
+        body: bookingDataPayLoad,
       }),
       invalidatesTags: ['booking'],
     }),

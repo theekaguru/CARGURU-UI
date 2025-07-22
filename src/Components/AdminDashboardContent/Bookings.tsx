@@ -3,10 +3,10 @@ import { FiEye} from "react-icons/fi";
 import { PuffLoader } from "react-spinners";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../app/store";
-import Swal from "sweetalert2";
 import { bookingApi } from "../../../features/api/bookingApi";
 import { MdOutlineCancel, MdOutlineCheckCircle } from "react-icons/md";
 
+// ✅ Interface for each booking - defines the data structure returned from backend
 interface BookingInterface {
   bookingId: number;
   bookingDate: string;
@@ -50,8 +50,11 @@ interface BookingInterface {
 
 
 export const Bookings = () => {
-  
+
+   // ✅ Getting auth state from Redux
     const {user , isAuthenticated} =useSelector((state:RootState)=>state.auth)
+
+  // ✅ Mutation hook to update booking
     const [updateBookingStatus] = bookingApi.useUpdateBookingMutation()
   
     const userId =user?.userId;
@@ -61,38 +64,16 @@ export const Bookings = () => {
 });
    
     console.log("🚀~Bookings ~BookingsData:",allBookingsData)
-  
-    const handleEdit = async (bookingId: number) => {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "you want to cancel the Bookings?",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#2563eb",
-        cancelButtonColor: "#f44336",
-        confirmButtonText: "yes , cancel it!",
-      }).then(async (result) => {
-        const updatePayload = {
-          bookingId: bookingId,
-          status: "Unavailable"
-        }
-        if (result.isConfirmed) {
-          try {
-            const res = await updateBookingStatus(updatePayload).unwrap()
-            console.log(res)
-            Swal.fire("Updated", res.message, "success")
-          } catch (error) {
-            Swal.fire("Something Went Wrong", "Please Try Again", "error")
-          }
-        }
-      })
-    }
+
+
+    // ✅ Utility: Calculate how many days a booking covers
     const calculateDaysBooked = (start: string, end: string) => {
     const startDate = new Date(start);
     const endDate = new Date(end);
     return Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
   };
 
+   // ✅ Utility: Format the booking date range
   const formatDateRange = (start: string, end: string) => {
     const startDate = new Date(start);
     const endDate = new Date(end);
@@ -107,6 +88,7 @@ export const Bookings = () => {
     })}`;
   };
 
+  // ✅ Utility: Set badge color class based on booking status
   const getStatusBadge =(status:string)=>{
   switch(status){
     case "Avaialble":return "badge-success"
