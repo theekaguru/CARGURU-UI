@@ -81,32 +81,43 @@ export const CarSpecifications = () => {
                   <th>Color</th>
                   <th>Features</th>
                   <th>Number Plate</th>
+                  <th>Action</th>
 
 
               </tr>
             </thead>
             <tbody>
-  
+
               {
                 error ? (
-                  <div className="text-red-400">
-                    something went Wrong try Again .....
-                  </div>
+                  <tr>
+                    <td colSpan={11}>
+                      <div className="text-red-400">
+                        something went Wrong try Again .....
+                      </div>
+                    </td>
+                  </tr>
                 ): isLoading ? (
-                  <div>
-                   <PuffLoader color="#0aff13"/>
-                  </div>
+                  <tr>
+                    <td colSpan={11}>
+                      <div>
+                       <PuffLoader color="#0aff13"/>
+                      </div>
+                    </td>
+                  </tr>
                 ) : allVehicleSpecificationData?.length === 0 ? (
                   <tr>
-                    <div>No Orders Available</div>
+                    <td colSpan={11}>
+                      <div>No Orders Available</div>
+                    </td>
                   </tr>
-                ):(
-                  allVehicleSpecificationData?.map((vehicleSpec:CarSpecificationInterface)=>(
+                ):( 
+                  allVehicleSpecificationData?.map((vehicleSpec:CarSpecificationInterface)=>( 
                     <tr key={vehicleSpec.vehicleSpecId}>
-  
+
 {/* vehicleSpeId id */}
                       <td>
-                        <th>{vehicleSpec.vehicleSpecId}</th>
+                        {vehicleSpec.vehicleSpecId}
                       </td>
                       
 {/* image, manufacturer , model */}
@@ -125,32 +136,32 @@ export const CarSpecifications = () => {
                     </div>
                   </div>
                 </td>
-  
+
 {/* Year*/}
-  
+
                 <td>{vehicleSpec.year}</td>
 {/* FuelType */}
-  
+
                 <td>{vehicleSpec.fuelType}</td>
 
 {/* Engine Capacity */}
-  
+
                 <td>{vehicleSpec.engineCapacity}</td>
-  
-  
+
+
 {/* Transmission */}
    
                 <td>{vehicleSpec.transmission}</td>                
                   
-  
+
 {/* Number Of Seats */}
    
                 <td>{vehicleSpec.seatingCapacity}</td>  
-  
-  
+
+
 {/* Colour*/}
                 <td>{vehicleSpec.color}</td>
-  
+
 {/*features*/}
    
                 <td>{vehicleSpec.features}</td>
@@ -158,7 +169,7 @@ export const CarSpecifications = () => {
 {/*NumberPlate*/}
    
                 <td>{vehicleSpec.numberPlate}</td>                
-              
+
 {/* update and delete car */}
                 <td>
                 <button className="text-blue-500 hover:text-blue-400 btn btn-sm btn-outline"
@@ -168,17 +179,16 @@ export const CarSpecifications = () => {
                 <button className="btn btn-sm btn-outline text-red-500 ml-1 hover:bg-red-700">
                 <AiFillDelete />
                 </button>
-  
+
                   </td>
                     </tr>
                   ))
                 )
               }
             </tbody>
-  
+
           </table>
         </div>
       </>
     )
    }
-  

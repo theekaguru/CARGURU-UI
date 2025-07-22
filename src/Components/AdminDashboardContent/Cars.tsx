@@ -33,7 +33,7 @@ interface vehicleInterface {
 
 const getStatusBadge =(status:string)=>{
   switch(status){
-    case "avaialble":return "badge-success"
+    case "available":return "badge-success"
     case "unavailable":return "badge-error"
     default: return "badge-primary"
 
@@ -104,24 +104,32 @@ export const Cars = () => {
 
             {
               error ? (
-                <div className="text-red-400">
-                  something went Wrong try Again .....
-                </div>
+                <tr>
+                  <td colSpan={9}>
+                    <div className="text-red-400">something went Wrong try Again .....</div>
+                  </td>
+                </tr>
               ): isLoading ? (
-                <div>
-                 <PuffLoader color="#0aff13"/>
-                </div>
+                <tr>
+                  <td colSpan={9}>
+                    <div>
+                      <PuffLoader color="#0aff13"/>
+                    </div>
+                  </td>
+                </tr>
               ) : allVehicleData?.length === 0 ? (
                 <tr>
-                  <div>No Orders Available</div>
+                  <td colSpan={9}>
+                    <div>No Orders Available</div>
+                  </td>
                 </tr>
-              ):(
-                allVehicleData?.map((vehicle:vehicleInterface)=>(
+              ):( 
+                allVehicleData?.map((vehicle:vehicleInterface)=>( 
                   <tr key={vehicle.vehicleId}>
 
  {/* Car id */}
                     <td>
-                      <th>{vehicle.vehicleId}</th>
+                      {vehicle.vehicleId}
                     </td>
                     
 {/* image, manufacturer , model */}
@@ -193,4 +201,4 @@ export const Cars = () => {
       </div>
     </>
   )
- }
+}

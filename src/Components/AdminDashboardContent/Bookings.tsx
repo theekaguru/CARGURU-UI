@@ -90,8 +90,9 @@ export const Bookings = () => {
   // ✅ Utility: Set badge color class based on booking status
   const getStatusBadge =(status:string)=>{
   switch(status){
-    case "Avaialble":return "badge-success"
-    case "Unavailable":return "badge-error"
+    case "Confirmed":return "badge-success"
+    case "Cancelled":return "badge-error"
+    case "Pending":return "badge-warning"
     default: return "badge-primary"
 
   }

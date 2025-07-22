@@ -83,7 +83,9 @@ export const Users = () => {
 
   return (
     <>
-      <div className="text-2xl font-bold text-center mb-4 text-orange-400">All Users Page</div>
+      <div className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c] animate-pulse">
+        ALL Users
+      </div>
       <div className="overflow-x-auto">
         <table className="table">
           {/* Table Header */}
