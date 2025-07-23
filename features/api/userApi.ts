@@ -98,3 +98,16 @@ export const userApi = createApi({
   }),
 });
 
+export const {
+  useRegisterUserMutation,
+  useLoginUserMutation,
+
+  useGetAllUsersQuery,
+  useGetUserByIdQuery,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
+
+  useGetAllUsersProfilesQuery,
+  useGetUserProfileQuery,
+  useDeleteUserProfileMutation,
+} = userApi;
