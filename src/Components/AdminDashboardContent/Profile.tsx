@@ -89,9 +89,6 @@ export const Profile = () => {
           const res = await updateUserProfile({
             userId: userDetails.userId,
             profileImage: imageProfile,
-            firstname: userDetails.firstname,
-            lastname: userDetails.lastname,
-            email: userDetails.email,
           }).unwrap();
           toast.success(res.message, { id: loadingToastId });
         } catch (error: any) {
