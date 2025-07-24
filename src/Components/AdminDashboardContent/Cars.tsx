@@ -8,7 +8,6 @@ import { PuffLoader } from "react-spinners";
 import { FaAddressBook, FaTimes } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import axios from "axios";
 import { toast, Toaster } from "sonner";
 import { useState } from "react";
 
@@ -37,6 +36,7 @@ interface vehicleInterface {
 }
 
 type AddVehicleForm = {
+  vehicleSpecId: number
   rentalRate: number;
   availability: string;
   vehicleImage: string;
@@ -74,67 +74,28 @@ export const Cars = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm<AddVehicleForm>();
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [vehicleImage, setVehicleImage] = useState<string>("");
-  const [isUploading, setIsUploading] = useState(false);
-
-  const cloud_name = "yourcloud_name";
-  const preset_key = "yourpreset_key";
 
   const handleAddModalToggle = () => {
     setIsAddModalOpen(!isAddModalOpen);
   };
+const onSubmit: SubmitHandler<AddVehicleForm> = async (data) => {
+  const toastId = toast.loading("Adding vehicle...");
+  try {
+    const payload = {
+      vehicleSpecId: data.vehicleSpecId,
+      rentalRate: data.rentalRate,
+      availability: data.availability,
+    };
+    const res = await createVehicle(payload).unwrap();
+    toast.success(res.message, { id: toastId });
+    reset();
+    setIsAddModalOpen(false);
+  } catch (err) {
+    toast.error("Error adding vehicle 🚫", { id: toastId });
+  }
+};
 
-  const handleFileChange = async (e: any) => {
-    setIsUploading(true);
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", preset_key);
-    try {
-      const res = await axios(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
-        method: "POST",
-        data: formData,
-      });
-      setVehicleImage(res.data.secure_url);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsUploading(false);
-    }
-  };
 
-  const onSubmit: SubmitHandler<AddVehicleForm> = async (data) => {
-    const toastId = toast.loading("Adding vehicle...");
-    data.vehicleImage = vehicleImage;
-    try {
-      const payload = {
-        rentalRate: data.rentalRate,
-        availability: data.availability,
-        specification: {
-          manufacturer: data.manufacturer,
-          model: data.model,
-          transmission: data.transmission,
-          engineCapacity: data.engineCapacity,
-          seatingCapacity: data.seatingCapacity,
-          fuelType: data.fuelType,
-          year: data.year,
-          color: data.color,
-          features: data.features,
-          vehicleImage: data.vehicleImage,
-        },
-        location: {
-          name: data.location
-        }
-      };
-      const res = await createVehicle(payload).unwrap();
-      toast.success(res.message, { id: toastId });
-      reset();
-      setVehicleImage("");
-      setIsAddModalOpen(false);
-    } catch (err) {
-      toast.error("Error adding vehicle.", { id: toastId });
-    }
-  };
 
   const handleEdit = async (vehicleId: number) => {
     Swal.fire({
@@ -253,62 +214,53 @@ export const Cars = () => {
       <div className="flex justify-center items-center mb-4">
         <h2 className="text-2xl font-bold text-orange-500">Add A Vehicle</h2>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-4">
-          <label htmlFor="manufacturer" className="block text-sm font-medium text-orange-500">Manufacturer</label>
-          <input
-            type="text"
-            id="manufacturer"
-            className="input w-full text-blue-500 text-sm"
-            {...register("manufacturer", { required: "manufacturer is required" })}
-          />
-          {errors.manufacturer && <p className="text-red-500 text-sm">{errors.manufacturer.message}</p>}
-        </div>
+<form onSubmit={handleSubmit(onSubmit)}>
+  <div className="mb-4">
+    <label htmlFor="vehicleSpecId" className="block text-sm font-medium text-orange-500">Vehicle Spec ID</label>
+    <input
+      type="number"
+      id="vehicleSpecId"
+      className="input w-full text-blue-500 text-sm"
+      {...register("vehicleSpecId", { required: "Vehicle Spec ID is required" })}
+    />
+    {errors.vehicleSpecId && <p className="text-red-500 text-sm">{errors.vehicleSpecId.message}</p>}
+  </div>
 
-        <div className="mb-4">
-          <label htmlFor="model" className="block text-sm font-medium text-orange-500">Model</label>
-          <input
-            type="text"
-            id="model"
-            className="input w-full text-blue-500 text-sm"
-            {...register("model", { required: "model is required" })}
-          />
-          {errors.model && <p className="text-red-500 text-sm">{errors.model.message}</p>}
-        </div>
+  <div className="mb-4">
+    <label htmlFor="rentalRate" className="block text-sm font-medium text-orange-500">Rental Rate (Ksh)</label>
+    <input
+      type="number"
+      id="rentalRate"
+      className="input input-bordered w-full text-blue-500 text-sm"
+      {...register("rentalRate", { required: "Rental Rate is required" })}
+    />
+    {errors.rentalRate && <p className="text-red-500 text-sm">{errors.rentalRate.message}</p>}
+  </div>
 
-        <div className="mb-4">
-          <label htmlFor="rentalRate" className="block text-sm font-medium text-orange-500">Rental Rate (Ksh)</label>
-          <input
-            type="number"
-            id="rentalRate"
-            className="input input-bordered w-full text-blue-500 text-sm"
-            {...register("rentalRate", { required: "rentalRate is required" })}
-          />
-          {errors.rentalRate && <p className="text-red-500 text-sm">{errors.rentalRate.message}</p>}
-        </div>
+  <div className="mb-4">
+    <label htmlFor="availability" className="block text-sm font-medium text-orange-500">Availability</label>
+    <select
+      id="availability"
+      className="select select-bordered w-full text-blue-500 text-sm"
+      {...register("availability", { required: "Availability is required" })}
+    >
+      <option value="">Select Availability</option>
+      <option value="available">Available</option>
+      <option value="unavailable">Unavailable</option>
+    </select>
+    {errors.availability && <p className="text-red-500 text-sm">{errors.availability.message}</p>}
+  </div>
 
-        <div className="mb-4">
-          <label htmlFor="vehicleImage" className="block text-sm font-medium text-orange-500">Vehicle Image</label>
-          <input
-            type="file"
-            id="vehicleImage"
-            onChange={handleFileChange}
-            className="input input-bordered w-full text-blue-500 text-sm"
-          />
-        </div>
+  <div className="flex justify-end">
+    <button onClick={handleAddModalToggle} className="btn btn-error mr-2">
+      <FaTimes /> Cancel
+    </button>
+    <button type="submit" className="btn btn-primary">
+      <SaveIcon /> Add Vehicle
+    </button>
+  </div>
+</form>
 
-        {/* Preview Image */}
-        <img src={vehicleImage} alt="vehicle" width="75" height="75" />
-
-        <div className="flex justify-end">
-          <button onClick={handleAddModalToggle} className="btn btn-error mr-2">
-            <FaTimes /> Cancel
-          </button>
-          <button type="submit" className="btn btn-primary" disabled={isUploading}>
-            <SaveIcon /> Add Vehicle {isUploading ? 'Uploading...' : 'Submit'}
-          </button>
-        </div>
-      </form>
     </div>
   </div>
 )}
