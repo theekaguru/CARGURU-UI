@@ -192,7 +192,7 @@ const onSubmit: SubmitHandler<AddVehicleForm> = async (data) => {
                   <td>
                     <div className={`badge badge-outline ${getStatusBadge(vehicle.availability)}`}>{vehicle.availability}</div>
                   </td>
-                  <td>{vehicle.location.name || "N/A"}</td>
+                  <td>{vehicle.location?.name || "N/A"}</td>
                   <td>
                     <button onClick={() => handleEdit(vehicle.vehicleId)} className="btn btn-sm btn-outline text-blue-500 mr-2">
                       <FiEdit />

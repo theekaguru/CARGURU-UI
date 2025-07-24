@@ -1,3 +1,4 @@
+// ... imports remain unchanged
 import { FiEdit } from "react-icons/fi";
 import { PuffLoader } from "react-spinners";
 import { useSelector } from "react-redux";
@@ -35,7 +36,8 @@ export const CarSpecifications = () => {
   const userId = user?.userId;
 
   const {
-    data: allVehicleSpecificationData = [],isLoading,error,} = vehicleSpecApi.useGetAllVehicleSpecificationsQuery(userId, {
+    data: allVehicleSpecificationData = [], isLoading, error,
+  } = vehicleSpecApi.useGetAllVehicleSpecificationsQuery(userId, {
     skip: !isAuthenticated,
   });
 
@@ -49,8 +51,8 @@ export const CarSpecifications = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isImgUploading, setIsImgUploading] = useState(false);
 
-  const cloud_name = "yourcloud_name";
-  const preset_key = "yourpreset_key";
+  const cloud_name = 'dfty9bjsf';
+  const preset_key = 'CARGURU-RIDES';
 
   const handleModalToggle = () => setIsAddModalOpen(!isAddModalOpen);
 
@@ -92,7 +94,11 @@ export const CarSpecifications = () => {
     const LoadingtoastId = toast.loading("Adding vehicle spec...");
     data.vehicleImage = vehicleImage;
     try {
-      const res = await createVehicleSpec(data).unwrap();
+      const payload = {
+        ...data,
+        userId, // ✅ Ensure userId is sent
+      };
+      const res = await createVehicleSpec(payload).unwrap();
       toast.success(res.message, { id: LoadingtoastId });
       reset();
       setVehicleImage("");
@@ -204,7 +210,6 @@ export const CarSpecifications = () => {
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid grid-cols-2 gap-4">
-                {/* Form Inputs */}
                 {[
                   ["manufacturer", "Manufacturer"],
                   ["model", "Model"],
@@ -223,9 +228,16 @@ export const CarSpecifications = () => {
                       id={key}
                       type={key === "year" || key === "seatingCapacity" ? "number" : "text"}
                       className="input w-full text-blue-500 text-sm"
-                      {...register(key as keyof AddFormValues, { required: `${label} is required` })}
+                      {...register(key as keyof AddFormValues, {
+                        required: `${label} is required`,
+                        ...(key === "year" || key === "seatingCapacity" ? { valueAsNumber: true } : {})
+                      })}
                     />
-                    {errors[key as keyof AddFormValues] && <p className="text-red-500 text-sm">{errors[key as keyof AddFormValues]?.message}</p>}
+                    {errors[key as keyof AddFormValues] && (
+                      <p className="text-red-500 text-sm">
+                        {errors[key as keyof AddFormValues]?.message}
+                      </p>
+                    )}
                   </div>
                 ))}
                 <div className="col-span-2">
