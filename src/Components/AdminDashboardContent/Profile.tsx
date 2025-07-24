@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { FaCamera, FaEdit, FaTimes } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import { useForm, type SubmitHandler } from 'react-hook-form';
-import { SaveIcon } from 'lucide-react';
-import type { RootState } from '../../../app/store';
-import { userApi } from '../../../features/api/userApi';
-import axios from 'axios';
-import { toast, Toaster } from 'sonner';
 import { useNavigate } from 'react-router-dom';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import type { RootState } from '../../../app/store';
+import { SaveIcon } from 'lucide-react';
+import axios from 'axios';
+import { userApi } from '../../../features/api/userApi';
+import { toast, Toaster } from 'sonner';
 
 interface FormValues {
   firstname: string;
@@ -19,123 +19,123 @@ interface FormValues {
 export const Profile = () => {
   const cloud_name = 'dfty9bjsf';
   const preset_key = 'CARGURU-RIDES';
-  const [ProfilePicture, setImageProfile] = useState<string>('');
+  const [imageProfile, setImageProfile] = useState<string>('');
   const [updateUserProfile] = userApi.useUpdateUserProfileMutation();
-  const Navigate = useNavigate();
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+
   const { user, isAuthenticated, userType } = useSelector((state: RootState) => state.auth);
   const userId = user?.userId;
 
-  const { data: userDetails } = userApi.useGetUserByIdQuery(userId, {
-    skip: !isAuthenticated
+  const { data: userDetails = [] } = userApi.useGetUserByIdQuery(userId, {
+    skip: !isAuthenticated,
   });
+  console.log(userDetails);
 
-  const imageProfile = userDetails?.profileImage
-    ? userDetails.profileImage
-    : `https://ui-avatars.com/api/?name=${encodeURIComponent(userDetails?.firstname || 'User')}&background=4ade80&color=fff&size=128`;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleModalToggle = () => setIsModalOpen(!isModalOpen);
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>();
+
+
+
+  const profilePicture = userDetails?.profileImage ||  `https://ui-avatars.com/api/?name=${encodeURIComponent(userDetails?.firstname)}&background=4ade80&color=fff&size=128`;
+
+  const handleModalToggle = () => {setIsModalOpen(!isModalOpen);};
 
   useEffect(() => {
     if (!isAuthenticated) {
-      Navigate('/login');
+      navigate('/login');
     } else if (userType !== 'admin') {
-      Navigate('/dashboard/analytics');
+      navigate('/dashboard/analytics');
     }
-  }, [isAuthenticated, userType, Navigate]);
+  }, [isAuthenticated, userType, navigate]);
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     const loadingToastId = toast.loading("Updating your details...");
-    const updateData = {
-      ...data,
-      userId: userId
-    };
     try {
-      const res = await updateUserProfile(updateData).unwrap();
+      const res = await updateUserProfile({ ...data, userId }).unwrap();
       toast.success(res.message, { id: loadingToastId });
       reset();
       setIsModalOpen(false);
     } catch (error: any) {
-      toast.error('Failed to update profile. Please try again.');
+      toast.error('Failed to update profile. Please try again.', error);
       toast.dismiss(loadingToastId);
     }
   };
 
-const handleFileImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  const file = e.target.files?.[0];
-  if (!file) {
-    toast.error("No file selected!");
-    return;
-  }
-
-  console.log("Selected file:", file); // ✅ Ensure a valid file is logged
-
-  const formData = new FormData();
-  formData.append('file', file);
-  formData.append('upload_preset', preset_key);
-
-  try {
-    const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData);
-    const data = res.data;
-    setImageProfile(data.secure_url);
-    toast.success("Image uploaded successfully");
-  } catch (error: any) {
-    console.error("Cloudinary upload error:", error.response?.data || error.message);
-    toast.error("Image upload failed. Check Cloudinary preset and cloud name.");
-  }
-};
-
+  const handleFileImage = async (e: any) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", preset_key);
+    try {
+      const res = await axios(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
+        method: "POST",
+        data: formData
+      });
+      const data = await res.data;
+      console.log("handleFileImage~data:",data);
+      setImageProfile(data.secure_url);
+    } catch (err: any) {
+      console.log(err);
+      toast.error('Image upload failed.');
+    }
+  };
 
   useEffect(() => {
-    const updateProfile = async () => {
-      if (ProfilePicture && userDetails) {
+    const updateProfilePic = async () => {
+      if (imageProfile && userDetails) {
+        const loadingToastId = toast.loading("Updating your profile image...");
         try {
           const res = await updateUserProfile({
             userId: userDetails.userId,
-            profileImage: ProfilePicture,
+            profileImage: imageProfile,
             firstname: userDetails.firstname,
             lastname: userDetails.lastname,
             email: userDetails.email,
           }).unwrap();
-          console.log("~updateProfile~res:", res);
-        } catch (error) {
-          console.error("Error updating profile image", error);
+          toast.success(res.message, { id: loadingToastId });
+        } catch (error: any) {
+          toast.error('Failed to update profile picture. Please try again.', error);
+          toast.dismiss(loadingToastId);
         }
       }
     };
-    updateProfile();
-  }, [ProfilePicture, userDetails]);
+
+    updateProfilePic();
+  }, [imageProfile, userDetails]);
 
   return (
     <div className="min-h-screen text-white py-10 px-5">
-      <Toaster />
-      <div className="max-w-4xl w-full mx-auto rounded-lg shadow-lg p-5">
-        <div className="flex flex-col md:flex-row flex-wrap items-center justify-between border-b border-gray-700 pb-5 mb-5 gap-4">
-          <div className="relative flex items-center gap-4 w-full sm:w-auto">
+      <Toaster richColors position="top-right" />
+
+      <div className="max-w-4xl mx-auto rounded-lg shadow-lg p-5">
+        <div className="flex flex-col md:flex-row items-center justify-between border-b border-gray-700 pb-5 mb-5">
+          <div className="relative flex items-center gap-4 mb-4 md:mb-0">
             <img
-              src={ProfilePicture}
+              src={profilePicture}
               alt="Profile"
-              className="w-24 h-24 rounded-full border-4 border-[#444009]"
+              className="w-24 h-24 rounded-full border-4 border-orange-500"
             />
-            <label className="absolute bottom-0 bg-[#342e0f] p-2 rounded-full cursor-pointer">
+            <label className="absolute bottom-0 bg-orange-500 p-2 rounded-full cursor-pointer">
               <FaCamera />
               <input type="file" className="hidden" onChange={handleFileImage} />
             </label>
-
-            <div className="min-w-0">
-              <h2 className="text-2xl md:text-3xl font-bold text-green-600 truncate">{userDetails?.firstname}</h2>
-              <p className="text-green-600 truncate">{userDetails?.email}</p>
+            <div>
+              <h2 className="text-3xl font-bold text-orange-500">{userDetails?.firstname}</h2>
+              <p className="text-orange-400">{userDetails?.email}</p>
             </div>
           </div>
-          <button className="btn btn-warning flex items-center gap-2 w-full sm:w-auto justify-center">
+          <button
+            className="btn btn-warning flex items-center gap-2"
+            onClick={handleModalToggle}
+          >
             <FaEdit /> Edit Profile
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div className="bg-gradient-to-br from-[#888372] via-[#a3a4a1] to-[#504118] shadow-xl hover:scale-105 transition-transform duration-300 rounded-lg p-4">
-            <h3 className="text-xl md:text-2xl font-bold mb-3">Personal Information</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-gradient-to-r from-orange-600 to-amber-600 rounded-lg p-4">
+            <h3 className="text-2xl font-bold mb-3">Personal Information</h3>
             <p className="mb-2">
               <span className="font-bold">First Name:</span> {userDetails?.firstname}
             </p>
@@ -143,27 +143,25 @@ const handleFileImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
               <span className="font-bold">Last Name:</span> {userDetails?.lastname}
             </p>
           </div>
-          <div className="bg-gradient-to-br from-[#888372] via-[#a3a4a1] to-[#504118] shadow-xl hover:scale-105 transition-transform duration-300 rounded-lg p-4">
-            <h3 className="text-xl md:text-2xl font-bold mb-3">Security Settings</h3>
+          <div className="bg-gradient-to-r from-orange-600 to-amber-600 rounded-lg p-4">
+            <h3 className="text-2xl font-bold mb-3">Security Settings</h3>
             <p className="mb-2">
-              <span className="font-bold">Password:</span> 🔒🤚
+              <span className="font-bold">Password:</span> 🔒💁‍♂️
             </p>
-            <button className="btn btn-secondary w-full sm:w-auto">Change Password</button>
+            <button className="btn btn-secondary">Change Password</button>
           </div>
         </div>
       </div>
 
       {isModalOpen && (
         <div className="modal modal-open">
-          <div className="modal-box w-full max-w-lg mx-auto">
+          <div className="modal-box">
             <div className="flex justify-center items-center mb-4">
-              <h2 className="text-xl md:text-2xl font-bold text-orange-500">Edit Profile</h2>
+              <h2 className="text-2xl font-bold text-orange-500">Edit Profile</h2>
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4">
-                <label htmlFor="firstName" className="block text-sm font-medium text-orange-500">
-                  First Name
-                </label>
+                <label htmlFor="firstname" className="block text-sm font-medium text-orange-500">First Name</label>
                 <input
                   type="text"
                   id="firstname"
@@ -174,12 +172,10 @@ const handleFileImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
                 {errors.firstname && <p className="text-red-500 text-sm">{errors.firstname.message}</p>}
               </div>
               <div className="mb-4">
-                <label htmlFor="lastName" className="block text-sm font-medium text-orange-500">
-                  Last Name
-                </label>
+                <label htmlFor="lastname" className="block text-sm font-medium text-orange-500">Last Name</label>
                 <input
                   type="text"
-                  id="lastName"
+                  id="lastname"
                   className="input w-full text-blue-500 text-sm"
                   defaultValue={user?.lastname}
                   {...register('lastname', { required: 'Last name is required' })}
@@ -187,9 +183,7 @@ const handleFileImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
                 {errors.lastname && <p className="text-red-500 text-sm">{errors.lastname.message}</p>}
               </div>
               <div className="mb-4">
-                <label htmlFor="email" className="block text-sm font-medium">
-                  Email
-                </label>
+                <label htmlFor="email" className="block text-sm font-medium text-orange-500">Email</label>
                 <input
                   type="email"
                   id="email"
@@ -200,9 +194,8 @@ const handleFileImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
                 />
                 {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
               </div>
-
-              <div className="flex flex-col sm:flex-row justify-end gap-2">
-                <button onClick={handleModalToggle} className="btn btn-error">
+              <div className="flex justify-end">
+                <button onClick={handleModalToggle} className="btn mr-2 btn-error">
                   <FaTimes /> Cancel
                 </button>
                 <button type="submit" className="btn btn-primary">
@@ -216,3 +209,5 @@ const handleFileImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     </div>
   );
 };
+
+export default Profile;
