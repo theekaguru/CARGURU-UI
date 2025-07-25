@@ -111,7 +111,20 @@ export const Location = () => {
         </button>
       </div>
 
-      <div className="overflow-x-auto">
+      {
+           error ? (
+            <div className="text-red-500">
+                  something went wrong try again
+            </div>
+          ):isLoading ? (
+            <div className="loading">
+              <PuffLoader/>
+              loading....
+            </div>
+            ) : allLocationsData.length === 0 ? (
+            <div>No vehicles Available</div>
+          ):(  
+             <div className="overflow-x-auto">
         <table className="table">
           <thead>
             <tr>
@@ -126,28 +139,7 @@ export const Location = () => {
             </tr>
           </thead>
           <tbody>
-            {error ? (
-              <tr>
-                <td colSpan={8}>
-                  <div className="text-red-400 text-center">Something went wrong. Try again...</div>
-                </td>
-              </tr>
-            ) : isLoading ? (
-              <tr>
-                <td colSpan={8}>
-                  <div className="flex justify-center">
-                    <PuffLoader color="#0aff13" />
-                  </div>
-                </td>
-              </tr>
-            ) : allLocationsData.length === 0 ? (
-              <tr>
-                <td colSpan={8} className="text-center">
-                  No Locations Available 😎
-                </td>
-              </tr>
-            ) : (
-              allLocationsData.map((location: LocationInterface) => (
+            { allLocationsData.map((location: LocationInterface) => (
                 <tr key={location.locationId}>
                   <td>{location.locationId}</td>
                   <td>{location.name}</td>
@@ -171,12 +163,12 @@ export const Location = () => {
                     </button>
                   </td>
                 </tr>
-              ))
-            )}
+              ))}
           </tbody>
         </table>
-      </div>
-
+      </div> 
+          )    
+      }
       {isAddModalOpen && (
         <div className="modal modal-open">
           <div className="modal-box">

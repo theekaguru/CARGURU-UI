@@ -6,6 +6,7 @@ import { FaTimes } from "react-icons/fa";
 import { SaveIcon } from "lucide-react";
 import type { RootState } from "../../../app/store";
 import { userApi } from "../../../features/api/userApi";
+import { toast, Toaster } from "sonner";
 
 // 🧩 User Interface
 interface UserInterface {
@@ -74,7 +75,7 @@ export const Users = () => {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   // Fetch all users with profiles
-  const { data: usersData = [], isLoading: userDataIsLoading, error } = userApi.useGetAllUsersProfilesQuery({
+  const { data: usersData = [], isLoading , error } = userApi.useGetAllUsersProfilesQuery({
     skip: !isAuthenticated,
   });
 
@@ -83,10 +84,24 @@ export const Users = () => {
 
   return (
     <>
+    <Toaster richColors position="top-right" />
       <div className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c] animate-pulse">
         ALL Users
       </div>
-      <div className="overflow-x-auto">
+      {
+        error ? (
+            <div className="text-red-500">
+                  something went wrong try again
+            </div>
+          ):isLoading ? (
+            <div className="loading">
+              <PuffLoader/>
+              loading....
+            </div>
+          ): usersData?.length === 0 ? (
+            <div>No Users Available</div>
+          ):(
+          <div className="overflow-x-auto">
         <table className="table">
           {/* Table Header */}
           <thead>
@@ -102,21 +117,7 @@ export const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {error ? (
-              <tr>
-                <td colSpan={8} className="text-center text-red-500">
-                  error while fetching your User..try again
-                </td>
-              </tr>
-            ) : userDataIsLoading ? (
-              <tr>
-                <td colSpan={8} className="text-center">
-                  <PuffLoader color="#0aff13" />
-                </td>
-              </tr>
-            ) : usersData.length === 0 ? (
-              <tr><td colSpan={8}>No Users available 😎</td></tr>
-            ) : (
+            {
               usersData.map((user: UserInterface) => (
                 <tr key={user.userId}>
                   <th>{user.userId}</th>
@@ -170,11 +171,13 @@ export const Users = () => {
                     </button>
                   </td>
                 </tr>
-              ))
-            )}
+              ))}
           </tbody>
         </table>
       </div>
+          )
+      }
+     
 
       {/* 🛠️ Modal for editing user type */}
       {isModalOpen && (

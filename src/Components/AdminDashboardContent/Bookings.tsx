@@ -99,12 +99,23 @@ export const Bookings = () => {
 }
     return (
       <>
-     
-
         <div className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c] animate-pulse">
         Bookings
       </div>
-        <div className="overflow-x-auto">
+      {
+        error ? (
+                  <div className="text-red-500">
+                          something went wrong try again
+                    </div>
+                  ):isLoading ? (
+                    <div className="loading">
+                      <PuffLoader/>
+                      loading....
+                    </div>
+                   ) : allBookingsData?.length === 0 ? (
+                    <div>No Bookings Available</div>
+                  ):(
+                    <div className="overflow-x-auto">
           <table className="table">
             {/* head */}
             <thead>
@@ -122,31 +133,7 @@ export const Bookings = () => {
               </tr>
             </thead>
             <tbody>
-  
               {
-                error ? (
-                  <tr>
-                    <td colSpan={10}>
-                      <div className="text-red-400 text-center">
-                        something went Wrong try Again .....
-                      </div> 
-                    </td>                    
-                  </tr>
-                ): isLoading ? (
-                  <tr>
-                    <td colSpan={10}>
-                      <div className="flex justify-center">
-                        <PuffLoader color="#0aff13" />
-                      </div>
-                    </td>
-                  </tr>
-                ) : allBookingsData?.length === 0 ? (
-                  <tr>
-                    <td colSpan={10} className="text-center">
-                      No bookings available.
-                    </td>
-                  </tr>
-                ):( 
                   allBookingsData?.map((booking:BookingInterface)=>( 
                     <tr key={booking.bookingId}>
 
@@ -223,11 +210,12 @@ export const Bookings = () => {
                       </button>
                     </td>
                   </tr>
-                ))
-              )}
+                ))}
             </tbody>
           </table>
         </div>
+      )}
+
       </>
     );
 };

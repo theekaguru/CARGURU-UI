@@ -90,7 +90,7 @@ const onSubmit: SubmitHandler<AddVehicleForm> = async (data) => {
     toast.success(res.message, { id: toastId });
     reset();
     setIsAddModalOpen(false);
-  } catch (err) {
+  } catch (err:any) {
     toast.error("Error adding vehicle 🚫", { id: toastId });
   }
 };
@@ -146,8 +146,21 @@ const onSubmit: SubmitHandler<AddVehicleForm> = async (data) => {
           <FaAddressBook /> Add Vehicle
         </button>
       </div>
-      <div className="overflow-x-auto">
-        <table className="table">
+        {
+          error ? (
+            <div className="text-red-500">
+                  something went wrong try again
+            </div>
+          ):isLoading ? (
+            <div className="loading">
+              <PuffLoader/>
+              loading....
+            </div>
+          ): allVehicleData?.length === 0 ? (
+            <div>No vehicles Available</div>
+          ):(
+            <div className="overflow-x-auto">
+             <table className="table">
           <thead>
             <tr>
               <th>Car Id</th>
@@ -162,14 +175,7 @@ const onSubmit: SubmitHandler<AddVehicleForm> = async (data) => {
             </tr>
           </thead>
           <tbody>
-            {error ? (
-              <tr><td colSpan={9}>Error fetching data...</td></tr>
-            ) : isLoading ? (
-              <tr><td colSpan={9}><PuffLoader color="#0aff13" /></td></tr>
-            ) : allVehicleData.length === 0 ? (
-              <tr><td colSpan={9}>No vehicles found</td></tr>
-            ) : (
-              allVehicleData.map((vehicle: vehicleInterface) => (
+            { allVehicleData.map((vehicle: vehicleInterface) => (
                 <tr key={vehicle.vehicleId}>
                   <td>{vehicle.vehicleId}</td>
                   <td>
@@ -202,12 +208,12 @@ const onSubmit: SubmitHandler<AddVehicleForm> = async (data) => {
                     </button>
                   </td>
                 </tr>
-              ))
-            )}
+              ))}
           </tbody>
         </table>
-      </div>
-
+        </div>
+          )
+        }
       {isAddModalOpen && (
   <div className="modal modal-open">
     <div className="modal-box">

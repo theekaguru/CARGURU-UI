@@ -38,7 +38,7 @@ export const CarSpecifications = () => {
   const {
     data: allVehicleSpecificationData = [], isLoading, error,
   } = vehicleSpecApi.useGetAllVehicleSpecificationsQuery(userId, {
-    skip: !isAuthenticated,
+    skip: !isAuthenticated
   });
 
   const [createVehicleSpec] = vehicleSpecApi.useCreateVehicleSpecificationMutation();
@@ -137,8 +137,20 @@ export const CarSpecifications = () => {
           <FaAddressBook /> Add Vehicle
         </button>
       </div>
-
-      <div className="overflow-x-auto">
+      {
+        error ? (
+            <div className="text-red-500">
+                  something went wrong try again
+            </div>
+          ):isLoading ? (
+            <div className="loading">
+              <PuffLoader/>
+              loading....
+            </div>
+          ): allVehicleSpecificationData.length === 0 ? (
+            <div>No vehicleSpecs Available</div>
+          ):( 
+          <div className="overflow-x-auto">
         <table className="table">
           <thead>
             <tr>
@@ -156,13 +168,7 @@ export const CarSpecifications = () => {
             </tr>
           </thead>
           <tbody>
-            {error ? (
-              <tr><td colSpan={11} className="text-red-400">something went Wrong try Again .....</td></tr>
-            ) : isLoading ? (
-              <tr><td colSpan={11}><PuffLoader color="#0aff13" /></td></tr>
-            ) : allVehicleSpecificationData.length === 0 ? (
-              <tr><td colSpan={11}>No CarSpecs Available</td></tr>
-            ) : (
+             {
               allVehicleSpecificationData.map((vehicleSpec: CarSpecificationInterface) => (
                 <tr key={vehicleSpec.vehicleSpecId}>
                   <td>{vehicleSpec.vehicleSpecId}</td>
@@ -196,11 +202,12 @@ export const CarSpecifications = () => {
                     </button>
                   </td>
                 </tr>
-              ))
-            )}
+              ))}
           </tbody>
         </table>
       </div>
+  )
+      }
 
       {isAddModalOpen && (
         <div className="modal modal-open">
