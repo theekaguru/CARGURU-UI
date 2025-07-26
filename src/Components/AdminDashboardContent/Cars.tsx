@@ -62,22 +62,23 @@ const getStatusBadge = (status: string) => {
 
 export const Cars = () => {
   const { user, isAuthenticated } = useSelector((state: RootState) => state.auth);
-  const [createVehicle] = vehicleApi.useCreateVehicleMutation();
-  const [updateVehicleStatus] = vehicleApi.useUpdateVehicleMutation();
-  const [deleteVehicle] = vehicleApi.useDeleteVehicleMutation();
   const userId = user?.userId;
 
   const { data: allVehicleData = [], isLoading, error } = vehicleApi.useGetAllVehiclesQuery(userId, {
-    skip: !isAuthenticated
+  skip: !isAuthenticated
   });
+
+  const [createVehicle] = vehicleApi.useCreateVehicleMutation();
+  const [updateVehicleStatus] = vehicleApi.useUpdateVehicleMutation();
+  const [deleteVehicle] = vehicleApi.useDeleteVehicleMutation();
+
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<AddVehicleForm>();
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  const handleAddModalToggle = () => {
-    setIsAddModalOpen(!isAddModalOpen);
-  };
+  const handleAddModalToggle = () => {setIsAddModalOpen(!isAddModalOpen);};
+  
 const onSubmit: SubmitHandler<AddVehicleForm> = async (data) => {
   const toastId = toast.loading("Adding vehicle...");
   try {
@@ -87,13 +88,19 @@ const onSubmit: SubmitHandler<AddVehicleForm> = async (data) => {
       availability: data.availability,
     };
     const res = await createVehicle(payload).unwrap();
+
     toast.success(res.message, { id: toastId });
+
+    // ✅ Safely reset and close modal after successful mutation
     reset();
-    setIsAddModalOpen(false);
-  } catch (err:any) {
+    setTimeout(() => {
+      setIsAddModalOpen(false);
+    }, 100); // Small delay ensures form remains mounted during completion
+  } catch (err: any) {
     toast.error("Error adding vehicle 🚫", { id: toastId });
   }
 };
+
 
 
 
@@ -214,62 +221,89 @@ const onSubmit: SubmitHandler<AddVehicleForm> = async (data) => {
         </div>
           )
         }
-      {isAddModalOpen && (
-  <div className="modal modal-open">
-    <div className="modal-box">
-      <div className="flex justify-center items-center mb-4">
-        <h2 className="text-2xl font-bold text-orange-500">Add A Vehicle</h2>
+          {isAddModalOpen && (
+      <div className="modal modal-open">
+        <div className="modal-box max-w-4xl">
+          <div className="flex justify-center items-center mb-4">
+            <h2 className="text-2xl font-bold text-orange-500">Add Vehicle Spec</h2>
+          </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                ["manufacturer", "Manufacturer"],
+                ["model", "Model"],
+                ["year", "Year"],
+                ["fuelType", "Fuel Type"],
+                ["engineCapacity", "Engine Capacity"],
+                ["transmission", "Transmission"],
+                ["seatingCapacity", "Seats"],
+                ["color", "Color"],
+                ["features", "Features"],
+                ["vehicleImage", "Vehicle Image URL"],
+                ["location", "Location"],
+              ].map(([key, label]) => (
+                <div key={key}>
+                  <label htmlFor={key} className="block text-sm font-medium text-orange-500">{label}</label>
+                  <input
+                    id={key}
+                    type={key === "year" || key === "seatingCapacity" ? "number" : "text"}
+                    className="input w-full text-blue-500 text-sm"
+                    {...register(key as keyof AddVehicleForm, {
+                      required: `${label} is required`,
+                      ...(key === "year" || key === "seatingCapacity" ? { valueAsNumber: true } : {})
+                    })}
+                  />
+                  {errors[key as keyof AddVehicleForm] && (
+                    <p className="text-red-500 text-sm">
+                      {errors[key as keyof AddVehicleForm]?.message}
+                    </p>
+                  )}
+                </div>
+              ))}
+
+              <div>
+                <label htmlFor="rentalRate" className="block text-sm font-medium text-orange-500">Rental Rate (Ksh)</label>
+                <input
+                  type="number"
+                  id="rentalRate"
+                  className="input w-full text-blue-500 text-sm"
+                  {...register("rentalRate", { required: "Rental Rate is required", valueAsNumber: true })}
+                />
+                {errors.rentalRate && (
+                  <p className="text-red-500 text-sm">{errors.rentalRate.message}</p>
+                )}
+              </div>
+
+              <div>
+                <label htmlFor="availability" className="block text-sm font-medium text-orange-500">Availability</label>
+                <select
+                  id="availability"
+                  className="select w-full text-blue-500 text-sm"
+                  {...register("availability", { required: "Availability is required" })}
+                >
+                  <option value="">Select</option>
+                  <option value="available">Available</option>
+                  <option value="unavailable">Unavailable</option>
+                </select>
+                {errors.availability && (
+                  <p className="text-red-500 text-sm">{errors.availability.message}</p>
+                )}
+              </div>
+            </div>
+
+            <div className="flex justify-end mt-4">
+              <button onClick={handleAddModalToggle} type="button" className="btn btn-error mr-2">
+                <FaTimes /> Cancel
+              </button>
+              <button type="submit" className="btn btn-primary">
+                <SaveIcon /> Add Vehicle
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-<form onSubmit={handleSubmit(onSubmit)}>
-  <div className="mb-4">
-    <label htmlFor="vehicleSpecId" className="block text-sm font-medium text-orange-500">Vehicle Spec ID</label>
-    <input
-      type="number"
-      id="vehicleSpecId"
-      className="input w-full text-blue-500 text-sm"
-      {...register("vehicleSpecId", { required: "Vehicle Spec ID is required" })}
-    />
-    {errors.vehicleSpecId && <p className="text-red-500 text-sm">{errors.vehicleSpecId.message}</p>}
-  </div>
+    )}
 
-  <div className="mb-4">
-    <label htmlFor="rentalRate" className="block text-sm font-medium text-orange-500">Rental Rate (Ksh)</label>
-    <input
-      type="number"
-      id="rentalRate"
-      className="input input-bordered w-full text-blue-500 text-sm"
-      {...register("rentalRate", { required: "Rental Rate is required" })}
-    />
-    {errors.rentalRate && <p className="text-red-500 text-sm">{errors.rentalRate.message}</p>}
-  </div>
-
-  <div className="mb-4">
-    <label htmlFor="availability" className="block text-sm font-medium text-orange-500">Availability</label>
-    <select
-      id="availability"
-      className="select select-bordered w-full text-blue-500 text-sm"
-      {...register("availability", { required: "Availability is required" })}
-    >
-      <option value="">Select Availability</option>
-      <option value="available">Available</option>
-      <option value="unavailable">Unavailable</option>
-    </select>
-    {errors.availability && <p className="text-red-500 text-sm">{errors.availability.message}</p>}
-  </div>
-
-  <div className="flex justify-end">
-    <button onClick={handleAddModalToggle} className="btn btn-error mr-2">
-      <FaTimes /> Cancel
-    </button>
-    <button type="submit" className="btn btn-primary">
-      <SaveIcon /> Add Vehicle
-    </button>
-  </div>
-</form>
-
-    </div>
-  </div>
-)}
     </>
   );
 };

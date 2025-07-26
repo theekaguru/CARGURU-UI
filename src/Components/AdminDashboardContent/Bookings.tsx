@@ -1,9 +1,9 @@
-import { FiEye} from "react-icons/fi";
+
 import { PuffLoader } from "react-spinners";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../app/store";
 import { bookingApi } from "../../../features/api/bookingApi";
-import { MdOutlineCancel, MdOutlineCheckCircle } from "react-icons/md";
+import { MdOutlineCancel} from "react-icons/md";
 
 // ✅ Interface for each booking - defines the data structure returned from backend
 interface BookingInterface {
@@ -120,14 +120,14 @@ export const Bookings = () => {
             {/* head */}
             <thead>
               <tr>
-                  <th>Booking Id</th>
+                  <th>Id</th>
                   <th>Customer</th>
                   <th>vehicle</th>
                   <th>Number Plate</th>
                   <th>Days Booked</th>
                   <th>Total Amount</th>
                   <th>Status</th>
-                  <th>Date Booked</th>
+                  <th>Days</th>
                   <th>Location</th>
                   <th>Actions</th>
               </tr>
@@ -199,12 +199,6 @@ export const Bookings = () => {
 
 {/* update and delete car */}
                     <td className="flex gap-1">
-                      <button className="btn btn-sm btn-outline text-blue-700 hover:text-blue-500">
-                        <FiEye />
-                      </button>
-                      <button className="btn btn-sm btn-outline text-green-600 hover:text-green-400">
-                        <MdOutlineCheckCircle />
-                      </button>
                       <button className="btn btn-sm btn-outline text-red-600 hover:text-red-400">
                         <MdOutlineCancel />
                       </button>

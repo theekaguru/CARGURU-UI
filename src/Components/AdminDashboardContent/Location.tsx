@@ -62,12 +62,26 @@ export const Location = () => {
 
   const [createLocation] = locationApi.useCreateLocationMutation();
   const [deleteLocation] = locationApi.useDeleteLocationMutation();
+  const [updateLocation] = locationApi.useUpdateLocationMutation();
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<AddLocationFormValues>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+    setValue,
+  } = useForm<AddLocationFormValues>();
+
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState<LocationInterface | null>(null);
   const [isLoadingUpload] = useState(false);
 
-  const handleModalToggle = () => setIsAddModalOpen(!isAddModalOpen);
+  const handleModalToggle = () => {
+    reset();
+    setSelectedLocation(null);
+    setIsAddModalOpen(!isAddModalOpen);
+  };
 
   const handleDelete = async (locationId: number) => {
     const confirm = window.confirm("Are you sure you want to delete this location?");
@@ -81,20 +95,36 @@ export const Location = () => {
     }
   };
 
-  const handleEdit = (locationId: number) => {
-    toast.info("Update feature coming soon 😎");
-    console.log(locationId);
+  const handleUpdate = (locationId: number) => {
+    const location = allLocationsData.find((l: LocationInterface) => l.locationId === locationId);
+    if (location) {
+      setSelectedLocation(location);
+      setValue("name", location.name);
+      setValue("address", location.address);
+      setValue("contactPhone", location.contactPhone);
+      setIsEditModalOpen(true);
+    }
   };
 
   const onSubmit: SubmitHandler<AddLocationFormValues> = async (data) => {
-    const loadingToastId = toast.loading("Adding location...");
+    const loadingToastId = toast.loading(selectedLocation ? "Updating location..." : "Adding location...");
+
     try {
-      const res = await createLocation(data).unwrap();
-      toast.success(res.message, { id: loadingToastId });
+      if (selectedLocation) {
+        // Update mode
+        const res = await updateLocation({ id: selectedLocation.locationId, ...data }).unwrap();
+        toast.success(res.message, { id: loadingToastId });
+        setIsEditModalOpen(false);
+        setSelectedLocation(null);
+      } else {
+        // Add mode
+        const res = await createLocation(data).unwrap();
+        toast.success(res.message, { id: loadingToastId });
+        setIsAddModalOpen(false);
+      }
       reset();
-      setIsAddModalOpen(false);
     } catch (err) {
-      toast.error("Failed to add location", { id: loadingToastId });
+      toast.error("Failed to submit location", { id: loadingToastId });
     }
   };
 
@@ -103,43 +133,37 @@ export const Location = () => {
       <Toaster richColors position="top-right" />
       <div className="text-2xl font-bold text-center mb-4 text-orange-400">
         <h1>Location Management Page</h1>
-        <button
-          className="btn btn-warning flex items-center gap-2"
-          onClick={handleModalToggle}
-        >
+        <button className="btn btn-warning flex items-center gap-2" onClick={handleModalToggle}>
           <FaAddressBook /> Add Location
         </button>
       </div>
 
-      {
-           error ? (
-            <div className="text-red-500">
-                  something went wrong try again
-            </div>
-          ):isLoading ? (
-            <div className="loading">
-              <PuffLoader/>
-              loading....
-            </div>
-            ) : allLocationsData.length === 0 ? (
-            <div>No vehicles Available</div>
-          ):(  
-             <div className="overflow-x-auto">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Address</th>
-              <th>Phone</th>
-              <th>Total Bookings</th>
-              <th>Total Vehicles</th>
-              <th>Total Amount</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            { allLocationsData.map((location: LocationInterface) => (
+      {error ? (
+        <div className="text-red-500">something went wrong try again</div>
+      ) : isLoading ? (
+        <div className="loading">
+          <PuffLoader />
+          loading....
+        </div>
+      ) : allLocationsData.length === 0 ? (
+        <div>No vehicles Available</div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Total Bookings</th>
+                <th>Total Vehicles</th>
+                <th>Total Amount</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {allLocationsData.map((location: LocationInterface) => (
                 <tr key={location.locationId}>
                   <td>{location.locationId}</td>
                   <td>{location.name}</td>
@@ -151,7 +175,7 @@ export const Location = () => {
                   <td>
                     <button
                       className="text-blue-700 hover:text-blue-500 btn btn-sm btn-outline"
-                      onClick={() => handleEdit(location.locationId)}
+                      onClick={() => handleUpdate(location.locationId)}
                     >
                       <FiEdit />
                     </button>
@@ -164,20 +188,24 @@ export const Location = () => {
                   </td>
                 </tr>
               ))}
-          </tbody>
-        </table>
-      </div> 
-          )    
-      }
-      {isAddModalOpen && (
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {(isAddModalOpen || isEditModalOpen) && (
         <div className="modal modal-open">
           <div className="modal-box">
             <div className="flex justify-center items-center mb-4">
-              <h2 className="text-2xl font-bold text-orange-500">Add A Location</h2>
+              <h2 className="text-2xl font-bold text-orange-500">
+                {selectedLocation ? "Edit Location" : "Add A Location"}
+              </h2>
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4">
-                <label htmlFor="name" className="block text-sm font-medium text-orange-500">Location Name</label>
+                <label htmlFor="name" className="block text-sm font-medium text-orange-500">
+                  Location Name
+                </label>
                 <input
                   type="text"
                   id="name"
@@ -188,7 +216,9 @@ export const Location = () => {
               </div>
 
               <div className="mb-4">
-                <label htmlFor="address" className="block text-sm font-medium text-orange-500">Address</label>
+                <label htmlFor="address" className="block text-sm font-medium text-orange-500">
+                  Address
+                </label>
                 <input
                   type="text"
                   id="address"
@@ -199,7 +229,9 @@ export const Location = () => {
               </div>
 
               <div className="mb-4">
-                <label htmlFor="contactPhone" className="block text-sm font-medium text-orange-500">Contact Phone</label>
+                <label htmlFor="contactPhone" className="block text-sm font-medium text-orange-500">
+                  Contact Phone
+                </label>
                 <input
                   type="text"
                   id="contactPhone"
@@ -210,11 +242,21 @@ export const Location = () => {
               </div>
 
               <div className="flex justify-end">
-                <button type="button" onClick={handleModalToggle} className="btn mr-2 btn-error">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsAddModalOpen(false);
+                    setIsEditModalOpen(false);
+                    setSelectedLocation(null);
+                    reset();
+                  }}
+                  className="btn mr-2 btn-error"
+                >
                   <FaTimes /> Cancel
                 </button>
                 <button type="submit" className="btn btn-primary" disabled={isLoadingUpload}>
-                  <SaveIcon /> Add Location {isLoadingUpload && "Uploading..."}
+                  <SaveIcon /> {selectedLocation ? "Update Location" : "Add Location"}{" "}
+                  {isLoadingUpload && "Uploading..."}
                 </button>
               </div>
             </form>
