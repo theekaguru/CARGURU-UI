@@ -1,81 +1,34 @@
-import gwagon from "../assets/gwagon.jpg";
-import bmw from "../assets/bmw.jpg";
-import mustang from "../assets/mustang.jpg";
+// src/Utils/carData.ts
 
 export interface Car {
   vehicleId: number;
   carRating?: number;
-  carImage: string;
   rentalRate: number;
-  availability: string; 
+  availability: string;
+
   specification: {
+    vehicleSpecId: number;
+    vehicleImage: string;
     manufacturer: string;
     model: string;
-    transmission: string;
-    engineCapacity: string;
-    seatingCapacity: number;
+    year: number;
     fuelType: string;
+    engineCapacity: string;
+    transmission: string;
+    seatingCapacity: number;
+    color: string;
+    features: string;
+    numberPlate: string;
   };
+
   location: {
     name: string;
     address?: string;
     contactPhone?: string;
+    locationId?: string;
   };
+
+  description?: string;
 }
 
-export const carData: Car[] = [
-  {
-    vehicleId: 5,
-    carRating: 4.9,
-    carImage: gwagon,
-    rentalRate: 5500,
-    availability: "available", // ✅ ADDED
-    specification: {
-      manufacturer: "Hyundai",
-      model: "Tucson PHEV",
-      transmission: "Automatic",
-      engineCapacity: "1600cc",
-      seatingCapacity: 5,
-      fuelType: "Petrol",
-    },
-    location: {
-      name: "Garden City , Thika Road",
-    },
-  },
-  {
-    vehicleId: 6,
-    carRating: 4.8,
-    carImage: bmw,
-    rentalRate: 4500,
-    availability: "available", 
-    specification: {
-      manufacturer: "Tesla",
-      model: "Model S",
-      transmission: "Automatic",
-      engineCapacity: "Electric",
-      seatingCapacity: 5,
-      fuelType: "Electric",
-    },
-    location: {
-      name: "San Francisco, California",
-    },
-  },
-  {
-    vehicleId: 7,
-    carRating: 4.7,
-    carImage: mustang,
-    rentalRate: 3300,
-    availability: "unavailable", 
-    specification: {
-      manufacturer: "Ford",
-      model: "Mustang",
-      transmission: "Manual",
-      engineCapacity: "5000cc",
-      seatingCapacity: 4,
-      fuelType: "Petrol",
-    },
-    location: {
-      name: "New York City",
-    },
-  },
-];
+export const carData: Car[] = [];
