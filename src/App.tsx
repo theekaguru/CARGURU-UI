@@ -26,6 +26,7 @@ import { Users } from './Components/AdminDashboardContent/Users'
 import { Profile } from './Components/AdminDashboardContent/Profile'
 import { Settings } from './Components/UsersDashboardContent/Settings'
 import { Payments } from './Components/UsersDashboardContent/Payments'
+import { BookNow } from './Pages/BookNow'
 
 
 
@@ -65,6 +66,11 @@ const router = createBrowserRouter([
   {
     path:'book',
     element:<Book/>,
+    errorElement:<Error/>
+  },
+  {
+    path:'booknow',
+    element:<BookNow/>,
     errorElement:<Error/>
   },
   {
