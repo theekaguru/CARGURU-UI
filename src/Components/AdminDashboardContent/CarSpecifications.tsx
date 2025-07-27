@@ -134,79 +134,79 @@ export const CarSpecifications = () => {
           className="btn btn-warning ml-4 flex items-center gap-2"
           onClick={handleModalToggle}
         >
-          <FaAddressBook /> Add Vehicle
+          <FaAddressBook /> Add VehicleSpec
         </button>
       </div>
       {
         error ? (
-            <div className="text-red-500">
-                  something went wrong try again
-            </div>
-          ):isLoading ? (
-            <div className="loading">
-              <PuffLoader/>
-              loading....
-            </div>
-          ): allVehicleSpecificationData.length === 0 ? (
-            <div>No vehicleSpecs Available</div>
-          ):( 
+          <div className="text-red-500">
+            something went wrong try again
+          </div>
+        ) : isLoading ? (
+          <div className="loading">
+            <PuffLoader />
+            loading....
+          </div>
+        ) : allVehicleSpecificationData.length === 0 ? (
+          <div>No vehicleSpecs Available</div>
+        ) : (
           <div className="overflow-x-auto">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Spec Id</th>
-              <th>vehicle</th>
-              <th>Year</th>
-              <th>fuelType</th>
-              <th>EngineCapacity</th>
-              <th>Transmission</th>
-              <th>Seats</th>
-              <th>Color</th>
-              <th>Features</th>
-              <th>Number Plate</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-             {
-              allVehicleSpecificationData.map((vehicleSpec: CarSpecificationInterface) => (
-                <tr key={vehicleSpec.vehicleSpecId}>
-                  <td>{vehicleSpec.vehicleSpecId}</td>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                          <img src={vehicleSpec.vehicleImage} alt="vehicle" />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font-bold">{vehicleSpec.manufacturer}</div>
-                        <div className="text-sm opacity-50">{vehicleSpec.model}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>{vehicleSpec.year}</td>
-                  <td>{vehicleSpec.fuelType}</td>
-                  <td>{vehicleSpec.engineCapacity}</td>
-                  <td>{vehicleSpec.transmission}</td>
-                  <td>{vehicleSpec.seatingCapacity}</td>
-                  <td>{vehicleSpec.color}</td>
-                  <td>{vehicleSpec.features}</td>
-                  <td>{vehicleSpec.numberPlate}</td>
-                  <td>
-                    <button className="text-blue-500 hover:text-blue-400 btn btn-sm btn-outline" onClick={() => handleEdit(vehicleSpec.vehicleSpecId)}>
-                      <FiEdit />
-                    </button>
-                    <button className="btn btn-sm btn-outline text-red-500 ml-1 hover:bg-red-700" onClick={() => handleDelete(vehicleSpec.vehicleSpecId)}>
-                      <AiFillDelete />
-                    </button>
-                  </td>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Spec Id</th>
+                  <th>vehicle</th>
+                  <th>Year</th>
+                  <th>fuelType</th>
+                  <th>EngineCapacity</th>
+                  <th>Transmission</th>
+                  <th>Seats</th>
+                  <th>Color</th>
+                  <th>Features</th>
+                  <th>Number Plate</th>
+                  <th>Action</th>
                 </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
-  )
+              </thead>
+              <tbody>
+                {
+                  allVehicleSpecificationData.map((vehicleSpec: CarSpecificationInterface) => (
+                    <tr key={vehicleSpec.vehicleSpecId}>
+                      <td>{vehicleSpec.vehicleSpecId}</td>
+                      <td>
+                        <div className="flex items-center gap-3">
+                          <div className="avatar">
+                            <div className="mask mask-squircle h-12 w-12">
+                              <img src={vehicleSpec.vehicleImage} alt="vehicle" />
+                            </div>
+                          </div>
+                          <div>
+                            <div className="font-bold">{vehicleSpec.manufacturer}</div>
+                            <div className="text-sm opacity-50">{vehicleSpec.model}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>{vehicleSpec.year}</td>
+                      <td>{vehicleSpec.fuelType}</td>
+                      <td>{vehicleSpec.engineCapacity}</td>
+                      <td>{vehicleSpec.transmission}</td>
+                      <td>{vehicleSpec.seatingCapacity}</td>
+                      <td>{vehicleSpec.color}</td>
+                      <td>{vehicleSpec.features}</td>
+                      <td>{vehicleSpec.numberPlate}</td>
+                      <td>
+                        <button className="text-blue-500 hover:text-blue-400 btn btn-sm btn-outline" onClick={() => handleEdit(vehicleSpec.vehicleSpecId)}>
+                          <FiEdit />
+                        </button>
+                        <button className="btn btn-sm btn-outline text-red-500 ml-1 hover:bg-red-700" onClick={() => handleDelete(vehicleSpec.vehicleSpecId)}>
+                          <AiFillDelete />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        )
       }
 
       {isAddModalOpen && (
