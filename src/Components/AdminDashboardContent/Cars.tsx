@@ -72,51 +72,56 @@ export const Cars = () => {
   } = useForm<AddVehicleForm>();
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editCar, setEditCar] = useState<vehicleInterface | null>(null);
 
   const handleAddModalToggle = () => {
     setIsAddModalOpen(!isAddModalOpen);
+    setIsEditMode(false);
+    setEditCar(null);
+    reset();
   };
 
   const onSubmit: SubmitHandler<AddVehicleForm> = async (data) => {
-    const toastId = toast.loading("Adding vehicle...");
+    const toastId = toast.loading(isEditMode ? "Updating vehicle..." : "Adding vehicle...");
     try {
       const payload = {
         vehicleSpecId: data.vehicleSpecId,
         rentalRate: data.rentalRate,
         availability: data.availability,
       };
-      const res = await createVehicle(payload).unwrap();
-
-      toast.success(res.message, { id: toastId });
-
+      if (isEditMode && editCar) {
+        // Update
+        const res = await updateVehicleStatus({ vehicleId: editCar.vehicleId, ...payload }).unwrap();
+        toast.success(res.message, { id: toastId });
+      } else {
+        // Add
+        const res = await createVehicle(payload).unwrap();
+        toast.success(res.message, { id: toastId });
+      }
       reset();
       setTimeout(() => {
         setIsAddModalOpen(false);
+        setIsEditMode(false);
+        setEditCar(null);
       }, 100);
     } catch (err: any) {
-      toast.error("Error adding vehicle 🚫", { id: toastId });
+      toast.error(isEditMode ? "Error updating vehicle 🚫" : "Error adding vehicle 🚫", { id: toastId });
     }
   };
 
-  const handleEdit = async (vehicleId: number) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "you want to mark this vehicle unavailable?",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#2563eb",
-      cancelButtonColor: "#f44336",
-      confirmButtonText: "Yes, update it!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          const res = await updateVehicleStatus({ vehicleId, availability: "unavailable" }).unwrap();
-          Swal.fire("Updated", res.message, "success");
-        } catch (err) {
-          Swal.fire("Error", "Failed to update.", "error");
-        }
-      }
-    });
+  const handleEdit = (vehicleId: number) => {
+    const car = allVehicleData.find((v: vehicleInterface) => v.vehicleId === vehicleId);
+    if (car) {
+      setEditCar(car);
+      setIsEditMode(true);
+      setIsAddModalOpen(true);
+      reset({
+        vehicleSpecId: car.vehicleId,
+        rentalRate: car.rentalRate,
+        availability: car.availability,
+      });
+    }
   };
 
   const handleDelete = async (vehicleId: number) => {
@@ -217,7 +222,7 @@ export const Cars = () => {
         <div className="modal modal-open">
           <div className="modal-box max-w-4xl">
             <div className="flex justify-center items-center mb-4">
-              <h2 className="text-2xl font-bold text-orange-500">Add Vehicle Spec</h2>
+              <h2 className="text-2xl font-bold text-orange-500">{isEditMode ? 'Edit Vehicle' : 'Add Vehicle Spec'}</h2>
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid grid-cols-2 gap-4">
@@ -229,6 +234,7 @@ export const Cars = () => {
                     id="vehicleSpecId"
                     className="select w-full text-blue-500 text-sm"
                     {...register("vehicleSpecId", { required: "VehicleSpec ID is required", valueAsNumber: true })}
+                    disabled={isEditMode}
                   >
                     <option value="">Select Vehicle Spec</option>
                     {allVehicleData.map((vehicle: vehicleInterface) => (
@@ -239,7 +245,6 @@ export const Cars = () => {
                   </select>
                   {errors.vehicleSpecId && <p className="text-red-500 text-sm">{errors.vehicleSpecId.message}</p>}
                 </div>
-
                 <div>
                   <label htmlFor="rentalRate" className="block text-sm font-medium text-orange-500">Rental Rate (Ksh)</label>
                   <input
@@ -266,19 +271,12 @@ export const Cars = () => {
                 </div>
               </div>
 
-              <div className="flex justify-end mt-4 gap-2">
-                <button
-                  type="button"
-                  className="btn btn-error"
-                  onClick={() => {
-                    reset();
-                    setIsAddModalOpen(false);
-                  }}
-                >
+              <div className="flex justify-end mt-4">
+                <button onClick={handleAddModalToggle} type="button" className="btn btn-error mr-2">
                   Cancel
                 </button>
                 <button type="submit" className="btn btn-primary">
-                  <SaveIcon /> Add Vehicle
+                  <SaveIcon /> {isEditMode ? 'Update Vehicle' : 'Add Vehicle'}
                 </button>
               </div>
             </form>

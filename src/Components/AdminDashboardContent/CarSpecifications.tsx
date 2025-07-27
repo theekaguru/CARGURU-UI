@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { vehicleSpecApi } from "../../../features/api/vehicleSpecApi";
 import type { RootState } from "../../../app/store";
-import Swal from "sweetalert2";
 import { AiFillDelete } from "react-icons/ai";
 import { FaAddressBook, FaTimes } from "react-icons/fa";
 import { SaveIcon } from "lucide-react";
@@ -49,12 +48,20 @@ export const CarSpecifications = () => {
 
   const [vehicleImage, setVehicleImage] = useState<string>("");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editSpec, setEditSpec] = useState<CarSpecificationInterface | null>(null);
   const [isImgUploading, setIsImgUploading] = useState(false);
 
   const cloud_name = 'dfty9bjsf';
   const preset_key = 'CARGURU-RIDES';
 
-  const handleModalToggle = () => setIsAddModalOpen(!isAddModalOpen);
+  const handleModalToggle = () => {
+    setIsAddModalOpen(!isAddModalOpen);
+    setIsEditMode(false);
+    setEditSpec(null);
+    setVehicleImage("");
+    reset();
+  };
 
   const handleDelete = async (vehicleSpecId: number) => {
     try {
@@ -65,46 +72,40 @@ export const CarSpecifications = () => {
     }
   };
 
-  const handleEdit = async (VehicleId: number) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "you want to cancel the VehicleSpec?",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#2563eb",
-      cancelButtonColor: "#f44336",
-      confirmButtonText: "yes , cancel it!",
-    }).then(async (result) => {
-      const updatePayload = {
-        vehicleSpecId: VehicleId,
-        status: "Unavailable",
-      };
-      if (result.isConfirmed) {
-        try {
-          const res = await updateVehicleSpecStatus(updatePayload).unwrap();
-          Swal.fire("Updated", res.message, "success");
-        } catch (error) {
-          Swal.fire("Something Went Wrong", "Please Try Again", "error");
-        }
-      }
-    });
+  const handleEdit = (vehicleSpecId: number) => {
+    const spec = allVehicleSpecificationData.find((v: CarSpecificationInterface) => v.vehicleSpecId === vehicleSpecId);
+    if (spec) {
+      setEditSpec(spec);
+      setIsEditMode(true);
+      setIsAddModalOpen(true);
+      setVehicleImage(spec.vehicleImage);
+      reset({ ...spec }); // 🛠️ safe assignment
+    }
   };
 
+
   const onSubmit: SubmitHandler<AddFormValues> = async (data) => {
-    const LoadingtoastId = toast.loading("Adding vehicle spec...");
+    const LoadingtoastId = toast.loading(isEditMode ? "Updating vehicle spec..." : "Adding vehicle spec...");
     data.vehicleImage = vehicleImage;
     try {
       const payload = {
         ...data,
         userId, // ✅ Ensure userId is sent
       };
-      const res = await createVehicleSpec(payload).unwrap();
-      toast.success(res.message, { id: LoadingtoastId });
+      if (isEditMode && editSpec) {
+        const res = await updateVehicleSpecStatus(payload).unwrap();
+        toast.success(res.message, { id: LoadingtoastId });
+      } else {
+        const res = await createVehicleSpec(payload).unwrap();
+        toast.success(res.message, { id: LoadingtoastId });
+      }
       reset();
       setVehicleImage("");
       setIsAddModalOpen(false);
+      setIsEditMode(false);
+      setEditSpec(null);
     } catch (err) {
-      toast.error("Failed to add vehicle spec", { id: LoadingtoastId });
+      toast.error(isEditMode ? "Failed to update vehicle spec" : "Failed to add vehicle spec", { id: LoadingtoastId });
     }
   };
 
@@ -213,7 +214,7 @@ export const CarSpecifications = () => {
         <div className="modal modal-open">
           <div className="modal-box">
             <div className="flex justify-center items-center mb-4">
-              <h2 className="text-2xl font-bold text-orange-500">Add Vehicle Spec</h2>
+              <h2 className="text-2xl font-bold text-orange-500">{isEditMode ? 'Edit Vehicle Spec' : 'Add Vehicle Spec'}</h2>
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid grid-cols-2 gap-4">
@@ -258,7 +259,7 @@ export const CarSpecifications = () => {
                   <FaTimes /> Cancel
                 </button>
                 <button type="submit" className="btn btn-primary" disabled={isImgUploading}>
-                  <SaveIcon /> {isImgUploading ? 'Uploading...' : 'Add Vehicle'}
+                  <SaveIcon /> {isImgUploading ? 'Uploading...' : isEditMode ? 'Update Vehicle Spec' : 'Add Vehicle'}
                 </button>
               </div>
             </form>
