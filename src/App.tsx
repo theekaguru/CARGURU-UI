@@ -1,5 +1,5 @@
 import './App.css'
-import {createBrowserRouter , RouterProvider} from "react-router"
+import { createBrowserRouter, RouterProvider } from "react-router"
 import { Home } from './Pages/Home'
 import { Error } from './Pages/Error'
 import { Register } from './Pages/Register'
@@ -32,141 +32,141 @@ import { BookNow } from './Pages/BookNow'
 
 
 function App() {
-const router = createBrowserRouter([
-  {
-    path:'/',
-    element:<Home/>,
-    errorElement:<Error/>
-  },
-  {
-    path:'/register',
-    element:<Register/>,
-    errorElement:<Error/>
-  },
-  {
-    path:'/login',
-    element:<Login/>,
-    errorElement:<Error/>
-  },
-  {
-    path:'/contact',
-    element:<Contact/>,
-    errorElement:<Error/>
-  },
-  {
-    path:'/faq',
-    element:<FAQ/>,
-    errorElement:<Error/>
-  },
-  {
-    path:'about',
-    element:<About/>,
-    errorElement:<Error/>
-  },
-  {
-    path:'book',
-    element:<Book/>,
-    errorElement:<Error/>
-  },
-  {
-    path:'booknow',
-    element:<BookNow/>,
-    errorElement:<Error/>
-  },
-  {
-    path:'dashboard',
-    element:(
-      <ProtectedRoute>
-        <UsersDashboard/>
-      </ProtectedRoute>
-          ),
-    errorElement:<Error/>,
-       children:[
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Home />,
+      errorElement: <Error />
+    },
+    {
+      path: '/register',
+      element: <Register />,
+      errorElement: <Error />
+    },
+    {
+      path: '/login',
+      element: <Login />,
+      errorElement: <Error />
+    },
+    {
+      path: '/contact',
+      element: <Contact />,
+      errorElement: <Error />
+    },
+    {
+      path: '/faq',
+      element: <FAQ />,
+      errorElement: <Error />
+    },
+    {
+      path: 'about',
+      element: <About />,
+      errorElement: <Error />
+    },
+    {
+      path: 'book',
+      element: <Book />,
+      errorElement: <Error />
+    },
+    {
+      path: 'booknow',
+      element: <BookNow />,
+      errorElement: <Error />
+    },
+    {
+      path: 'dashboard',
+      element: (
+        <ProtectedRoute>
+          <UsersDashboard />
+        </ProtectedRoute>
+      ),
+      errorElement: <Error />,
+      children: [
         {
-          path:'activities',
-          element:<Activities/>,
-          errorElement:<Error/>
+          path: 'activities',
+          element: <Activities />,
+          errorElement: <Error />
         },
-                {
-          path:'driveNow',
-          element:<DriveNow/>,
-          errorElement:<Error/>
+        {
+          path: 'driveNow',
+          element: <DriveNow />,
+          errorElement: <Error />
         },
-                {
-          path:'bookingHistory',
-          element:<BookingHistory/>,
-          errorElement:<Error/>
+        {
+          path: 'bookingHistory',
+          element: <BookingHistory />,
+          errorElement: <Error />
         },
-                {
-          path:'payments',
-          element:<Payments/>,
-          errorElement:<Error/>
+        {
+          path: 'payments',
+          element: <Payments />,
+          errorElement: <Error />
         },
-                        {
-          path:'supportTickets',
-          element:<SupportTickets/>,
-          errorElement:<Error/>
+        {
+          path: 'supportTickets',
+          element: <SupportTickets />,
+          errorElement: <Error />
         },
-                        {
-          path:'settings',
-          element:<Settings/>,
-          errorElement:<Error/>
+        {
+          path: 'settings',
+          element: <Settings />,
+          errorElement: <Error />
         },
-       ]
-  },
-  {
-    path:'admindashboard',
-    element:<AdminDashboard/>,
-    errorElement:<Error/>,
-    children:[
-      {
-        path:"Analytics",
-        element:<Analytics/>,
-        errorElement:<Error/>
-      },
-      {
-        path:"users",
-        element:<Users/>,
-        errorElement:<Error/>
-      },
-      {
-        path:"bookings",
-        element:<Bookings/>,
-        errorElement:<Error/>
-      },
-      {
-        path:"cars",
-        element:<Cars/>,
-        errorElement:<Error/>
-      },
-      {
-         path:"carSpecifications",
-         element:<CarSpecifications/>,
-         errorElement:<Error/>
-      },
-      {
-        path:"adminSupport",
-        element:<AdminSupport/>,
-        errorElement:<Error/>
-      },
-      {
-        path:"profile",
-        element:<Profile/>,
-        errorElement:<Error/>
-      },
-      {
-        path:"dashboard",
-        element:<Dashboard/>
-      },
-      {
-        path:"location",
-        element:<Location/>
-      }
-    ]
-  }
-])
+      ]
+    },
+    {
+      path: 'admindashboard',
+      element: <AdminDashboard />,
+      errorElement: <Error />,
+      children: [
+        {
+          path: "Analytics",
+          element: <Analytics />,
+          errorElement: <Error />
+        },
+        {
+          path: "users",
+          element: <Users />,
+          errorElement: <Error />
+        },
+        {
+          path: "bookings",
+          element: <Bookings />,
+          errorElement: <Error />
+        },
+        {
+          path: "cars",
+          element: <Cars />,
+          errorElement: <Error />
+        },
+        {
+          path: "carSpecifications",
+          element: <CarSpecifications />,
+          errorElement: <Error />
+        },
+        {
+          path: "adminSupport",
+          element: <AdminSupport />,
+          errorElement: <Error />
+        },
+        {
+          path: "profile",
+          element: <Profile />,
+          errorElement: <Error />
+        },
+        {
+          path: "dashboard",
+          element: <Dashboard />
+        },
+        {
+          path: "location",
+          element: <Location />
+        }
+      ]
+    }
+  ])
   return (
-     <RouterProvider router={router} />
+    <RouterProvider router={router} />
   )
 }
 
