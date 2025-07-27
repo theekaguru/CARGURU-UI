@@ -9,6 +9,10 @@ import axios from 'axios';
 import { userApi } from '../../../features/api/userApi';
 import { toast, Toaster } from 'sonner';
 
+
+
+
+
 interface FormValues {
   firstname: string;
   lastname: string;
@@ -17,8 +21,9 @@ interface FormValues {
 }
 
 export const Profile = () => {
-  const cloud_name = 'dfty9bjsf';
-  const preset_key = 'CARGURU-RIDES';
+  const cloud_name = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+  const preset_key = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+
   const [imageProfile, setImageProfile] = useState<string>('');
   const [updateUserProfile] = userApi.useUpdateUserProfileMutation();
   const navigate = useNavigate();
@@ -37,9 +42,9 @@ export const Profile = () => {
 
 
 
-  const profilePicture = userDetails?.profileImage ||  `https://ui-avatars.com/api/?name=${encodeURIComponent(userDetails?.firstname)}&background=4ade80&color=fff&size=128`;
+  const profilePicture = userDetails?.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(userDetails?.firstname)}&background=4ade80&color=fff&size=128`;
 
-  const handleModalToggle = () => {setIsModalOpen(!isModalOpen);};
+  const handleModalToggle = () => { setIsModalOpen(!isModalOpen); };
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -73,7 +78,7 @@ export const Profile = () => {
         data: formData
       });
       const data = await res.data;
-      console.log("handleFileImage~data:",data);
+      console.log("handleFileImage~data:", data);
       setImageProfile(data.secure_url);
     } catch (err: any) {
       console.log(err);

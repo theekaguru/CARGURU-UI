@@ -6,7 +6,7 @@ import { FaTimes } from "react-icons/fa";
 import { SaveIcon } from "lucide-react";
 import type { RootState } from "../../../app/store";
 import { userApi } from "../../../features/api/userApi";
-import { toast, Toaster } from "sonner";
+import { Toaster } from "sonner";
 
 // 🧩 User Interface
 interface UserInterface {
@@ -75,7 +75,7 @@ export const Users = () => {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   // Fetch all users with profiles
-  const { data: usersData = [], isLoading , error } = userApi.useGetAllUsersProfilesQuery({
+  const { data: usersData = [], isLoading, error } = userApi.useGetAllUsersProfilesQuery({
     skip: !isAuthenticated,
   });
 
@@ -84,100 +84,100 @@ export const Users = () => {
 
   return (
     <>
-    <Toaster richColors position="top-right" />
+      <Toaster richColors position="top-right" />
       <div className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c] animate-pulse">
         ALL Users
       </div>
       {
         error ? (
-            <div className="text-red-500">
-                  something went wrong try again
-            </div>
-          ):isLoading ? (
-            <div className="loading">
-              <PuffLoader/>
-              loading....
-            </div>
-          ): usersData?.length === 0 ? (
-            <div>No Users Available</div>
-          ):(
+          <div className="text-red-500">
+            something went wrong try again
+          </div>
+        ) : isLoading ? (
+          <div className="loading">
+            <PuffLoader />
+            loading....
+          </div>
+        ) : usersData?.length === 0 ? (
+          <div>No Users Available</div>
+        ) : (
           <div className="overflow-x-auto">
-        <table className="table">
-          {/* Table Header */}
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>User</th>
-              <th>Joined On</th>
-              <th>User Type</th>
-              <th>Total Bookings</th>
-              <th>Total Days Booked</th>
-              <th>Total Revenue</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              usersData.map((user: UserInterface) => (
-                <tr key={user.userId}>
-                  <th>{user.userId}</th>
-
-                  {/* 🧍‍♂️ Profile, Name, Email */}
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                          <img src={user.profileImage} alt="User Avatar" />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font-bold text-orange-500">
-                          {user.firstname} {user.lastname}
-                        </div>
-                        <div className="text-sm opacity-50">{user.email}</div>
-                      </div>
-                    </div>
-                  </td>
-
-                  {/* 🕓 Joined On */}
-                  <td>{new Date(user.createdAt).toLocaleString()}</td>
-
-                  {/* 🏷️ User Type */}
-                  <td>
-                    <div className={`badge badge-outline ${getUserTypeBadge(user.userType)}`}>
-                      {user.userType}
-                    </div>
-                  </td>
-
-                  {/* 🔢 Total Bookings */}
-                  <td>{calculateTotalBookings(user)}</td>
-
-                  {/* 📅 Total Days Booked */}
-                  <td>{calculateTotalDaysBooked(user)}</td>
-
-                  {/* 💵 Total Revenue */}
-                  <td>
-                    <span className="font-semibold text-green-600">
-                      ${calculateTotalRevenue(user).toFixed(2)}
-                    </span>
-                  </td>
-
-                  {/* ✏️ Edit Button */}
-                  <td>
-                    <button className="text-blue-700 hover:text-blue-500 btn btn-sm btn-outline"
-                      onClick={handleModalToggle}
-                    >
-                      <FiEdit />
-                    </button>
-                  </td>
+            <table className="table">
+              {/* Table Header */}
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>User</th>
+                  <th>Joined On</th>
+                  <th>User Type</th>
+                  <th>Total Bookings</th>
+                  <th>Total Days Booked</th>
+                  <th>Total Revenue</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
-          )
+              </thead>
+              <tbody>
+                {
+                  usersData.map((user: UserInterface) => (
+                    <tr key={user.userId}>
+                      <th>{user.userId}</th>
+
+                      {/* 🧍‍♂️ Profile, Name, Email */}
+                      <td>
+                        <div className="flex items-center gap-3">
+                          <div className="avatar">
+                            <div className="mask mask-squircle h-12 w-12">
+                              <img src={user.profileImage} alt="User Avatar" />
+                            </div>
+                          </div>
+                          <div>
+                            <div className="font-bold text-orange-500">
+                              {user.firstname} {user.lastname}
+                            </div>
+                            <div className="text-sm opacity-50">{user.email}</div>
+                          </div>
+                        </div>
+                      </td>
+
+                      {/* 🕓 Joined On */}
+                      <td>{new Date(user.createdAt).toLocaleString()}</td>
+
+                      {/* 🏷️ User Type */}
+                      <td>
+                        <div className={`badge badge-outline ${getUserTypeBadge(user.userType)}`}>
+                          {user.userType}
+                        </div>
+                      </td>
+
+                      {/* 🔢 Total Bookings */}
+                      <td>{calculateTotalBookings(user)}</td>
+
+                      {/* 📅 Total Days Booked */}
+                      <td>{calculateTotalDaysBooked(user)}</td>
+
+                      {/* 💵 Total Revenue */}
+                      <td>
+                        <span className="font-semibold text-green-600">
+                          ${calculateTotalRevenue(user).toFixed(2)}
+                        </span>
+                      </td>
+
+                      {/* ✏️ Edit Button */}
+                      <td>
+                        <button className="text-blue-700 hover:text-blue-500 btn btn-sm btn-outline"
+                          onClick={handleModalToggle}
+                        >
+                          <FiEdit />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        )
       }
-     
+
 
       {/* 🛠️ Modal for editing user type */}
       {isModalOpen && (

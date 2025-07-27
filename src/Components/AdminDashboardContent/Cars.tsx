@@ -39,12 +39,16 @@ type AddVehicleForm = {
   vehicleSpecId: number;
   rentalRate: number;
   availability: string;
-}
+};
+
 const getStatusBadge = (status: string) => {
   switch (status) {
-    case "available": return "badge-success";
-    case "unavailable": return "badge-error";
-    default: return "badge-primary";
+    case "available":
+      return "badge-success";
+    case "unavailable":
+      return "badge-error";
+    default:
+      return "badge-primary";
   }
 };
 
@@ -53,19 +57,25 @@ export const Cars = () => {
   const userId = user?.userId;
 
   const { data: allVehicleData = [], isLoading, error } = vehicleApi.useGetAllVehiclesQuery(userId, {
-    skip: !isAuthenticated
+    skip: !isAuthenticated,
   });
 
   const [createVehicle] = vehicleApi.useCreateVehicleMutation();
   const [updateVehicleStatus] = vehicleApi.useUpdateVehicleMutation();
   const [deleteVehicle] = vehicleApi.useDeleteVehicleMutation();
 
-
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<AddVehicleForm>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<AddVehicleForm>();
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  const handleAddModalToggle = () => { setIsAddModalOpen(!isAddModalOpen); };
+  const handleAddModalToggle = () => {
+    setIsAddModalOpen(!isAddModalOpen);
+  };
 
   const onSubmit: SubmitHandler<AddVehicleForm> = async (data) => {
     const toastId = toast.loading("Adding vehicle...");
@@ -79,18 +89,14 @@ export const Cars = () => {
 
       toast.success(res.message, { id: toastId });
 
-      // ✅ Safely reset and close modal after successful mutation
       reset();
       setTimeout(() => {
         setIsAddModalOpen(false);
-      }, 100); // Small delay ensures form remains mounted during completion
+      }, 100);
     } catch (err: any) {
       toast.error("Error adding vehicle 🚫", { id: toastId });
     }
   };
-
-
-
 
   const handleEdit = async (vehicleId: number) => {
     Swal.fire({
@@ -141,74 +147,72 @@ export const Cars = () => {
           <FaAddressBook /> Add Vehicle
         </button>
       </div>
-      {
-        error ? (
-          <div className="text-red-500">
-            something went wrong try again
-          </div>
-        ) : isLoading ? (
-          <div className="loading">
-            <PuffLoader />
-            loading....
-          </div>
-        ) : allVehicleData?.length === 0 ? (
-          <div>No vehicles Available</div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Car Id</th>
-                  <th>Vehicle</th>
-                  <th>Color</th>
-                  <th>Fuel</th>
-                  <th>Transmission</th>
-                  <th>Rate</th>
-                  <th>Available</th>
-                  <th>Location</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {allVehicleData.map((vehicle: vehicleInterface) => (
-                  <tr key={vehicle.vehicleId}>
-                    <td>{vehicle.vehicleId}</td>
-                    <td>
-                      <div className="flex items-center gap-3">
-                        <div className="avatar">
-                          <div className="mask mask-squircle h-12 w-12">
-                            <img src={vehicle.specification.vehicleImage} alt="car" />
-                          </div>
-                        </div>
-                        <div>
-                          <div className="font-bold">{vehicle.specification.manufacturer}</div>
-                          <div className="text-sm opacity-50">{vehicle.specification.model}</div>
+
+      {error ? (
+        <div className="text-red-500">something went wrong try again</div>
+      ) : isLoading ? (
+        <div className="loading">
+          <PuffLoader />
+          loading....
+        </div>
+      ) : allVehicleData?.length === 0 ? (
+        <div>No vehicles Available</div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Car Id</th>
+                <th>Vehicle</th>
+                <th>Color</th>
+                <th>Fuel</th>
+                <th>Transmission</th>
+                <th>Rate</th>
+                <th>Available</th>
+                <th>Location</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {allVehicleData.map((vehicle: vehicleInterface) => (
+                <tr key={vehicle.vehicleId}>
+                  <td>{vehicle.vehicleId}</td>
+                  <td>
+                    <div className="flex items-center gap-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle h-12 w-12">
+                          <img src={vehicle.specification.vehicleImage} alt="car" />
                         </div>
                       </div>
-                    </td>
-                    <td>{vehicle.specification.color}</td>
-                    <td>{vehicle.specification.fuelType}</td>
-                    <td>{vehicle.specification.transmission}</td>
-                    <td>KSH: {vehicle.rentalRate}</td>
-                    <td>
-                      <div className={`badge badge-outline ${getStatusBadge(vehicle.availability)}`}>{vehicle.availability}</div>
-                    </td>
-                    <td>{vehicle.location?.name || "N/A"}</td>
-                    <td>
-                      <button onClick={() => handleEdit(vehicle.vehicleId)} className="btn btn-sm btn-outline text-blue-500 mr-2">
-                        <FiEdit />
-                      </button>
-                      <button onClick={() => handleDelete(vehicle.vehicleId)} className="btn btn-sm btn-outline text-red-500">
-                        <AiFillDelete />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )
-      }
+                      <div>
+                        <div className="font-bold">{vehicle.specification.manufacturer}</div>
+                        <div className="text-sm opacity-50">{vehicle.specification.model}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{vehicle.specification.color}</td>
+                  <td>{vehicle.specification.fuelType}</td>
+                  <td>{vehicle.specification.transmission}</td>
+                  <td>KSH: {vehicle.rentalRate}</td>
+                  <td>
+                    <div className={`badge badge-outline ${getStatusBadge(vehicle.availability)}`}>{vehicle.availability}</div>
+                  </td>
+                  <td>{vehicle.location?.name || "N/A"}</td>
+                  <td>
+                    <button onClick={() => handleEdit(vehicle.vehicleId)} className="btn btn-sm btn-outline text-blue-500 mr-2">
+                      <FiEdit />
+                    </button>
+                    <button onClick={() => handleDelete(vehicle.vehicleId)} className="btn btn-sm btn-outline text-red-500">
+                      <AiFillDelete />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
       {isAddModalOpen && (
         <div className="modal modal-open">
           <div className="modal-box max-w-4xl">
@@ -218,16 +222,22 @@ export const Cars = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="vehicleSpecId" className="block text-sm font-medium text-orange-500">Vehicle Spec ID</label>
-                  <input
-                    type="number"
+                  <label htmlFor="vehicleSpecId" className="block text-sm font-medium text-orange-500">
+                    Vehicle Spec
+                  </label>
+                  <select
                     id="vehicleSpecId"
-                    className="input w-full text-blue-500 text-sm"
+                    className="select w-full text-blue-500 text-sm"
                     {...register("vehicleSpecId", { required: "VehicleSpec ID is required", valueAsNumber: true })}
-                  />
-                  {errors.vehicleSpecId && (
-                    <p className="text-red-500 text-sm">{errors.vehicleSpecId.message}</p>
-                  )}
+                  >
+                    <option value="">Select Vehicle Spec</option>
+                    {allVehicleData.map((vehicle: vehicleInterface) => (
+                      <option key={vehicle.vehicleId} value={vehicle.vehicleId}>
+                        {vehicle.specification.manufacturer} {vehicle.specification.model} (ID: {vehicle.vehicleId}) - {vehicle.specification.features}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.vehicleSpecId && <p className="text-red-500 text-sm">{errors.vehicleSpecId.message}</p>}
                 </div>
 
                 <div>
@@ -238,9 +248,7 @@ export const Cars = () => {
                     className="input w-full text-blue-500 text-sm"
                     {...register("rentalRate", { required: "Rental Rate is required", valueAsNumber: true })}
                   />
-                  {errors.rentalRate && (
-                    <p className="text-red-500 text-sm">{errors.rentalRate.message}</p>
-                  )}
+                  {errors.rentalRate && <p className="text-red-500 text-sm">{errors.rentalRate.message}</p>}
                 </div>
 
                 <div>
@@ -254,13 +262,21 @@ export const Cars = () => {
                     <option value="available">Available</option>
                     <option value="unavailable">Unavailable</option>
                   </select>
-                  {errors.availability && (
-                    <p className="text-red-500 text-sm">{errors.availability.message}</p>
-                  )}
+                  {errors.availability && <p className="text-red-500 text-sm">{errors.availability.message}</p>}
                 </div>
               </div>
 
-              <div className="flex justify-end mt-4">
+              <div className="flex justify-end mt-4 gap-2">
+                <button
+                  type="button"
+                  className="btn btn-error"
+                  onClick={() => {
+                    reset();
+                    setIsAddModalOpen(false);
+                  }}
+                >
+                  Cancel
+                </button>
                 <button type="submit" className="btn btn-primary">
                   <SaveIcon /> Add Vehicle
                 </button>
@@ -269,7 +285,6 @@ export const Cars = () => {
           </div>
         </div>
       )}
-
     </>
   );
 };
