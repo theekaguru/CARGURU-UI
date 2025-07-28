@@ -7,7 +7,6 @@ import { Login } from './Pages/Login'
 import { Contact } from './Pages/Contact'
 import { FAQ } from './Pages/FAQ'
 import { About } from './Pages/About'
-import { Book } from './Pages/Book'
 import { UsersDashboard } from './Pages/UsersDashboard'
 import { Activities } from './Components/UsersDashboardContent/Activities'
 import { DriveNow } from './Components/UsersDashboardContent/DriveNow'
@@ -61,11 +60,6 @@ function App() {
     {
       path: 'about',
       element: <About />,
-      errorElement: <Error />
-    },
-    {
-      path: 'book',
-      element: <Book />,
       errorElement: <Error />
     },
     {
