@@ -97,119 +97,120 @@ export const Bookings = () => {
 
   }
 }
-    return (
-      <>
-        <div className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c] animate-pulse">
-        Bookings
-      </div>
-      {
-        error ? (
-                  <div className="text-red-500">
-                          something went wrong try again
+   return (
+  <>
+    <div className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c] animate-pulse">
+      Bookings
+    </div>
+    
+    <div className="overflow-x-auto">
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Customer</th>
+            <th>vehicle</th>
+            <th>Number Plate</th>
+            <th>Days Booked</th>
+            <th>Total Amount</th>
+            <th>Status</th>
+            <th>Days</th>
+            <th>Location</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {error ? (
+            <tr>
+              <td colSpan={10}>
+                <div className="text-red-400">Something went wrong. Try again.</div>
+              </td>
+            </tr>
+          ) : isLoading ? (
+            <tr>
+              <td colSpan={10}>
+                <div className="flex justify-center"><PuffLoader color="#0aff13" /></div>
+              </td>
+            </tr>
+          ) : allBookingsData?.length === 0 ? (
+            <tr>
+              <td colSpan={10} className="text-center">No Bookings Available</td>
+            </tr>
+          ) : (
+            allBookingsData?.map((booking: BookingInterface) => (
+              <tr key={booking.bookingId}>
+                {/* Booking Id */}
+                <td>{booking.bookingId}</td>
+
+                {/* Customer Info */}
+                <td>
+                  <div className="flex items-center gap-3">
+                    <div className="avatar">
+                      <div className="mask mask-squircle h-12 w-12">
+                        <img
+                          src={booking.user.profileImage}
+                          alt="user image" />
+                      </div>
                     </div>
-                  ):isLoading ? (
-                    <div className="loading">
-                      <PuffLoader/>
-                      loading....
+                    <div>
+                      <div className="font-bold">{booking.user.firstname} {booking.user.lastname}</div>
+                      <div className="font-bold">{booking.user.contactPhone}</div>
+                      <div className="text-sm opacity-50">{booking.user.email}</div>
                     </div>
-                   ) : allBookingsData?.length === 0 ? (
-                    <div>No Bookings Available</div>
-                  ):(
-                    <div className="overflow-x-auto">
-          <table className="table">
-            {/* head */}
-            <thead>
-              <tr>
-                  <th>Id</th>
-                  <th>Customer</th>
-                  <th>vehicle</th>
-                  <th>Number Plate</th>
-                  <th>Days Booked</th>
-                  <th>Total Amount</th>
-                  <th>Status</th>
-                  <th>Days</th>
-                  <th>Location</th>
-                  <th>Actions</th>
+                  </div>
+                </td>
+
+                {/* Vehicle Info */}
+                <td>
+                  <div className="flex items-center gap-3">
+                    <div className="avatar">
+                      <div className="mask mask-squircle h-12 w-12">
+                        <img
+                          src={booking.vehicle.specification.vehicleImage}
+                          alt="vehicle image" />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="font-bold">{booking.vehicle.specification.manufacturer}</div>
+                      <div className="text-sm opacity-50">{booking.vehicle.specification.model}</div>
+                    </div>
+                  </div>
+                </td>
+
+                {/* Number Plate*/}
+                <td>{booking.vehicle.specification.numberPlate}</td>
+
+                {/* Booking Days */}
+                <td>{calculateDaysBooked(booking.bookingDate, booking.returnDate)}</td>
+
+                {/* TotalAmount */}
+                <td>Ksh{booking.totalAmount}</td>
+
+                {/* Status*/}
+                <td>
+                  <div className={`badge badge-outline ${getStatusBadge(booking.bookingStatus)}`}>
+                    {booking.bookingStatus}
+                  </div>
+                </td>
+
+                {/* Booking Date */}
+                <td>{formatDateRange(booking.bookingDate, booking.returnDate)}</td> 
+
+                {/* Location*/}
+                <td>{booking.location.name}</td>
+
+                {/* Actions */}
+                <td className="flex gap-1">
+                  <button className="btn btn-sm btn-outline text-red-600 hover:text-red-400">
+                    <MdOutlineCancel />
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {
-                  allBookingsData?.map((booking:BookingInterface)=>( 
-                    <tr key={booking.bookingId}>
-
-{/* Booking Id */}
-                      <td>{booking.bookingId}</td>
-
-{/* profileImage , username and email */}
-                    <td>
-                      <div className="flex items-center gap-3">
-                        <div className="avatar">
-                          <div className="mask mask-squircle h-12 w-12">
-                            <img
-                              src={booking.user.profileImage}
-                              alt="user image" />
-                          </div>
-                        </div>
-                        <div>
-                          <div className="font-bold">{booking.user.firstname} {booking.user.lastname}</div>
-                          <div className="font-bold">{booking.user.contactPhone}</div>
-                          <div className="text-sm opacity-50">{booking.user.email}</div>
-                        </div>
-                      </div>
-                    </td>
-
-{/* image, manufacturer , model */}
-                    <td>
-                      <div className="flex items-center gap-3">
-                        <div className="avatar">
-                          <div className="mask mask-squircle h-12 w-12">
-                            <img
-                              src={booking.vehicle.specification.vehicleImage}
-                              alt="vehicle image" />
-                          </div>
-                        </div>
-                        <div>
-                          <div className="font-bold">{booking.vehicle.specification.manufacturer}</div>
-                          <div className="text-sm opacity-50">{booking.vehicle.specification.model}</div>
-                        </div>
-                      </div>
-                    </td>
-
-{/* Number Plate*/}
-                    <td>{booking.vehicle.specification.numberPlate}</td>
-
-{/* Booking Days */}
-                    <td>{calculateDaysBooked(booking.bookingDate, booking.returnDate)}</td>
-
-{/* TotalAmount */}
-                    <td>Ksh{booking.totalAmount}</td>
-
-{/* Status*/}
-                    <td>
-                      <div className={`badge badge-outline ${getStatusBadge(booking.bookingStatus)}`}>
-                        {booking.bookingStatus}
-                      </div>
-                    </td>
-
-{/* Booking Date */}
-                    <td>{formatDateRange(booking.bookingDate, booking.returnDate)}</td> 
-
-{/* Location*/}
-                    <td>{booking.location.name}</td>
-
-{/* update and delete car */}
-                    <td className="flex gap-1">
-                      <button className="btn btn-sm btn-outline text-red-600 hover:text-red-400">
-                        <MdOutlineCancel />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-
-      </>
-    );
-};
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
+  </>
+);
+}
