@@ -83,131 +83,134 @@ export const Users = () => {
   const handleSubmit = async () => { };
 
   return (
-    <>
-      <Toaster richColors position="top-right" />
-      <div className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c] animate-pulse">
-        ALL Users
-      </div>
-      {
-        error ? (
-          <div className="text-red-500">
-            something went wrong try again
+  <>
+    <Toaster richColors position="top-right" />
+    <div className="text-2xl font-bold text-center mb-4 bg-gradient-to-r from-[#11120f] via-[#988821] to-[#93141c] animate-pulse">
+      ALL Users
+    </div>
+    
+    <div className="overflow-x-auto">
+      <table className="table">
+        {/* Table Header */}
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>User</th>
+            <th>Joined On</th>
+            <th>User Type</th>
+            <th>Total Bookings</th>
+            <th>Total Days Booked</th>
+            <th>Total Revenue</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {error ? (
+            <tr>
+              <td colSpan={8}>
+                <div className="text-red-400">Something went wrong. Try again.</div>
+              </td>
+            </tr>
+          ) : isLoading ? (
+            <tr>
+              <td colSpan={8}>
+                <div className="flex justify-center"><PuffLoader color="#0aff13" /></div>
+              </td>
+            </tr>
+          ) : usersData?.length === 0 ? (
+            <tr>
+              <td colSpan={8} className="text-center">No Users Available</td>
+            </tr>
+          ) : (
+            usersData.map((user: UserInterface) => (
+              <tr key={user.userId}>
+                <th>{user.userId}</th>
+
+                {/* 🧍‍♂️ Profile, Name, Email */}
+                <td>
+                  <div className="flex items-center gap-3">
+                    <div className="avatar">
+                      <div className="mask mask-squircle h-12 w-12">
+                        <img src={user.profileImage} alt="User Avatar" />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="font-bold text-orange-500">
+                        {user.firstname} {user.lastname}
+                      </div>
+                      <div className="text-sm opacity-50">{user.email}</div>
+                    </div>
+                  </div>
+                </td>
+
+                {/* 🕓 Joined On */}
+                <td>{new Date(user.createdAt).toLocaleString()}</td>
+
+                {/* 🏷️ User Type */}
+                <td>
+                  <div className={`badge badge-outline ${getUserTypeBadge(user.userType)}`}>
+                    {user.userType}
+                  </div>
+                </td>
+
+                {/* 🔢 Total Bookings */}
+                <td>{calculateTotalBookings(user)}</td>
+
+                {/* 📅 Total Days Booked */}
+                <td>{calculateTotalDaysBooked(user)}</td>
+
+                {/* 💵 Total Revenue */}
+                <td>
+                  <span className="font-semibold text-green-600">
+                    ${calculateTotalRevenue(user).toFixed(2)}
+                  </span>
+                </td>
+
+                {/* ✏️ Edit Button */}
+                <td>
+                  <button 
+                    className="text-blue-700 hover:text-blue-500 btn btn-sm btn-outline"
+                    onClick={handleModalToggle}
+                  >
+                    <FiEdit />
+                  </button>
+                </td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
+
+    {/* 🛠️ Modal for editing user type */}
+    {isModalOpen && (
+      <div className="modal modal-open">
+        <div className="modal-box">
+          <div className="flex justify-center items-center mb-4">
+            <h2 className="text-2xl font-bold text-orange-500">Change User Type</h2>
           </div>
-        ) : isLoading ? (
-          <div className="loading">
-            <PuffLoader />
-            loading....
-          </div>
-        ) : usersData?.length === 0 ? (
-          <div>No Users Available</div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="table">
-              {/* Table Header */}
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>User</th>
-                  <th>Joined On</th>
-                  <th>User Type</th>
-                  <th>Total Bookings</th>
-                  <th>Total Days Booked</th>
-                  <th>Total Revenue</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  usersData.map((user: UserInterface) => (
-                    <tr key={user.userId}>
-                      <th>{user.userId}</th>
-
-                      {/* 🧍‍♂️ Profile, Name, Email */}
-                      <td>
-                        <div className="flex items-center gap-3">
-                          <div className="avatar">
-                            <div className="mask mask-squircle h-12 w-12">
-                              <img src={user.profileImage} alt="User Avatar" />
-                            </div>
-                          </div>
-                          <div>
-                            <div className="font-bold text-orange-500">
-                              {user.firstname} {user.lastname}
-                            </div>
-                            <div className="text-sm opacity-50">{user.email}</div>
-                          </div>
-                        </div>
-                      </td>
-
-                      {/* 🕓 Joined On */}
-                      <td>{new Date(user.createdAt).toLocaleString()}</td>
-
-                      {/* 🏷️ User Type */}
-                      <td>
-                        <div className={`badge badge-outline ${getUserTypeBadge(user.userType)}`}>
-                          {user.userType}
-                        </div>
-                      </td>
-
-                      {/* 🔢 Total Bookings */}
-                      <td>{calculateTotalBookings(user)}</td>
-
-                      {/* 📅 Total Days Booked */}
-                      <td>{calculateTotalDaysBooked(user)}</td>
-
-                      {/* 💵 Total Revenue */}
-                      <td>
-                        <span className="font-semibold text-green-600">
-                          ${calculateTotalRevenue(user).toFixed(2)}
-                        </span>
-                      </td>
-
-                      {/* ✏️ Edit Button */}
-                      <td>
-                        <button className="text-blue-700 hover:text-blue-500 btn btn-sm btn-outline"
-                          onClick={handleModalToggle}
-                        >
-                          <FiEdit />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        )
-      }
-
-
-      {/* 🛠️ Modal for editing user type */}
-      {isModalOpen && (
-        <div className="modal modal-open">
-          <div className="modal-box">
-            <div className="flex justify-center items-center mb-4">
-              <h2 className="text-2xl font-bold text-orange-500">Change User Type</h2>
+          <form onSubmit={() => handleSubmit()}>
+            <div className="mb-4">
+              <label htmlFor="firstName" className="block text-sm font-medium text-orange-500">User Type</label>
+              <select>
+                <option value="">Select UserType</option>
+                <option value="admin">Admin</option>
+                <option value="member">Member</option>
+                <option value="disabled">Disabled</option>
+              </select>
             </div>
-            <form onSubmit={() => handleSubmit()}>
-              <div className="mb-4">
-                <label htmlFor="firstName" className="block text-sm font-medium text-orange-500">User Type</label>
-                <select>
-                  <option value="">Select UserType</option>
-                  <option value="admin">Admin</option>
-                  <option value="member">Member</option>
-                  <option value="disabled">Disabled</option>
-                </select>
-              </div>
-              <div className="flex justify-end">
-                <button onClick={handleModalToggle} className="btn mr-2 btn-error">
-                  <FaTimes /> Cancel
-                </button>
-                <button type="submit" className="btn btn-primary">
-                  <SaveIcon /> Save Profile
-                </button>
-              </div>
-            </form>
-          </div>
+            <div className="flex justify-end">
+              <button onClick={handleModalToggle} className="btn mr-2 btn-error">
+                <FaTimes /> Cancel
+              </button>
+              <button type="submit" className="btn btn-primary">
+                <SaveIcon /> Save Profile
+              </button>
+            </div>
+          </form>
         </div>
-      )}
-    </>
-  );
-};
+      </div>
+    )}
+  </>
+);
+}
