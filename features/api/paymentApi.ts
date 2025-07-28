@@ -4,7 +4,7 @@ import type { RootState } from "../../app/store";
 export const paymentApi = createApi({
   reducerPath: 'paymentApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:5000/api/',
+    baseUrl: 'https://carguruhiresbackend.onrender.com/api/',
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
       if (token) {
@@ -34,10 +34,10 @@ export const paymentApi = createApi({
       invalidatesTags: ['payment'],
     }),
 
-        getAllPaymentForUserById:builder.query({
-            query:(userId)=>`payment/user?userId=${userId}`,
-            providesTags:['payment']
-        }),    
+    getAllPaymentForUserById: builder.query({
+      query: (userId) => `payment/user?userId=${userId}`,
+      providesTags: ['payment']
+    }),
 
     updatePayment: builder.mutation({
       query: ({ paymentId, ...paymentDataPayload }) => ({
@@ -46,6 +46,14 @@ export const paymentApi = createApi({
         body: paymentDataPayload,
       }),
       invalidatesTags: ['payment'],
+    }),
+    createPaymentSession: builder.mutation({
+      query: (paymentPayload) => ({
+        url: 'payment/create-checkout-session',
+        method: 'POST',
+        body: paymentPayload
+      }),
+      invalidatesTags: ['payment']
     }),
 
     deletePayment: builder.mutation({
@@ -64,4 +72,5 @@ export const {
   useCreatePaymentMutation,
   useUpdatePaymentMutation,
   useDeletePaymentMutation,
-} = paymentApi;
+  useCreatePaymentSessionMutation
+  , } = paymentApi;

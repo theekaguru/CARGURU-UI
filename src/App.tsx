@@ -58,6 +58,11 @@ function App() {
       errorElement: <Error />
     },
     {
+      path: 'vehicles/:id',
+      element: <BookNow />,
+      errorElement: <Error />,
+    },
+    {
       path: 'about',
       element: <About />,
       errorElement: <Error />

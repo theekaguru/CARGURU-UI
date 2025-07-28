@@ -13,6 +13,8 @@
   "dependencies": {
     "@heroicons/react": "^2.2.0",
     "@reduxjs/toolkit": "^2.8.2",
+    "@stripe/react-stripe-js": "^3.8.0",
+    "@stripe/stripe-js": "^7.6.1",
     "@tailwindcss/vite": "^4.1.11",
     "axios": "^1.10.0",
     "date-fns": "^4.1.0",
@@ -30,6 +32,7 @@
     "redux-persist": "^6.0.0",
     "shadcn": "^2.9.2",
     "sonner": "^2.0.6",
+    "stripe": "^18.3.0",
     "sweetalert2": "^11.22.2",
     "tailwindcss": "^4.1.11"
   },
