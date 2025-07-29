@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaCalendarAlt, FaMoneyBillWave } from "react-icons/fa";
 import { useCreateBookingMutation } from "../../features/api/bookingApi";
 import {
-  useCreatePaymentMutation,
   useCreatePaymentSessionMutation,
   useGetPaymentByIdQuery,
 } from "../../features/api/paymentApi";
@@ -23,10 +22,9 @@ export const BookNow = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const [createBooking, { isLoading: bookingLoading }] = useCreateBookingMutation();
-  const [createPayment, { isLoading: paymentLoading }] = useCreatePaymentMutation();
-  const [createPaymentSession] = useCreatePaymentSessionMutation();
+  const [createPaymentSession , { isLoading: paymentLoading }] = useCreatePaymentSessionMutation();
 
-  const [paymentId, setPaymentId] = useState<string | null>(null);
+  const [paymentId] = useState<string | null>(null);
   const [bookingId, setBookingId] = useState<string | null>(null);
   const [paymentStatus, setPaymentStatus] = useState("pending");
   const [showPaymentPrompt, setShowPaymentPrompt] = useState(false);
