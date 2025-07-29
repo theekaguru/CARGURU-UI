@@ -3,8 +3,8 @@ import { FiEdit } from "react-icons/fi"
 import { useSelector } from "react-redux"
 import { PuffLoader } from "react-spinners"
 import Swal from "sweetalert2"
-import { bookingApi } from "../../../features/api/bookingApi";
-import type { RootState } from "../../../app/store";
+import { bookingApi } from "../../features/api/bookingApi";
+import type { RootState } from "../../app/store";
 
 
 interface BookingInterface {

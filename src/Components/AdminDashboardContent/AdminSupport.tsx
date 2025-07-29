@@ -1,8 +1,8 @@
 import { PuffLoader } from "react-spinners";
-import { supportTicketApi } from "../../../features/api/supportTicketApi";
+import { supportTicketApi } from "../../features/api/supportTicketApi";
 import { Toaster, toast } from "sonner";
 import { FiChevronDown } from "react-icons/fi";
-import { useGetUserByIdQuery } from "../../../features/api/userApi"; // Add this import
+import { useGetUserByIdQuery } from "../../features/api/userApi"; // Add this import
 
 interface Ticket {
   ticketId: number;

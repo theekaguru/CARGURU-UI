@@ -1,12 +1,12 @@
 import { PuffLoader } from "react-spinners";
 import { useSelector } from "react-redux";
 import { supportTicketApi } from "../../../features/api/supportTicketApi";
-import type { RootState } from "../../../app/store";
 import { Toaster, toast } from "sonner";
 import { useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import { FaTimes, FaPlus } from "react-icons/fa";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import type { RootState } from "../../app/store";
 
 interface Ticket {
   ticketId: number;

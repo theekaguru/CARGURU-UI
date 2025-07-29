@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaCalendarAlt, FaMoneyBillWave } from "react-icons/fa";
-import { useCreateBookingMutation } from "../../features/api/bookingApi";
+import { useCreateBookingMutation } from "../features/api/bookingApi";
 import {
   useCreatePaymentSessionMutation,
   useGetPaymentByIdQuery,
-} from "../../features/api/paymentApi";
-import { vehicleApi } from "../../features/api/vehicleApi";
+} from "../features/api/paymentApi";
 import { useSelector } from "react-redux";
-import type { RootState } from "../../app/store";
+import type { RootState } from "../app/store";
+import { vehicleApi } from "../features/api/vehicleApi";
 
 export const BookNow = () => {
   const { user } = useSelector((state: RootState) => state.auth);

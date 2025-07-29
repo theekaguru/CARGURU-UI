@@ -1,7 +1,6 @@
 
 import { PuffLoader } from "react-spinners";
 import { useSelector } from "react-redux";
-import type { RootState } from "../../../app/store";
 import { bookingApi } from "../../../features/api/bookingApi";
 import { useState } from "react";
 import Swal from "sweetalert2";
@@ -10,6 +9,7 @@ import { FiEdit } from "react-icons/fi";
 import { AiFillDelete } from "react-icons/ai";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { SaveIcon } from "lucide-react";
+import type { RootState } from "../../app/store";
 
 // ✅ Interface for each booking - defines the data structure returned from backend
 interface BookingInterface {

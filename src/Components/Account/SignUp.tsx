@@ -1,7 +1,7 @@
 import sumertime from '../../assets/Account/summertime vw.jpg';
 import {useForm} from "react-hook-form"
 import { Anim } from './Anim';
-import { userApi } from '../../../features/api/userApi';
+import { userApi } from '../../features/api/userApi';
 import { toast, Toaster } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 

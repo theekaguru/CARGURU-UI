@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-import type { RootState } from "../../../app/store";
 import { vehicleApi } from "../../../features/api/vehicleApi";
 import { FiEdit } from "react-icons/fi";
 import { AiFillDelete } from "react-icons/ai";
@@ -10,6 +9,7 @@ import Swal from "sweetalert2";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { toast, Toaster } from "sonner";
 import { useState } from "react";
+import type { RootState } from "../../app/store";
 
 interface vehicleInterface {
   vehicleId: number;

@@ -3,8 +3,8 @@ import { FiEdit } from "react-icons/fi"
 import { useSelector } from "react-redux"
 import { PuffLoader } from "react-spinners"
 import Swal from "sweetalert2"
-import type { RootState } from "../../../app/store";
-import { paymentApi } from "../../../features/api/paymentApi";
+import { paymentApi } from "../../features/api/paymentApi";
+import type { RootState } from "../../app/store";
 
 
 export interface PaymentInterface {

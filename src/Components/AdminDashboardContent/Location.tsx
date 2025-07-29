@@ -1,7 +1,6 @@
 import { FiEdit } from "react-icons/fi";
 import { PuffLoader } from "react-spinners";
 import { useSelector } from "react-redux";
-import type { RootState } from "../../../app/store";
 import { AiFillDelete } from "react-icons/ai";
 import { FaAddressBook, FaTimes } from "react-icons/fa";
 import { useForm, type SubmitHandler } from "react-hook-form";
@@ -9,6 +8,7 @@ import { Toaster, toast } from "sonner";
 import { useState } from "react";
 import { SaveIcon } from "lucide-react";
 import { locationApi } from "../../../features/api/locationApi";
+import type { RootState } from "../../app/store";
 
 // 🧮 Interfaces
 interface LocationInterface {

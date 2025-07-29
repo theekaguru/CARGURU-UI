@@ -3,11 +3,11 @@ import { FaCamera, FaEdit, FaTimes } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import type { RootState } from '../../../app/store';
 import { SaveIcon } from 'lucide-react';
 import axios from 'axios';
-import { userApi } from '../../../features/api/userApi';
+import { userApi } from '../../features/api/userApi';
 import { toast, Toaster } from 'sonner';
+import type { RootState } from '../../app/store';
 
 
 

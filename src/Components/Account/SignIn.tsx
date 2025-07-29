@@ -3,9 +3,9 @@ import vw1 from '../../assets/Account/vw1.jpg';
 import {useForm} from "react-hook-form"
 import { toast, Toaster } from 'sonner';
 import { useNavigate } from 'react-router-dom';
-import { userApi } from '../../../features/api/userApi';
+import { userApi } from '../../features/api/userApi';
 import { useDispatch } from 'react-redux';
-import { setCredentials } from '../../../features/auth/authSlice';
+import { setCredentials } from '../../features/auth/authSlice';
 
 
 

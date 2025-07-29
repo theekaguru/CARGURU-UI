@@ -18,7 +18,6 @@ import { Bookings } from './Components/AdminDashboardContent/Bookings'
 import { Cars } from './Components/AdminDashboardContent/Cars'
 import { CarSpecifications } from './Components/AdminDashboardContent/CarSpecifications'
 import { AdminSupport } from './Components/AdminDashboardContent/AdminSupport'
-import { Dashboard } from './Components/AdminDashboardContent/Dashboard'
 import { Location } from './Components/AdminDashboardContent/Location'
 import { Analytics } from './Components/AdminDashboardContent/Analytics'
 import { Users } from './Components/AdminDashboardContent/Users'
@@ -154,12 +153,9 @@ function App() {
           errorElement: <Error />
         },
         {
-          path: "dashboard",
-          element: <Dashboard />
-        },
-        {
           path: "location",
-          element: <Location />
+          element: <Location />,
+          errorElement:<Error/>
         }
       ]
     }

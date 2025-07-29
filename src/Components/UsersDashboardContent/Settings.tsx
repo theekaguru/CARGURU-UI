@@ -5,7 +5,7 @@ import { FaCamera, FaEdit, FaTimes } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { SaveIcon } from 'lucide-react';
-import type { RootState } from '../../../app/store';
+import type { RootState } from '../../app/store';
 
 
 interface FormValues {

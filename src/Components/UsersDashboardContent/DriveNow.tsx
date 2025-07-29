@@ -3,7 +3,7 @@ import { carData, type Car } from "../../Utils/carData";
 import { FaSearch, FaFilter } from "react-icons/fa";
 
 import { PuffLoader } from "react-spinners";
-import { vehicleApi } from "../../../features/api/vehicleApi";
+import { vehicleApi } from "../../features/api/vehicleApi";
 
 export const DriveNow = () => {
   const { data: fetchedCars = [], isLoading, error } = vehicleApi.useGetAllVehiclesQuery({});

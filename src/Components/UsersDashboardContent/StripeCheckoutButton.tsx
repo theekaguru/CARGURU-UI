@@ -1,4 +1,4 @@
-import { paymentApi } from "../../../features/api/paymentApi";
+import { paymentApi } from "../../features/api/paymentApi";
 
 interface Props {
     amount: number;

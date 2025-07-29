@@ -13,7 +13,7 @@ import {
   useGetAllUsersQuery,
   useGetAllBookingsQuery,
   useGetAllVehiclesQuery,
-} from "../../../features/api/analyticsApi";
+} from "../../features/api/analyticsApi";
 
 interface ChartCardProps {
   title: string;
