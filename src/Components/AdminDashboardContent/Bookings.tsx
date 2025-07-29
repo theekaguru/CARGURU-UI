@@ -1,7 +1,7 @@
 
 import { PuffLoader } from "react-spinners";
 import { useSelector } from "react-redux";
-import { bookingApi } from "../../../features/api/bookingApi";
+import { bookingApi } from "../../features/api/bookingApi";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { toast, Toaster } from "sonner";

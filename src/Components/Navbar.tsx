@@ -3,7 +3,7 @@ import { FaHome, FaInfo, FaPhone } from "react-icons/fa"
 import { MdDashboard, MdOutlineQuiz, MdOutlineSecurity } from "react-icons/md"
 import { Link , useNavigate} from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { clearCredentials } from "../../features/auth/authSlice"
+import { clearCredentials } from "../features/auth/authSlice"
 import { RiLogoutCircleRLine } from "react-icons/ri"
 import type { RootState } from "../app/store"
 

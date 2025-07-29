@@ -1,6 +1,6 @@
 import { PuffLoader } from "react-spinners";
 import { useSelector } from "react-redux";
-import { supportTicketApi } from "../../../features/api/supportTicketApi";
+import { supportTicketApi } from "../../features/api/supportTicketApi";
 import { Toaster, toast } from "sonner";
 import { useState } from "react";
 import { AiFillDelete } from "react-icons/ai";

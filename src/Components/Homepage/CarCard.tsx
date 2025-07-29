@@ -5,7 +5,7 @@ import { PiEngineLight } from "react-icons/pi";
 import { BsPeopleFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import type { RootState } from "../../../app/store";
+import type { RootState } from "../../app/store";
 import type { Car } from "../../Utils/carData";
 
 interface Props {

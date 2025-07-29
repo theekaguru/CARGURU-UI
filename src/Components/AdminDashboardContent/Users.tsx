@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { SaveIcon } from "lucide-react";
 import type { RootState } from "../../app/store";
-import { userApi } from "../../../features/api/userApi";
+import { userApi } from "../../features/api/userApi";
 import { Toaster } from "sonner";
 
 // 🧩 User Interface

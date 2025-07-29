@@ -1,4 +1,4 @@
-import { vehicleApi } from "../../../features/api/vehicleApi";
+import { vehicleApi } from "../../features/api/vehicleApi";
 import { carData, type Car } from "../../Utils/carData";
 import CarCard from "./CarCard";
 import { PuffLoader } from "react-spinners";

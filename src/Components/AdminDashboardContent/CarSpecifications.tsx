@@ -3,7 +3,7 @@ import { FiEdit } from "react-icons/fi";
 import { PuffLoader } from "react-spinners";
 import { useSelector } from "react-redux";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { vehicleSpecApi } from "../../../features/api/vehicleSpecApi";
+import { vehicleSpecApi } from "../../features/api/vehicleSpecApi";
 
 import { AiFillDelete } from "react-icons/ai";
 import { FaAddressBook, FaTimes } from "react-icons/fa";

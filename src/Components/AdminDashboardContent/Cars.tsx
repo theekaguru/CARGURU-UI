@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { vehicleApi } from "../../../features/api/vehicleApi";
+import { vehicleApi } from "../../features/api/vehicleApi";
 import { FiEdit } from "react-icons/fi";
 import { AiFillDelete } from "react-icons/ai";
 import { SaveIcon } from "lucide-react";

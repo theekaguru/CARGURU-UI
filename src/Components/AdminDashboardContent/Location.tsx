@@ -7,7 +7,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { Toaster, toast } from "sonner";
 import { useState } from "react";
 import { SaveIcon } from "lucide-react";
-import { locationApi } from "../../../features/api/locationApi";
+import { locationApi } from "../../features/api/locationApi";
 import type { RootState } from "../../app/store";
 
 // 🧮 Interfaces
