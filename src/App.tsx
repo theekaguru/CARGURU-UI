@@ -18,13 +18,13 @@ import { Bookings } from './Components/AdminDashboardContent/Bookings'
 import { Cars } from './Components/AdminDashboardContent/Cars'
 import { CarSpecifications } from './Components/AdminDashboardContent/CarSpecifications'
 import { AdminSupport } from './Components/AdminDashboardContent/AdminSupport'
-import { Location } from './Components/AdminDashboardContent/Location'
-import { Analytics } from './Components/AdminDashboardContent/Analytics'
 import { Users } from './Components/AdminDashboardContent/Users'
 import { Profile } from './Components/AdminDashboardContent/Profile'
-import { Settings } from './Components/UsersDashboardContent/Settings'
 import { Payments } from './Components/UsersDashboardContent/Payments'
 import { BookNow } from './Pages/BookNow'
+import { Analytics } from './Components/AdminDashboardContent/Analytics'
+import { Location } from './Components/AdminDashboardContent/Location'
+import Settings from './Components/UsersDashboardContent/Settings'
 
 
 
@@ -118,7 +118,7 @@ function App() {
       errorElement: <Error />,
       children: [
         {
-          path: "Analytics",
+          path: "analytics",
           element: <Analytics />,
           errorElement: <Error />
         },

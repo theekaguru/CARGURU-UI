@@ -37,12 +37,16 @@ export const SideNav = () => {
 
   const shouldExpand = isExpanded || !isMobile;
 
-  const navItemClass = (path: string) =>
-    `flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-300 ${
-      location.pathname.includes(path)
+  const navItemClass = (path: string) => {
+    const fullPath = `/dashboard/${path}`;
+    const isActive = location.pathname === fullPath;
+    return clsx(
+      "flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-300",
+      isActive
         ? "bg-[#2D4974]/60 border-l-4 border-yellow-400 text-[#6896C0]"
         : "text-[#C5C7C9] hover:bg-[#1D3C6E] hover:text-[#6896C0]"
-    }`;
+    );
+  };
 
   const items = [
     { to: "activities", label: "Activities", icon: <TbActivityHeartbeat /> },
@@ -62,7 +66,6 @@ export const SideNav = () => {
       onClick={handleSidebarClick}
     >
       <ul className="menu px-2 py-6 gap-3 h-full overflow-hidden">
-
         {/* Avatar Section */}
         <div className="flex flex-col items-center transition-all duration-300 mb-6">
           <div className="rounded-full bg-gradient-to-tr from-yellow-400 to-orange-400 p-2 shadow-lg mb-2">
@@ -81,7 +84,7 @@ export const SideNav = () => {
         {/* Navigation Items */}
         {items.map((item) => (
           <li key={item.to}>
-            <Link to={item.to} className={navItemClass(item.to)}>
+            <Link to={`/dashboard/${item.to}`} className={navItemClass(item.to)}>
               {item.icon}
               {shouldExpand && <span>{item.label}</span>}
             </Link>

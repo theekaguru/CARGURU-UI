@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { FaUsers, FaUsersCog } from "react-icons/fa";
-import { FaLocationDot } from "react-icons/fa6";
-import { IoBookmark, IoCarSport } from "react-icons/io5";
+import { GiClick } from "react-icons/gi";
+import { GoHistory } from "react-icons/go";
 import { LuTickets } from "react-icons/lu";
-import { MdSettingsInputComposite } from "react-icons/md";
-import { TbDeviceDesktopAnalytics } from "react-icons/tb";
+import { FaHandHoldingDollar, FaUserGear } from "react-icons/fa6";
+import { TbActivityHeartbeat } from "react-icons/tb";
 import { Link, useLocation } from "react-router-dom";
 import clsx from "clsx";
 
@@ -13,7 +12,8 @@ export const SideNav = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const location = useLocation();
 
-  // Detect screen size changes
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -22,7 +22,6 @@ export const SideNav = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Auto-collapse on mobile after 3 seconds
   useEffect(() => {
     if (isMobile && isExpanded) {
       const timer = setTimeout(() => setIsExpanded(false), 20000);
@@ -30,32 +29,29 @@ export const SideNav = () => {
     }
   }, [isExpanded, isMobile]);
 
-  // Handle expanding sidebar only on mobile
   const handleSidebarClick = () => {
     if (isMobile) {
       setIsExpanded(true);
     }
   };
 
+  const shouldExpand = isExpanded || !isMobile;
+
   const navItemClass = (path: string) =>
     `flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-300 ${
-      location.pathname.includes(path)
+      location.pathname === `/dashboard/${path}`
         ? "bg-[#2D4974]/60 border-l-4 border-yellow-400 text-[#6896C0]"
         : "text-[#C5C7C9] hover:bg-[#1D3C6E] hover:text-[#6896C0]"
     }`;
 
   const items = [
-    { to: "analytics", label: "Activities", icon: <TbDeviceDesktopAnalytics /> },
-    { to: "users", label: "Users", icon: <FaUsers /> },
-    { to: "bookings", label: "Bookings", icon: <IoBookmark /> },
-    { to: "location", label: "Location", icon: <FaLocationDot /> },
-    { to: "cars", label: "Cars", icon: <IoCarSport /> },
-    { to: "carSpecifications", label: "Specifications", icon: <MdSettingsInputComposite /> },
-    { to: "adminSupport", label: "Support", icon: <LuTickets /> },
-    { to: "profile", label: "Profile", icon: <FaUsersCog /> },
+    { to: "activities", label: "Activities", icon: <TbActivityHeartbeat /> },
+    { to: "driveNow", label: "DriveNow", icon: <GiClick /> },
+    { to: "bookingHistory", label: "Booking History", icon: <GoHistory /> },
+    { to: "payments", label: "Payments", icon: <FaHandHoldingDollar /> },
+    { to: "supportTickets", label: "Support Tickets", icon: <LuTickets /> },
+    { to: "settings", label: "Settings", icon: <FaUserGear /> },
   ];
-
-  const shouldExpand = isExpanded || !isMobile;
 
   return (
     <div
@@ -66,23 +62,25 @@ export const SideNav = () => {
       onClick={handleSidebarClick}
     >
       <ul className="menu px-2 py-6 gap-3 h-full overflow-hidden">
-        {/* Avatar */}
+        {/* Avatar Section */}
         <div className="flex flex-col items-center transition-all duration-300 mb-6">
           <div className="rounded-full bg-gradient-to-tr from-yellow-400 to-orange-400 p-2 shadow-lg mb-2">
-            <span className="text-3xl font-extrabold text-white font-[cursive]"></span>
+            <span className="text-3xl font-extrabold text-white font-[cursive]">₭₳</span>
           </div>
           {shouldExpand && (
             <>
-              <span className="text-lg font-bold tracking-widest text-yellow-300 font-[cursive]"></span>
-              <span className="text-xs text-orange-200 font-semibold">Admin</span>
+              <span className="text-lg font-bold tracking-widest text-yellow-300 font-[cursive]">
+                {user?.firstname || "User"}
+              </span>
+              <span className="text-xs text-orange-200 font-semibold">Client</span>
             </>
           )}
         </div>
 
-        {/* Nav Items */}
+        {/* Navigation Items */}
         {items.map((item) => (
           <li key={item.to}>
-            <Link to={item.to} className={navItemClass(item.to)}>
+            <Link to={`/dashboard/${item.to}`} className={navItemClass(item.to)}>
               {item.icon}
               {shouldExpand && <span>{item.label}</span>}
             </Link>
