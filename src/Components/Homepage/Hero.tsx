@@ -1,3 +1,5 @@
+import speedometer from "../../assets/homepage/speedometer.mp4";
+
 import { Link } from "react-router-dom";
 
 export const Hero= () => {
@@ -26,13 +28,16 @@ export const Hero= () => {
             </Link>
           </div>
         </div>
-        <div className="md:w-1/2 z-10 flex justify-center">
-          <img 
-            src="https://source.unsplash.com/random/800x600?luxury-car" 
-            alt="Luxury Car" 
-            className="rounded-lg shadow-2xl max-w-full h-auto"
-          />
-        </div>
+      <div className="md:w-1/2 z-10 flex justify-center">
+        <video
+          src={speedometer}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="rounded-lg shadow-2xl max-w-full h-auto"
+        />
+      </div>
       </div>
       <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#1F1E1C] to-transparent z-0"></div>
     </section>
