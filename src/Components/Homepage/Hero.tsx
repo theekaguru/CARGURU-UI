@@ -2,27 +2,35 @@ import { Link } from "react-router-dom";
 
 export const Hero = () => {
   return (
-    <div className="hero relative flex justify-center items-start min-h-[75vh] pt-[var(--header-height)]">
+    <div className="relative flex items-center justify-center min-h-[90vh] pt-[var(--header-height)] px-4">
       {/* Background Video */}
       <video
-        className="absolute left-[10%] w-[80vw] h-[75vh] object-cover rounded-lg mb-8"
-        style={{ top: 0 }}
+        className="absolute inset-0 w-full h-full object-cover rounded-xl"
         autoPlay
         loop
         muted
         playsInline
       >
-        <source src="/volxwagen.mp4" type="video/mp4" /></video>
+        <source src="/volxwagen.mp4" type="video/mp4" />
+      </video>
 
-      {/* Overlay */}
-      <div className="hero-overlay bg-black/35 absolute left-[10%] w-[80vw] h-[75vh] z-10 rounded-lg mb-8"></div>
+      {/* Soft Overlay for readability */}
+      <div className="absolute inset-0 bg-black/30 rounded-xl" />
 
       {/* Content */}
-      <div className="hero-content text-neutral-content text-center relative z-20 w-full flex justify-center items-center" style={{ minHeight: "75vh" }}>
-        <div className="max-w-md">
-          <h1 className="text-[#76726f] mb-5 text-5xl font-bold">Hello there</h1>
-          <Link to="/register" className=" text-[#b4a125] btn btn-primary animate-pulse ">Book Now</Link>
-        </div>
+      <div className="relative z-10 text-center text-white max-w-2xl">
+        <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight drop-shadow-lg">
+          Drive with Style, Ride with Power
+        </h1>
+        <p className="text-lg md:text-xl mb-8 text-white/80 font-light drop-shadow-sm">
+          Book your luxury experience now. Effortless, elegant, and unforgettable.
+        </p>
+        <Link
+          to="/register"
+          className="px-6 py-3 rounded-lg bg-[#b4a125] text-black font-semibold hover:bg-[#d1b737] transition duration-300 shadow-md"
+        >
+          Book Now
+        </Link>
       </div>
     </div>
   );
