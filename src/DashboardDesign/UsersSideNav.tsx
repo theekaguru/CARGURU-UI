@@ -10,6 +10,8 @@ export const SideNav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
   const navItemClass = (path: string) =>
     `flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-200
      ${
@@ -28,7 +30,9 @@ export const SideNav = () => {
         >
           <FaBars />
         </button>
-        <span className="text-yellow-300 font-bold font-[cursive]">₲ɄⱤɄ User</span>
+        <span className="text-yellow-300 font-bold font-[cursive]">
+          {user?.firstname || "User"}
+        </span>
       </div>
 
       {/* Sidebar */}
@@ -37,14 +41,8 @@ export const SideNav = () => {
         ${isOpen ? "translate-x-0" : "-translate-x-full"} sm:translate-x-0`}
       >
         <ul className="menu min-w-full min-h-full gap-2 px-3 py-6 shadow-md">
-          {/* Avatar */}
-          <div className="mb-10 flex flex-col items-center">
-            <div className="rounded-full bg-gradient-to-tr from-yellow-400 to-orange-400 p-2 shadow-lg mb-2">
-              <span className="text-3xl font-extrabold text-white font-[cursive]">₭₳</span>
-            </div>
-            <span className="text-lg font-bold tracking-widest text-yellow-300 font-[cursive]">₲ɄⱤɄ</span>
-            <span className="text-xs text-orange-200 font-semibold">User</span>
-          </div>
+          
+          
 
           {/* Navigation */}
           <li>
