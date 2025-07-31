@@ -25,7 +25,7 @@ export const SideNav = () => {
   // Auto-collapse on mobile after 3 seconds
   useEffect(() => {
     if (isMobile && isExpanded) {
-      const timer = setTimeout(() => setIsExpanded(false), 10000);
+      const timer = setTimeout(() => setIsExpanded(false), 20000);
       return () => clearTimeout(timer);
     }
   }, [isExpanded, isMobile]);
@@ -69,11 +69,11 @@ export const SideNav = () => {
         {/* Avatar */}
         <div className="flex flex-col items-center transition-all duration-300 mb-6">
           <div className="rounded-full bg-gradient-to-tr from-yellow-400 to-orange-400 p-2 shadow-lg mb-2">
-            <span className="text-3xl font-extrabold text-white font-[cursive]">₭₳</span>
+            <span className="text-3xl font-extrabold text-white font-[cursive]"></span>
           </div>
           {shouldExpand && (
             <>
-              <span className="text-lg font-bold tracking-widest text-yellow-300 font-[cursive]">₲ɄⱤɄ</span>
+              <span className="text-lg font-bold tracking-widest text-yellow-300 font-[cursive]"></span>
               <span className="text-xs text-orange-200 font-semibold">Admin</span>
             </>
           )}
