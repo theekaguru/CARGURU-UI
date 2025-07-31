@@ -25,7 +25,7 @@ export const Navbar = () => {
           to="/"
           className="text-2xl font-extrabold tracking-wide text-white px-4 py-2 rounded-xl shadow-lg bg-gradient-to-r from-[#1D3C6E] to-[#2D4974] hover:scale-105 transition-transform duration-300"
         >
-          Levi It to Us™
+          TheeCarvana™
         </Link>
 
         {/* Hamburger Icon */}
