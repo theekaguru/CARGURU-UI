@@ -19,16 +19,16 @@ export default function CarCard({ car }: Props) {
   console.log(car);
 
   return (
-    <div className="bg-gradient-to-br from-[#817962] via-[#a2a099] to-[#c5c0ab] shadow-md w-full max-w-96 transition-transform duration-300 hover:scale-105 hover:shadow-xl p-8">
+    <div className="bg-gradient-to-br from-[#1D3C6E] to-[#2D4974] shadow-md w-full max-w-96 transition-transform duration-300 hover:scale-105 hover:shadow-xl p-8 rounded-lg">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="font-bold text-lg text-[#5c260b]">
+          <h3 className="font-bold text-lg text-white">
             {spec.manufacturer} {spec.model}
           </h3>
-          <p className="text-sm text-[#0d500c]">{spec.model}</p>
+          <p className="text-sm text-[#6896C0]">{spec.model}</p>
         </div>
-        <div className="flex items-center gap-1 text-[#761623] font-semibold">
+        <div className="flex items-center gap-1 text-yellow-400 font-semibold">
           <FaStar />
           <span>{car.carRating ?? "4.5"}</span>
         </div>
@@ -42,10 +42,11 @@ export default function CarCard({ car }: Props) {
           className="w-full h-40 object-cover rounded-md my-3"
         />
         <span
-          className={`absolute top-2 right-2 text-xs font-bold px-2 py-1 rounded-full ${car.availability.toLowerCase() === "available"
-            ? "bg-[#0c691f] text-white"
-            : "bg-[#bc1629] text-white"
-            }`}
+          className={`absolute top-2 right-2 text-xs font-bold px-2 py-1 rounded-full ${
+            car.availability.toLowerCase() === "available"
+              ? "bg-green-600 text-white"
+              : "bg-red-600 text-white"
+          }`}
         >
           {car.availability.toLowerCase() === "available"
             ? "Available"
@@ -54,19 +55,19 @@ export default function CarCard({ car }: Props) {
       </div>
 
       {/* Location */}
-      <div className="flex items-center text-sm gap-1 mb-2">
-        <FaLocationDot className="text-[#690c17]" />
+      <div className="flex items-center text-sm gap-1 mb-2 text-[#6896C0]">
+        <FaLocationDot />
         <span>{car.location?.name || "Unknown Location"}</span>
       </div>
 
       {/* Price */}
-      <div className="text-lg font-bold mb-2 text-black">
+      <div className="text-lg font-bold mb-2 text-white">
         ksh {car.rentalRate}
-        <span className="text-sm text-gray-500"> /Day</span>
+        <span className="text-sm text-[#6896C0]"> /Day</span>
       </div>
 
       {/* Features */}
-      <div className="flex flex-wrap justify-between text-sm text-gray-600 mt-3">
+      <div className="flex flex-wrap justify-between text-sm text-[#6896C0] mt-3">
         <div className="flex items-center gap-1 mb-2">
           <GiGearStickPattern />
           {spec.transmission}
@@ -90,6 +91,7 @@ export default function CarCard({ car }: Props) {
         car?.vehicleId && (
           <Link
             to={`/vehicles/${car.vehicleId}`}
+            className="bg-[#6896C0] hover:bg-[#2D4974] w-full mt-4 py-2 rounded-md text-white font-bold text-center block transition duration-300"
           >
             View Details
           </Link>
@@ -97,7 +99,7 @@ export default function CarCard({ car }: Props) {
       ) : (
         <Link
           to="/login"
-          className="bg-[#888776] w-full mt-4 py-2 rounded-md text-[#161135] transition-transform duration-300 hover:scale-105 hover:shadow-xl font-bold text-center block"
+          className="bg-[#6896C0] w-full mt-4 py-2 rounded-md text-white transition-transform duration-300 hover:scale-105 hover:bg-[#2D4974] font-bold text-center block"
         >
           Login to book
         </Link>
