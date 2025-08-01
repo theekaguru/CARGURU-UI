@@ -67,19 +67,23 @@ export const SideNav = () => {
     >
       <ul className="menu px-2 py-6 gap-3 h-full overflow-hidden">
         {/* Avatar Section */}
-        <div className="flex flex-col items-center transition-all duration-300 mb-6">
-          <div className="rounded-full bg-gradient-to-tr from-yellow-400 to-orange-400 p-2 shadow-lg mb-2">
-            <span className="text-3xl font-extrabold text-white font-[cursive]"></span>
-          </div>
-          {shouldExpand && (
-            <>
-              <span className="text-lg font-bold tracking-widest text-yellow-300 font-[cursive]">
-                {user?.firstname || "User"}
-              </span>
-              <span className="text-xs text-orange-200 font-semibold">Client</span>
-            </>
-          )}
-        </div>
+        {/* Avatar Section */}
+<div className="flex flex-col items-center transition-all duration-300 mb-6">
+  {/* Online Status Dot */}
+  <div className="w-3 h-3 bg-green-400 rounded-full shadow-md mb-2"></div>
+
+  {shouldExpand && (
+    <>
+      <span className="text-lg font-bold tracking-widest text-yellow-300 font-[cursive]">
+        {user?.firstname || "User"}
+      </span>
+      <span className="text-xs text-orange-200 font-semibold">
+        {user?.role || "Client"}
+      </span>
+    </>
+  )}
+</div>
+
 
         {/* Navigation Items */}
         {items.map((item) => (

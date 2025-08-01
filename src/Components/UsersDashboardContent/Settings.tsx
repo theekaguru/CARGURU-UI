@@ -20,7 +20,7 @@ interface FormValues {
   userId: number;
 }
 
-export const Settings = () => {
+export const UserProfile = () => {
   const cloud_name = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const preset_key = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
@@ -50,7 +50,7 @@ export const Settings = () => {
     if (!isAuthenticated) {
       navigate('/login');
     } else if (userType !== 'admin') {
-      navigate('/dashboard/analytics');
+      navigate('/dashboard/settings');
     }
   }, [isAuthenticated, userType, navigate]);
 
@@ -217,4 +217,4 @@ return (
 
 };
 
-export default Settings;
+export default UserProfile;

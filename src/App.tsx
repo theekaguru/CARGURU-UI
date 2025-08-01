@@ -24,7 +24,7 @@ import { Payments } from './Components/UsersDashboardContent/Payments'
 import { BookNow } from './Pages/BookNow'
 import { Analytics } from './Components/AdminDashboardContent/Analytics'
 import { Location } from './Components/AdminDashboardContent/Location'
-import Settings from './Components/UsersDashboardContent/Settings'
+import { UserProfile } from './Components/UsersDashboardContent/Settings'
 
 
 
@@ -107,7 +107,7 @@ function App() {
         },
         {
           path: 'settings',
-          element: <Settings />,
+          element: <UserProfile/>,
           errorElement: <Error />
         },
       ]
