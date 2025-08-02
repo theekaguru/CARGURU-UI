@@ -7,7 +7,16 @@ import { useEffect, useState } from "react";
 import { FaUsers, FaDollarSign } from "react-icons/fa";
 import { BiCar, BiSolidCalendar } from "react-icons/bi";
 import {
-  PieChart, Pie, XAxis, YAxis, Tooltip, CartesianGrid, AreaChart, Area, ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  AreaChart,
+  Area,
+  ResponsiveContainer,
 } from "recharts";
 
 import {
@@ -20,12 +29,6 @@ interface ChartCardProps {
   title: string;
   children: ReactNode;
   height?: string;
-}
-
-interface MetricRowProps {
-  label: string;
-  value: string | number;
-  color?: string;
 }
 
 interface StatCardProps {
@@ -88,13 +91,6 @@ export const Analytics = () => {
     <div className="rounded-xl p-6 bg-[#2D4974] shadow-lg text-white">
       <h3 className="text-xl font-bold mb-6 text-[#facc15] text-center">{title}</h3>
       <div style={{ height }}>{children}</div>
-    </div>
-  );
-
-  const MetricRow = ({ label, value, color = "#10b981" }: MetricRowProps) => (
-    <div className="flex justify-between items-center py-2 border-b border-[#1D3C6E]">
-      <span className="text-sm text-[#C5C7C9]">{label}</span>
-      <span className="font-semibold" style={{ color }}>{value}</span>
     </div>
   );
 
