@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { FaUsers, FaDollarSign } from "react-icons/fa";
 import { BiCar, BiSolidCalendar } from "react-icons/bi";
 import {
-  PieChart, Pie, Line, Cell, XAxis, YAxis, Tooltip, CartesianGrid, AreaChart, Area, ResponsiveContainer,
+  PieChart, Pie, XAxis, YAxis, Tooltip, CartesianGrid, AreaChart, Area, ResponsiveContainer,
 } from "recharts";
 
 import {
