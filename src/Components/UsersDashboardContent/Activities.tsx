@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { FaUsers, FaDollarSign } from "react-icons/fa";
 import { BiCar, BiSolidCalendar } from "react-icons/bi";
 import { MdOutlineMessage, MdOutlineManageAccounts } from "react-icons/md";
