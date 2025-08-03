@@ -8,7 +8,6 @@ import { Contact } from './Pages/Contact'
 import { FAQ } from './Pages/FAQ'
 import { About } from './Pages/About'
 import { UsersDashboard } from './Pages/UsersDashboard'
-import { Activities } from './Components/UsersDashboardContent/Activities'
 import { DriveNow } from './Components/UsersDashboardContent/DriveNow'
 import { BookingHistory } from './Components/UsersDashboardContent/BookingHistory'
 import { SupportTickets } from './Components/UsersDashboardContent/SupportTickets'
@@ -25,6 +24,7 @@ import { BookNow } from './Pages/BookNow'
 import { Analytics } from './Components/AdminDashboardContent/Analytics'
 import { Location } from './Components/AdminDashboardContent/Location'
 import { UserProfile } from './Components/UsersDashboardContent/Settings'
+import UserAnalytics from './Components/UsersDashboardContent/Activities'
 
 
 
@@ -82,7 +82,7 @@ function App() {
       children: [
         {
           path: 'activities',
-          element: <Activities />,
+          element: <UserAnalytics  />,
           errorElement: <Error />
         },
         {
